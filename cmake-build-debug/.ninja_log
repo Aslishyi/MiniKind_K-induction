@@ -1,11 +1,17 @@
 # ninja log v5
-1	179	7344448212406856	build.ninja	1583696f40633408
-9	410	7344369358057370	CMakeFiles/YourProjectName.dir/src/Tool/ExportOutput.cpp.obj	c048d551e8e6ac5a
-434	646	7344369360357778	YourProjectName.exe	e037ec57a5261996
-4	390	7344369357851303	CMakeFiles/YourProjectName.dir/src/main.cpp.obj	db693df9ce5eeeb6
-6	433	7344369358287361	CMakeFiles/YourProjectName.dir/src/Tool/GetInput.cpp.obj	18597f455f54cd8e
+1	179	7344523125856653	build.ninja	1583696f40633408
 5	471	7344456390396441	CMakeFiles/YourProjectName.dir/src/Tool/ExportOutput.cpp.obj	7c66ed856a433d7c
-8	512	7344456390806525	CMakeFiles/YourProjectName.dir/src/Tool/GetInput.cpp.obj	ddf71ab0053a6ce2
+5647	8021	7344522126712822	YourProjectName.exe	c4ae5c8cf093ea88
 11	1663	7344456402304745	CMakeFiles/YourProjectName.dir/src/main.cpp.obj	b3d830d4df3d9eaf
-14	5401	7344456439575389	CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj	f7f7d890e0116f29
-5401	7831	7344456443996470	YourProjectName.exe	c4ae5c8cf093ea88
+8	512	7344456390806525	CMakeFiles/YourProjectName.dir/src/Tool/GetInput.cpp.obj	ddf71ab0053a6ce2
+14	5647	7344522122765726	CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj	f7f7d890e0116f29
+18	476	7344532384593895	CMakeFiles/YourProjectName.dir/src/Tool/CheckTool.cpp.obj	e71011b3c810a1a6
+12	1675	7344532396568267	CMakeFiles/YourProjectName.dir/src/main.cpp.obj	b3d830d4df3d9eaf
+16	5189	7344532431615077	CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj	f7f7d890e0116f29
+5189	7477	7344532435471625	YourProjectName.exe	abef16bc3fea5c06
+15	422	7344540076802222	CMakeFiles/YourProjectName.dir/src/Tool/CheckTool.cpp.obj	e71011b3c810a1a6
+12	1578	7344540088361928	CMakeFiles/YourProjectName.dir/src/main.cpp.obj	b3d830d4df3d9eaf
+13	5076	7344540634121860	CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj	f7f7d890e0116f29
+5077	7370	7344540638028343	YourProjectName.exe	abef16bc3fea5c06
+12	5261	7344541049117972	CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj	f7f7d890e0116f29
+5262	7515	7344541052985896	YourProjectName.exe	abef16bc3fea5c06

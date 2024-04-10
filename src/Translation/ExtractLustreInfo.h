@@ -11,6 +11,8 @@
 #include <string>
 #include <regex>
 #include <boost/algorithm/string.hpp>
+#include "../Tool/CheckTool.h"
+
 
 class ExtractLustreInfo{
 public:

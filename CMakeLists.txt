@@ -10,7 +10,9 @@ add_executable(YourProjectName src/main.cpp
         src/Tool/ExportOutput.h
         src/Tool/ExportOutput.cpp
         src/Translation/ExtractLustreInfo.cpp
-        src/Translation/ExtractLustreInfo.h)
+        src/Translation/ExtractLustreInfo.h
+        src/Tool/CheckTool.cpp
+        src/Tool/CheckTool.h)
 
 find_package(Boost 1.83.0 REQUIRED)
 if(Boost_FOUND)
