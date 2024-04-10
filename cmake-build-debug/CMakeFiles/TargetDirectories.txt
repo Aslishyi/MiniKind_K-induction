@@ -1,0 +1,3 @@
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/YourProjectName.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/edit_cache.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/rebuild_cache.dir
