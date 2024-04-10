@@ -1,0 +1,3 @@
+system properties
+  I:   T:   P: 
+k-induction(I, T, P, 10);

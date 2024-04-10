@@ -1,3 +1,11 @@
 # ninja log v5
-0	332	7344222168670626	CMakeFiles/YourProjectName.dir/main.cpp.obj	6f363bf58f589ea1
-335	534	7344222170621057	YourProjectName.exe	d7837ea7ed590622
+1	179	7344448212406856	build.ninja	1583696f40633408
+9	410	7344369358057370	CMakeFiles/YourProjectName.dir/src/Tool/ExportOutput.cpp.obj	c048d551e8e6ac5a
+434	646	7344369360357778	YourProjectName.exe	e037ec57a5261996
+4	390	7344369357851303	CMakeFiles/YourProjectName.dir/src/main.cpp.obj	db693df9ce5eeeb6
+6	433	7344369358287361	CMakeFiles/YourProjectName.dir/src/Tool/GetInput.cpp.obj	18597f455f54cd8e
+5	471	7344456390396441	CMakeFiles/YourProjectName.dir/src/Tool/ExportOutput.cpp.obj	7c66ed856a433d7c
+8	512	7344456390806525	CMakeFiles/YourProjectName.dir/src/Tool/GetInput.cpp.obj	ddf71ab0053a6ce2
+11	1663	7344456402304745	CMakeFiles/YourProjectName.dir/src/main.cpp.obj	b3d830d4df3d9eaf
+14	5401	7344456439575389	CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj	f7f7d890e0116f29
+5401	7831	7344456443996470	YourProjectName.exe	c4ae5c8cf093ea88
