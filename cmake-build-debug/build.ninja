@@ -84,6 +84,20 @@ build CMakeFiles/YourProjectName.dir/src/Tool/CheckTool.cpp.obj: CXX_COMPILER__Y
   OBJECT_DIR = CMakeFiles\YourProjectName.dir
   OBJECT_FILE_DIR = CMakeFiles\YourProjectName.dir\src\Tool
 
+build CMakeFiles/YourProjectName.dir/src/Tool/StringVectorTool.cpp.obj: CXX_COMPILER__YourProjectName_unscanned_Debug G$:/Github/MiniKind_k-induction/src/Tool/StringVectorTool.cpp || cmake_object_order_depends_target_YourProjectName
+  DEP_FILE = CMakeFiles\YourProjectName.dir\src\Tool\StringVectorTool.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -ID:/vcpkg/vcpkg/installed/x64-windows/include
+  OBJECT_DIR = CMakeFiles\YourProjectName.dir
+  OBJECT_FILE_DIR = CMakeFiles\YourProjectName.dir\src\Tool
+
+build CMakeFiles/YourProjectName.dir/src/Translation/LustreNode.cpp.obj: CXX_COMPILER__YourProjectName_unscanned_Debug G$:/Github/MiniKind_k-induction/src/Translation/LustreNode.cpp || cmake_object_order_depends_target_YourProjectName
+  DEP_FILE = CMakeFiles\YourProjectName.dir\src\Translation\LustreNode.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -ID:/vcpkg/vcpkg/installed/x64-windows/include
+  OBJECT_DIR = CMakeFiles\YourProjectName.dir
+  OBJECT_FILE_DIR = CMakeFiles\YourProjectName.dir\src\Translation
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target YourProjectName
@@ -92,7 +106,7 @@ build CMakeFiles/YourProjectName.dir/src/Tool/CheckTool.cpp.obj: CXX_COMPILER__Y
 #############################################
 # Link the executable YourProjectName.exe
 
-build YourProjectName.exe: CXX_EXECUTABLE_LINKER__YourProjectName_Debug CMakeFiles/YourProjectName.dir/src/main.cpp.obj CMakeFiles/YourProjectName.dir/src/Tool/GetInput.cpp.obj CMakeFiles/YourProjectName.dir/src/Tool/ExportOutput.cpp.obj CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj CMakeFiles/YourProjectName.dir/src/Tool/CheckTool.cpp.obj
+build YourProjectName.exe: CXX_EXECUTABLE_LINKER__YourProjectName_Debug CMakeFiles/YourProjectName.dir/src/main.cpp.obj CMakeFiles/YourProjectName.dir/src/Tool/GetInput.cpp.obj CMakeFiles/YourProjectName.dir/src/Tool/ExportOutput.cpp.obj CMakeFiles/YourProjectName.dir/src/Translation/ExtractLustreInfo.cpp.obj CMakeFiles/YourProjectName.dir/src/Tool/CheckTool.cpp.obj CMakeFiles/YourProjectName.dir/src/Tool/StringVectorTool.cpp.obj CMakeFiles/YourProjectName.dir/src/Translation/LustreNode.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\YourProjectName.dir

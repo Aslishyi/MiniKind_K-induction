@@ -11,10 +11,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "../Tool/StringVectorTool.h"
 
+#ifndef CHECKTOOL_H
+#define CHECKTOOL_H
 class CheckTool{
 public:
+    static void print(const std::string& str);
     static void print(const std::string& name, const std::string& str);
     static void print(const std::string& name, const std::vector<std::string>& vstr);
     static void print(const std::string& name, const std::string vstr[],int lengh);
 };
+
+#endif // CHECKTOOL_H

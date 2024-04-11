@@ -1,4 +1,9 @@
-node Counter(init1: int,init2: int) returns (count1: int,count2: int);
+node Counter(init1: int,init2: int) returns (count1: int,count2: int, putasd : bool);
+var
+    x: int;
+    y: bool;
 let
-  count = init -> pre count + 1;
+  count1 = init1 -> pre count1 + 1;
+  count2 = init2 -> pre count2 + 1;
+  putasd = 1 = 3;
 tel;

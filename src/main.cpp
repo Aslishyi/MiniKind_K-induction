@@ -7,6 +7,7 @@
 #include "Tool/GetInput.h"
 #include "Tool/ExportOutput.h"
 #include "Translation/ExtractLustreInfo.h"
+#include "Translation/LustreNode.h"
 
 using namespace std;
 
@@ -21,7 +22,10 @@ int main(){
 
 
 
+
+    LustreNode lustreNode = ExtractLustreInfo::extractLustreInfo(lustreContent);
+    lustreNode.showNodeMessage();
     // export the result to the output file
-    string result = ExtractLustreInfo::extractLustreInfo(lustreContent);
+    string result = lustreNode.getNodeMessage();
     ExportOutput::exportOutputToFile(outFilename, result);
 }

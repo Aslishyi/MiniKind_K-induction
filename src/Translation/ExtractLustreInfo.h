@@ -11,10 +11,10 @@
 #include <string>
 #include <regex>
 #include <boost/algorithm/string.hpp>
-#include "../Tool/CheckTool.h"
-
+#include "../Tool/StringVectorTool.h"
+#include "LustreNode.h"
 
 class ExtractLustreInfo{
 public:
-    static std::string extractLustreInfo(const std::string& lustreCode);
+    static LustreNode extractLustreInfo(const std::string& lustreCode);
 };

@@ -12,7 +12,11 @@ add_executable(YourProjectName src/main.cpp
         src/Translation/ExtractLustreInfo.cpp
         src/Translation/ExtractLustreInfo.h
         src/Tool/CheckTool.cpp
-        src/Tool/CheckTool.h)
+        src/Tool/CheckTool.h
+        src/Tool/StringVectorTool.cpp
+        src/Tool/StringVectorTool.h
+        src/Translation/LustreNode.cpp
+        src/Translation/LustreNode.h)
 
 find_package(Boost 1.83.0 REQUIRED)
 if(Boost_FOUND)
