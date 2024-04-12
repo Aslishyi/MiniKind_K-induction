@@ -4,11 +4,7 @@
 
 该项目需要首先下载boost库，教程链接如下https://zhuanlan.zhihu.com/p/85806857
 
-
-
-
-
-
+Cmake选项`-DCMAKE_TOOLCHAIN_FILE=D:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake`
 
 ## 编码日志
 
@@ -56,8 +52,6 @@ class ClassName{
 #endif
 ```
 
-
-
 **LustreNode类内容：**
 
 1. node名称
@@ -73,5 +67,39 @@ class ClassName{
 2. 完成`../src/Translation/LustreNode.cpp`类构造，信息获取等内容
 3. 完成`../src/Tool`中`CheckTool.cpp` 与 `StringVectorTool.cpp`中部分函数编写
 
+### 4.12日志
 
+k-induction算法需要将代码处理为如下格式（下文将称之为k输入格式）
+
+```cpp
+// X is program variables
+Pre(X); // pre code from entry.
+while(G(X)) { // loop guard.
+  T(X, X'); // loop body, update X to X'.
+}
+assert(Post(X)); // post code and assertion.
+```
+
+因此新建`../src/Translation/VarState.cpp`与`../src/Translation/VarStateList.cpp`类
+
+**VarState类内容：**
+
+1. 用来存储单个变量的k输入格式
+2. 变量名与变量类型
+3. 4个`vector<string>, pre, guard, translate, post`
+
+**VarStateList类内容：**
+
+1. 用来存储一个node中所有的变量的k输入格式
+2. 一个`map<string, VarStateList>`存储对应变量名到对应State的映射
+
+**已完成部分：**
+
+1. 完成`../src/Translation/VarState.cpp`与`../src/Translation/VarStateList.cpp`的编写，将`LustreNode`类转化为`../src/Translation/VarStateList.cpp`类
+2. 完成`../src/Tool`中`StringTool.cpp` 与 `StringVectorTool.cpp`中部分函数编写
+
+**待完成部分：**
+
+1. `../src/Translation/VarStateList.cpp 中 BuildVarStateList方法`中通过代码语句获取Grand循环与Post断言信息
+2. `../src/Translation/VarStateList.cpp 中 BuildVarStateList方法`中通过代码语句区分Pre与Translation信息
 

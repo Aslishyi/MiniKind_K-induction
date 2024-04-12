@@ -12,19 +12,19 @@ bool isEmpty(const std::string& str) {
     return str.empty();
 }
 
-
+// 去除vector中空字符串
 void StringVectorTool::removeEmptyStrings(std::vector<std::string> &vec) {
     vec.erase(std::remove_if(vec.begin(), vec.end(), isEmpty), vec.end());
 }
 
-//去除首尾空格
+//去除vector中所有字符串首尾空格
 void StringVectorTool::trimStrings(std::vector<std::string> &vec) {
     for(auto& str : vec) {
         boost::trim(str);
     }
 }
 
-std::string StringVectorTool::mergeStringVector(std::vector<std::string> vec) {
+std::string StringVectorTool::mergeStringVector(const std::vector<std::string>& vec) {
     std::string str;
     for(const auto& item:vec){
         str += ("[" + item + "]\n");

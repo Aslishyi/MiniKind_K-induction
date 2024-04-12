@@ -4,16 +4,21 @@ NodeInput: [init1: int]
 
 NodeOutput: [count1: int]
 [count2: int]
-[putasd : bool]
 
 NodeVars: [x: int]
-[y: bool]
+[y: int]
 
-NodeBodys: [count1 = init1 -> pre count1 + 1;]
+NodeBodys: [init1 = x + 1;]
+[init2 = y + 1;]
+[count1 = init1 -> pre count1 + 1;]
 [count2 = init2 -> pre count2 + 1;]
-[putasd = 1 = 3;]
+[count1 = count1 + x;]
+[count2 = count2 + y;]
 
 NodeStates:
+From [init1] to [x + 1]
+From [init2] to [y + 1]
 From [count1] to [init1 -> pre count1 + 1]
 From [count2] to [init2 -> pre count2 + 1]
-From [putasd] to [1 = 3]
+From [count1] to [count1 + x]
+From [count2] to [count2 + y]

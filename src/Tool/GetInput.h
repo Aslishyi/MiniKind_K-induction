@@ -4,7 +4,6 @@
 
 #ifndef MINIKIND_K_INDUCTION_GETINPUT_H
 #define MINIKIND_K_INDUCTION_GETINPUT_H
-#endif //MINIKIND_K_INDUCTION_GETINPUT_H
 
 #include <string>
 
@@ -12,3 +11,7 @@ class GetInput {
 public:
     static std::string getInputByFilename(const std::string& filename);
 };
+
+
+#endif //MINIKIND_K_INDUCTION_GETINPUT_H
+

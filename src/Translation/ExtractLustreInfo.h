@@ -5,7 +5,7 @@
 #ifndef MINIKIND_K_INDUCTION_EXTRACTLUSTREINFO_H
 #define MINIKIND_K_INDUCTION_EXTRACTLUSTREINFO_H
 
-#endif //MINIKIND_K_INDUCTION_EXTRACTLUSTREINFO_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -18,3 +18,6 @@ class ExtractLustreInfo{
 public:
     static LustreNode extractLustreInfo(const std::string& lustreCode);
 };
+
+
+#endif //MINIKIND_K_INDUCTION_EXTRACTLUSTREINFO_H

@@ -4,18 +4,19 @@
 
 #ifndef MINIKIND_K_INDUCTION_LUSTRENODE_H
 #define MINIKIND_K_INDUCTION_LUSTRENODE_H
-
-#endif //MINIKIND_K_INDUCTION_LUSTRENODE_H
-
 #include <iostream>
 #include <string>
 #include <vector>
 #include "../Tool/CheckTool.h"
 #include "../Tool/StringVectorTool.h"
 
-#ifndef LUSTRENODE_H
-#define LUSTRENODE_H
 
+/*
+ * 输入的lustre node代码转化为LustreNode类储存
+ *
+ * 其中变量包括：输入参数、输出变量、自定义变量、函数语句
+ * 函数语句根据“=”分割为左右两部分，左边为变量名，右边为赋值部分
+ * */
 class LustreNode{
 private:
     std::string name;
@@ -39,5 +40,7 @@ public:
     std::string getNodeMessage();
 
 };
+#endif //MINIKIND_K_INDUCTION_LUSTRENODE_H
 
-#endif // LUSTRENODE_H
+
+

@@ -16,7 +16,13 @@ add_executable(YourProjectName src/main.cpp
         src/Tool/StringVectorTool.cpp
         src/Tool/StringVectorTool.h
         src/Translation/LustreNode.cpp
-        src/Translation/LustreNode.h)
+        src/Translation/LustreNode.h
+        src/Translation/VarState.cpp
+        src/Translation/VarState.h
+        src/Translation/VarStateList.cpp
+        src/Translation/VarStateList.h
+        src/Tool/StringTool.cpp
+        src/Tool/StringTool.h)
 
 find_package(Boost 1.83.0 REQUIRED)
 if(Boost_FOUND)

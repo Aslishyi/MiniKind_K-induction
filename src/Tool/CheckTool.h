@@ -5,16 +5,11 @@
 #ifndef MINIKIND_K_INDUCTION_CHECKTOOL_H
 #define MINIKIND_K_INDUCTION_CHECKTOOL_H
 
-#endif //MINIKIND_K_INDUCTION_CHECKTOOL_H
-
-
 #include <iostream>
 #include <string>
 #include <vector>
 #include "../Tool/StringVectorTool.h"
 
-#ifndef CHECKTOOL_H
-#define CHECKTOOL_H
 class CheckTool{
 public:
     static void print(const std::string& str);
@@ -22,5 +17,5 @@ public:
     static void print(const std::string& name, const std::vector<std::string>& vstr);
     static void print(const std::string& name, const std::string vstr[],int lengh);
 };
+#endif //MINIKIND_K_INDUCTION_CHECKTOOL_H
 
-#endif // CHECKTOOL_H
