@@ -2,15 +2,15 @@
 NodeName: : [Counter]
 NodeInput: : [init1: int; init2: int; ]
 NodeOutput: [count1: int; count2: int; ]
-NodeVars: [x: int; y: int; ]
-NodeBodys: [init1 = x + 1;; init2 = y + 1;; count1 = init1 -> pre count1 + 1;; count2 = init2 -> pre count2 + 1;; count1 = count1 + x;; count2 = count2 + y;; ]
+NodeVars: [x: int; y: int; t: int; ]
+NodeBodys: [init1 = x + 1;; init2 = y + 1;; count1 = init1 -> pre count1 + 1;; count1 = count1 + x;; t = 0 -> if reset or pre t = max then 0 else pre t + 1;; count2 = t + 2;; ]
 NodeStates:
 From [init1] to [x + 1]
 From [init2] to [y + 1]
 From [count1] to [init1 -> pre count1 + 1]
-From [count2] to [init2 -> pre count2 + 1]
 From [count1] to [count1 + x]
-From [count2] to [count2 + y]
+From [t] to [0 -> if reset or pre t = max then 0 else pre t + 1]
+From [count2] to [t + 2]
 ====================VarStateList类信息==========================
 
 [count1]'s state:
@@ -18,57 +18,55 @@ From [count2] to [count2 + y]
 2.[count1]'s Pre:
 {count1 + x}
 3.[count1]'s Guard:
-{GrandMessage}
 4.[count1]'s Translate:
 {init1 -> pre count1 + 1}
 5.[count1]'s Post:
-{PostMessage}
 
 [count2]'s state:
 1.VarName is: [count2], VarType is: [int]
 2.[count2]'s Pre:
-{count2 + y}
+{t + 2}
 3.[count2]'s Guard:
-{GrandMessage}
 4.[count2]'s Translate:
-{init2 -> pre count2 + 1}
 5.[count2]'s Post:
-{PostMessage}
 
 [init1]'s state:
 1.VarName is: [init1], VarType is: [int]
 2.[init1]'s Pre:
 {x + 1}
 3.[init1]'s Guard:
-{GrandMessage}
 4.[init1]'s Translate:
 5.[init1]'s Post:
-{PostMessage}
 
 [init2]'s state:
 1.VarName is: [init2], VarType is: [int]
 2.[init2]'s Pre:
 {y + 1}
 3.[init2]'s Guard:
-{GrandMessage}
 4.[init2]'s Translate:
 5.[init2]'s Post:
-{PostMessage}
+
+[t]'s state:
+1.VarName is: [t], VarType is: [int]
+2.[t]'s Pre:
+{0}
+3.[t]'s Guard:
+{reset or pre t = max}
+4.[t]'s Translate:
+{pre t + 1}
+5.[t]'s Post:
+{0}
 
 [x]'s state:
 1.VarName is: [x], VarType is: [int]
 2.[x]'s Pre:
 3.[x]'s Guard:
-{GrandMessage}
 4.[x]'s Translate:
 5.[x]'s Post:
-{PostMessage}
 
 [y]'s state:
 1.VarName is: [y], VarType is: [int]
 2.[y]'s Pre:
 3.[y]'s Guard:
-{GrandMessage}
 4.[y]'s Translate:
 5.[y]'s Post:
-{PostMessage}

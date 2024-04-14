@@ -103,3 +103,9 @@ assert(Post(X)); // post code and assertion.
 1. `../src/Translation/VarStateList.cpp 中 BuildVarStateList方法`中通过代码语句获取Grand循环与Post断言信息
 2. `../src/Translation/VarStateList.cpp 中 BuildVarStateList方法`中通过代码语句区分Pre与Translation信息
 
+### 4.14日志
+
+**已完成部分：**
+
+1. 完成处理简单由"->"与"if"组成的循环的代码编写
+2. 更新`../src/Tool`中`StringTool.cpp` 与`../src/Translation/VarStateList.cpp`中部分函数的编写

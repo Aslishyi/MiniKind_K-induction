@@ -27,21 +27,20 @@ void VarStateList::BuildVarStateList(LustreNode lustreNode) {
     for(const auto& item: lustreNode.getInputs()){
         std::vector<std::string> vec;
         vec = StringTool::StrSplitting(item,":");
-        this->varStateList[vec[0]].getVarStr(item);
+        this->varStateList[vec[0]].setNameAndTypeByVarStr(item);
     }
     for(const auto& item: lustreNode.getOutputs()){
         std::vector<std::string> vec;
         vec = StringTool::StrSplitting(item,":");
-        this->varStateList[vec[0]].getVarStr(item);
+        this->varStateList[vec[0]].setNameAndTypeByVarStr(item);
     }
     for(const auto& item: lustreNode.getVars()){
         std::vector<std::string> vec;
         vec = StringTool::StrSplitting(item,":");
-        this->varStateList[vec[0]].getVarStr(item);
+        this->varStateList[vec[0]].setNameAndTypeByVarStr(item);
     }
 
-    // TODO:通过语句获取Guard信息
-    for(const auto& item: lustreNode.getInputs()){
+    /*for(const auto& item: lustreNode.getInputs()){
         std::vector<std::string> vec;
         vec = StringTool::StrSplitting(item,":");
         this->varStateList[vec[0]].guard_pushback("GrandMessage");
@@ -55,33 +54,53 @@ void VarStateList::BuildVarStateList(LustreNode lustreNode) {
         std::vector<std::string> vec;
         vec = StringTool::StrSplitting(item,":");
         this->varStateList[vec[0]].guard_pushback("GrandMessage");
+    }*/
+    /*for(const auto& item: lustreNode.getInputs()){
+        std::vector<std::string> vec;
+        vec = StringTool::StrSplitting(item,":");
+        this->varStateList[vec[0]].post_pushback("PostMessage");
     }
+    for(const auto& item: lustreNode.getOutputs()){
+        std::vector<std::string> vec;
+        vec = StringTool::StrSplitting(item,":");
+        this->varStateList[vec[0]].post_pushback("PostMessage");
+    }
+    for(const auto& item: lustreNode.getVars()){
+        std::vector<std::string> vec;
+        vec = StringTool::StrSplitting(item,":");
+        this->varStateList[vec[0]].post_pushback("PostMessage");
+    }*/
 
-    // TODO:根据函数语句分类
+    // 根据函数语句分类
+    // 通过语句获取Guard信息
+    // 通过语句获取Post信息
     for(const auto& item: lustreNode.getStates()) {
         std::string var = item.first;
         std::string trans = item.second;
-        if (StringTool::StrCheck(trans, "pre"))
+
+        /* 存在由 "->" 与 "if" 构成的循环
+         * 目前只能处理由"->"与"if"构成的循环
+         * 如果日后需要匹配更多种类的循环
+         * 可以将语句中的循环处理独立为一个新类
+         * */
+        if (StringTool::StrCheck(trans, "->") && StringTool::StrCheck(trans, "if")){
+            std::string preMessage = StringTool::get_substring_to(trans, "->");
+            this->varStateList[var].pre_pushback(preMessage);
+
+            std::string guardMessage = StringTool::get_substring_between(trans, "if","then");
+            this->varStateList[var].guard_pushback(guardMessage);
+
+            std::string translateMessage = StringTool::get_substring_from(trans, "else");
+            this->varStateList[var].translate_pushback(translateMessage);
+
+            std::string postMessage = StringTool::get_substring_between(trans, "then", "else");
+            this->varStateList[var].post_pushback(postMessage);
+        }
+        else if(StringTool::StrCheck(trans, "->"))
             this->varStateList[var].translate_pushback(trans);
+
         else
             this->varStateList[var].pre_pushback(trans);
-    }
-
-    // TODO:通过语句获取Post信息
-    for(const auto& item: lustreNode.getInputs()){
-        std::vector<std::string> vec;
-        vec = StringTool::StrSplitting(item,":");
-        this->varStateList[vec[0]].post_pushback("PostMessage");
-    }
-    for(const auto& item: lustreNode.getOutputs()){
-        std::vector<std::string> vec;
-        vec = StringTool::StrSplitting(item,":");
-        this->varStateList[vec[0]].post_pushback("PostMessage");
-    }
-    for(const auto& item: lustreNode.getVars()){
-        std::vector<std::string> vec;
-        vec = StringTool::StrSplitting(item,":");
-        this->varStateList[vec[0]].post_pushback("PostMessage");
     }
 
 }

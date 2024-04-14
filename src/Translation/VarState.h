@@ -26,7 +26,7 @@ public:
 
     std::string getName() const;
     std::string getType() const;
-    void getVarStr(const std::string& varStr);
+    void setNameAndTypeByVarStr(const std::string& varStr);
     std::vector<std::string> getPre() const;
     std::vector<std::string> getGuard() const;
     std::vector<std::string> getTranslate() const;

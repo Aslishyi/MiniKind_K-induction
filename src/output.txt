@@ -7,18 +7,19 @@ NodeOutput: [count1: int]
 
 NodeVars: [x: int]
 [y: int]
+[t: int]
 
 NodeBodys: [init1 = x + 1;]
 [init2 = y + 1;]
 [count1 = init1 -> pre count1 + 1;]
-[count2 = init2 -> pre count2 + 1;]
 [count1 = count1 + x;]
-[count2 = count2 + y;]
+[t = 0 -> if reset or pre t = max then 0 else pre t + 1;]
+[count2 = t + 2;]
 
 NodeStates:
 From [init1] to [x + 1]
 From [init2] to [y + 1]
 From [count1] to [init1 -> pre count1 + 1]
-From [count2] to [init2 -> pre count2 + 1]
 From [count1] to [count1 + x]
-From [count2] to [count2 + y]
+From [t] to [0 -> if reset or pre t = max then 0 else pre t + 1]
+From [count2] to [t + 2]

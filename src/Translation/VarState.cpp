@@ -35,7 +35,7 @@ void VarState::setType(const std::string& varType) {
     this->type = varType;
 }
 
-void VarState::getVarStr(const std::string& varStr) {
+void VarState::setNameAndTypeByVarStr(const std::string& varStr) {
     std::vector<std::string> res;
     res = StringTool::StrSplitting(varStr, ":");
     this->setName(res[0]);
