@@ -109,3 +109,13 @@ assert(Post(X)); // post code and assertion.
 
 1. 完成处理简单由"->"与"if"组成的循环的代码编写
 2. 更新`../src/Tool`中`StringTool.cpp` 与`../src/Translation/VarStateList.cpp`中部分函数的编写
+
+### 4.19日志
+
+连接L2C解析模块内容与利用vcpkg安装z3库
+
+**已完成部分：**
+
+1. 成功连接L2C解析模块相关内容。相关内容在`../src/Lustre`和`../src/SymbolTable`两个文件夹中
+
+2. 成功利用vcpkg安装z3库

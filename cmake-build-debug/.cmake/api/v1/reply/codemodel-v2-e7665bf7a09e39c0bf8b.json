@@ -1,0 +1,90 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "runtime",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-runtime-Debug-27d9269eb354a9403e5c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "runtime",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "MiniKind_k-induction",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "MiniKind_k-induction::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MiniKind_k-induction-Debug-c9056c79fefa54d8bf1e.json",
+					"name" : "MiniKind_k-induction",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "antlr4_static::@dcf6d6b3a78d87189fa9",
+					"jsonFile" : "target-antlr4_static-Debug-1f2a755e76f6dd10c6db.json",
+					"name" : "antlr4_static",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "G:/Github/MiniKind_k-induction/cmake-build-debug",
+		"source" : "G:/Github/MiniKind_k-induction"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

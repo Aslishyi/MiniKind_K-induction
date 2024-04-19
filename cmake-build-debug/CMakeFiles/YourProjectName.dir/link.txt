@@ -1,0 +1,3 @@
+"D:\CLion 2023.3.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\YourProjectName.dir/objects.a
+D:\msys64\mingw64\bin\ar.exe qc CMakeFiles\YourProjectName.dir/objects.a @CMakeFiles\YourProjectName.dir\objects1.rsp
+D:\msys64\mingw64\bin\c++.exe -g -Wl,--whole-archive CMakeFiles\YourProjectName.dir/objects.a -Wl,--no-whole-archive -o YourProjectName.exe -Wl,--out-implib,libYourProjectName.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\YourProjectName.dir\linkLibs.rsp

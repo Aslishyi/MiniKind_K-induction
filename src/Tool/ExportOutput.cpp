@@ -9,7 +9,7 @@ void ExportOutput::exportOutputToFile(const std::string &filename, const std::st
     // 打开 output.txt 文件以写入内容
     std::ofstream outputFile("../src/" + filename);
 
-    // 写入 input.lustre 文件内容到 output.txt 文件
+    // 写入 input.Lustre 文件内容到 output.txt 文件
     outputFile << content;
     // 关闭 output.txt 文件
     outputFile.close();

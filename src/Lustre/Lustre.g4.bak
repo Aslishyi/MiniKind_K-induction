@@ -1,0 +1,230 @@
+grammar Lustre;
+
+//程序的定义
+program: (decls)* EOF;
+
+//程序中包含类型块，常量块和节点的定义
+decls: type_block | const_block | user_op_decl;
+
+//类型块声明
+type_block: 'type'  type_decl* ;
+type_decl: ID ('=' type_def)? ';';
+
+
+//type_def:  ID '=' topLevelType ';';
+type_def: type | 'enum' '{' ID (',' ID)* '}';
+
+//常量声明
+const_block: 'const'  const_decl* ;
+const_decl:  ID (':' type)? '=' const_expr ';';
+
+//变量声明
+var_decls : var_id (',' var_id)* ':' type  when_decl? last_decl?;	 //变量声明
+var_id : ID; 											//变量ID定义
+when_decl : 'when' clock_expr;							//变量时钟声明
+clock_expr : ID 										//时钟表达式定义
+		    | 'not' ID
+		    ;
+last_decl : last = const_expr;
+
+
+//节点声明
+user_op_decl : op_kind ID					//节点定义
+			params 'returns' params 			//输入参数和输出参数
+			op_body 						//节点体
+			;
+op_kind : 'function'						//节点类型分为函数和变量
+		| 'node'
+		;
+params : '(' ( var_decls ( ';' var_decls)* )? ')';	//参数列表定义
+
+op_body : ';'							//空节点
+		|  local_block? 					//局部变量定义可以为空
+		 'let'
+//		 (equation ';')*
+        (equation | property | assertion | main | realizabilityInputs | ivc)*
+
+		 'tel' ';'?
+
+		 ;
+
+local_block : 'var' (var_decls ';')*;			//局部变量定义
+
+//外部函数定义
+import_op_decl : 'function' 'imported' ID		//外部函数定义
+			params 'returns' params 			//输入参数和输出参数
+			;
+
+
+//node:
+//  'node' ID '(' input=varDeclList? ')'
+//  'returns' '(' output=varDeclList? ')' ';'?
+//  ('var' local=varDeclList ';')?
+//  'let'
+//    (equation | property | assertion | main | realizabilityInputs | ivc)*
+//  'tel' ';'?
+//;
+//
+//function:
+//  'function' eID '(' input=varDeclList? ')'
+//  'returns' '(' output=varDeclList? ')' ';'?
+//  ('var' local=varDeclList ';')?
+//    'let'
+//      (equation | property | assertion | main | realizabilityInputs | ivc)*
+//    'tel' ';'?
+//;
+
+varDeclList: varDeclGroup (';' varDeclGroup)*;
+
+varDeclGroup: eID (',' eID)* ':' type;
+
+topLevelType: type                                       # plainType
+    | 'struct' '{' (ID ':' type) (';' ID ':' type)* '}'  # recordType
+    | 'enum' '{' ID (',' ID)* '}'                        # enumType
+    ;
+
+type: 'int'                                              # intType
+    | 'subrange' '[' bound ',' bound ']' 'of' 'int'      # subrangeType
+    | 'bool'                                             # boolType
+    | 'char'                                             # charType
+    | 'short'                                            # shortType
+    | 'ushort'                                           # ushortType
+    | 'uint'                                             # uintType
+    | 'float'                                            # floatType
+    | 'real'                                             # realType
+    | type '[' INT ']'                                   # arrayType
+    | ID                                                 # userType
+    | type '^' '('? const_expr ')'?                        # arrayType
+    ;
+
+const_expr:ID
+          | atom
+          | unary_arith_op  const_expr					//常量的一元运算
+          | const_expr  bin_arith_op  const_expr 		//常量的二元算术运算
+          | const_expr  bin_bool_op  const_expr		//常量的二元布尔运算
+          | const_expr  bin_realtion_op  const_expr		//常量的二元比较运算
+          | '[' const_list ']'								//数组常量
+          | '{' const_label_expr  ( ',' const_label_expr)* '}'	//结构体常量
+          ;
+
+atom    : BOOL			//bool常量
+		| CHAR			//字符常量
+		| INT		//32位整型int常量
+        | UINT			//无符号32位整型常量
+		| FLOAT			//32位浮点常量
+        | REAL			//64位浮点常量
+        | USHORT		//无符号16位整型常量
+        | SHORT			//带符号16位整型常量
+        ;
+
+unary_arith_op  : '-' | '+' | 'not';						//一元运算符
+bin_arith_op : '+' | '-' | '*' | '/' | 'mod' | 'div'; 					//二元算术运算符
+bin_realtion_op : '='| '<>' | '<' | '>' | '<=' | '>='; 				//二元比较运算符
+bin_bool_op : 'and' | 'or' | 'xor'; 						//二元布尔运算符
+const_list : '[[' const_expr (',' const_expr)* ']]';			//数组常量内部定义
+const_label_expr : ID ':' const_expr;					//结构体常量内部定义
+
+
+bound: '-'? INT;
+
+property: '--%PROPERTY' eID ';';
+
+realizabilityInputs: '--%REALIZABLE' (ID (',' ID)*)? ';';
+
+ivc: '--%IVC' (eID (',' eID)*)? ';';
+
+main: '--%MAIN' ';'?;
+
+assertion: 'assert' expr ';';
+
+//equation: (lhs | '(' lhs? ')') '=' expr ';';
+//
+//lhs: eID (',' eID)*;
+
+//等式定义
+equation : lhs '=' expr			//等式定义
+         | state_machine return
+         ;
+
+lhs : ( )						//左值定义
+	| lhs_id (',' lhs_id)
+	;
+lhs_id : ID;
+return : 'returns' returns_var;
+returns_var : ( ID ',')*   (ID | '..' )?;
+
+
+//状态机定义
+state_machine : 'automaton'  ID?   state_decl*;   //状态机声明
+
+state_decl :  'initial' ?  'final' ? 'state' ID             //状态声明
+             ( 'unless' ( transition ';' )* )?           //强迁移列表
+             data_def                            //状态内语句
+             ( 'until' ( transition ';' ) )?               //弱迁移列表
+             ;
+
+data_def : equation                               //等式
+         |   local_block ? ( 'let' ( equation ';' ) 'tel' )?  //子变量和等式列表
+         ;
+
+transition : 'if' expr 'resume' ID                       //resume切换的状态迁移语句
+         |'if' expr 'restart' ID                        //restart切换的状态迁移语句
+        ;
+
+expr: ID                                                       # idExpr
+    | INT                                                      # intExpr
+    | REAL                                                     # realExpr
+    | BOOL                                                     # boolExpr
+    | op=('real' | 'floor') '(' expr ')'                       # castExpr
+    | eID '(' (expr (',' expr)*)? ')'                          # callExpr
+    | 'condact' '(' expr (',' expr)+ ')'                       # condactExpr
+    | expr '.' ID                                              # recordAccessExpr
+    | expr '{' ID ':=' expr '}'                                # recordUpdateExpr
+    | expr '[' expr ']'                                        # arrayAccessExpr
+    | expr '[' expr ':=' expr ']'                              # arrayUpdateExpr
+    | 'pre' expr                                               # preExpr
+    | 'not' expr                                               # notExpr
+    | '-' expr                                                 # negateExpr
+    | expr op=('*' | '/' | 'div' | 'mod') expr                 # binaryExpr
+    | expr op=('+' | '-') expr                                 # binaryExpr
+    | expr op=('<' | '<=' | '>' | '>=' | '=' | '<>') expr      # binaryExpr
+    | expr op='and' expr                                       # binaryExpr
+    | expr op=('or' | 'xor') expr                              # binaryExpr
+    | <assoc=right> expr op='=>' expr                          # binaryExpr
+    | <assoc=right> expr op='->' expr                          # binaryExpr
+    | 'if' expr 'then' expr 'else' expr                        # ifThenElseExpr
+    | ID '{' ID '=' expr (';' ID '=' expr)* '}'                # recordExpr
+    | '[' expr (',' expr)* ']'                                 # arrayExpr
+    | '(' expr (',' expr)* ')'                                 # tupleExpr
+    ;
+
+// eID used internally. Users should only use ID.
+eID: ID                                                        # baseEID
+   | eID '[' INT ']'                                           # arrayEID
+   | eID '.' ID                                                # recordEID
+   ;
+
+
+
+//类型定义
+BOOL: 'true' | 'false';
+INT: [0-9]+;
+UINT: INT 'u';
+REAL: INT '.' INT;
+CHAR: '\'' . '\'';
+FLOAT: [0-9]+ '.' [0-9]+ 'f';
+USHORT: INT 'us';
+SHORT: INT 's';
+
+// ~ is used internally. Users should not use it.
+ID: [a-zA-Z_~!][a-zA-Z_0-9~!]*;
+
+WS: [ \t\n\r\f]+ -> skip;
+
+
+
+SL_COMMENT: '--' (~[%\n\r] ~[\n\r]* | /* empty */) ('\r'? '\n')? -> skip;
+ML_COMMENT: '(*' .*? '*)' -> skip;
+MLX_COMMENT: '/*' .*? '*/' -> skip;
+
+ERROR: .;

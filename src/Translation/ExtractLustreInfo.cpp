@@ -25,8 +25,8 @@ LustreNode ExtractLustreInfo::extractLustreInfo(const std::string &lustreCode) {
         // 分割输入和输出变量列表
         std::vector<std::string> inputVars, outputVars,varsList , bodyWords;
         std::vector<std::pair<std::string,std::string>> states;
-        boost::split(inputVars, inputs, boost::is_any_of(","));
-        boost::split(outputVars, outputs, boost::is_any_of(","));
+        boost::split(inputVars, inputs, boost::is_any_of(";"));
+        boost::split(outputVars, outputs, boost::is_any_of(";"));
         boost::split(varsList, vars, boost::is_any_of(";\n"));
         StringVectorTool::removeEmptyStrings(varsList);
         StringVectorTool::trimStrings(outputVars);

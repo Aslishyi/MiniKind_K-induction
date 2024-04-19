@@ -1,6 +1,6 @@
 NodeName: Counter
 NodeInput: [init1: int]
-[init2: int]
+[ init2: int]
 
 NodeOutput: [count1: int]
 [count2: int]

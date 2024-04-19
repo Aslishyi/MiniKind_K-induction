@@ -1,0 +1,3 @@
+"D:\CLion 2023.3.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\MiniKind_k-induction.dir/objects.a
+D:\msys64\mingw64\bin\ar.exe qc CMakeFiles\MiniKind_k-induction.dir/objects.a @CMakeFiles\MiniKind_k-induction.dir\objects1.rsp
+D:\msys64\mingw64\bin\c++.exe -g -Wl,--whole-archive CMakeFiles\MiniKind_k-induction.dir/objects.a -Wl,--no-whole-archive -o MiniKind_k-induction.exe -Wl,--out-implib,libMiniKind_k-induction.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\MiniKind_k-induction.dir\linkLibs.rsp

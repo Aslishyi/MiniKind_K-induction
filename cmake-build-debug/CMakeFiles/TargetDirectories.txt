@@ -1,3 +1,14 @@
-G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/YourProjectName.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/MiniKind_k-induction.dir
 G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/edit_cache.dir
 G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/list_install_components.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/install.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/install/local.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/CMakeFiles/install/strip.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/runtime/CMakeFiles/antlr4_static.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/runtime/CMakeFiles/edit_cache.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/runtime/CMakeFiles/rebuild_cache.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/runtime/CMakeFiles/list_install_components.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/runtime/CMakeFiles/install.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/runtime/CMakeFiles/install/local.dir
+G:/Github/MiniKind_k-induction/cmake-build-debug/runtime/CMakeFiles/install/strip.dir

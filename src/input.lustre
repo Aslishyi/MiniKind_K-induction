@@ -1,4 +1,4 @@
-node Counter(init1: int,init2: int) returns (count1: int,count2: int);
+node Counter(init1: int; init2: int) returns (count1: int; count2: int);
 var
     x: int;
     y: int;

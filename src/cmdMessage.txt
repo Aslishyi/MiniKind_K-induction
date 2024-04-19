@@ -1,6 +1,6 @@
 ====================LustreNode类信息==========================
 NodeName: : [Counter]
-NodeInput: : [init1: int; init2: int; ]
+NodeInput: : [init1: int;  init2: int; ]
 NodeOutput: [count1: int; count2: int; ]
 NodeVars: [x: int; y: int; t: int; ]
 NodeBodys: [init1 = x + 1;; init2 = y + 1;; count1 = init1 -> pre count1 + 1;; count1 = count1 + x;; t = 0 -> if reset or pre t = max then 0 else pre t + 1;; count2 = t + 2;; ]
