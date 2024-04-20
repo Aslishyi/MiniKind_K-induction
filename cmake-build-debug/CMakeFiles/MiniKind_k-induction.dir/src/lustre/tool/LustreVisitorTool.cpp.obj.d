@@ -1,5 +1,5 @@
-CMakeFiles/MiniKind_k-induction.dir/src/lustre/tool/LustreVisitorTool.cpp.obj: \
- G:\Github\MiniKind_k-induction\src\lustre\tool\LustreVisitorTool.cpp \
+CMakeFiles/MiniKind_k-induction.dir/src/Lustre/tool/LustreVisitorTool.cpp.obj: \
+ G:\Github\MiniKind_k-induction\src\Lustre\tool\LustreVisitorTool.cpp \
  D:/msys64/mingw64/include/c++/13.2.0/any \
  D:/msys64/mingw64/include/c++/13.2.0/initializer_list \
  D:/msys64/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -149,7 +149,7 @@ CMakeFiles/MiniKind_k-induction.dir/src/lustre/tool/LustreVisitorTool.cpp.obj: \
  D:/msys64/mingw64/include/c++/13.2.0/bits/ostream.tcc \
  D:/msys64/mingw64/include/c++/13.2.0/istream \
  D:/msys64/mingw64/include/c++/13.2.0/bits/istream.tcc \
- G:\Github\MiniKind_k-induction\src\lustre\tool\LustreVisitorTool.h \
+ G:\Github\MiniKind_k-induction\src\Lustre\tool\LustreVisitorTool.h \
  G:/Github/MiniKind_k-induction/src/SymbolTable/Symbol/Symbol.h \
  D:/msys64/mingw64/include/c++/13.2.0/unordered_map \
  D:/msys64/mingw64/include/c++/13.2.0/bits/unordered_map.h \

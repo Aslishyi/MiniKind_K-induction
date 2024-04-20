@@ -1,6 +1,6 @@
-CMakeFiles/MiniKind_k-induction.dir/src/lustre/generated/LustreListener.cpp.obj: \
- G:\Github\MiniKind_k-induction\src\lustre\generated\LustreListener.cpp \
- G:\Github\MiniKind_k-induction\src\lustre\generated\LustreListener.h \
+CMakeFiles/MiniKind_k-induction.dir/src/Lustre/generated/LustreListener.cpp.obj: \
+ G:\Github\MiniKind_k-induction\src\Lustre\generated\LustreListener.cpp \
+ G:\Github\MiniKind_k-induction\src\Lustre\generated\LustreListener.h \
  G:/Github/MiniKind_k-induction/runtime/src/antlr4-runtime.h \
  G:/Github/MiniKind_k-induction/runtime/src/antlr4-common.h \
  D:/msys64/mingw64/include/c++/13.2.0/algorithm \
@@ -397,4 +397,4 @@ CMakeFiles/MiniKind_k-induction.dir/src/lustre/generated/LustreListener.cpp.obj:
  G:/Github/MiniKind_k-induction/runtime/src/tree/xpath/XPathTokenElement.h \
  G:/Github/MiniKind_k-induction/runtime/src/tree/xpath/XPathWildcardAnywhereElement.h \
  G:/Github/MiniKind_k-induction/runtime/src/tree/xpath/XPathWildcardElement.h \
- G:\Github\MiniKind_k-induction\src\lustre\generated\LustreParser.h
+ G:\Github\MiniKind_k-induction\src\Lustre\generated\LustreParser.h

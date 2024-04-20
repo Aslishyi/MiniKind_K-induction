@@ -406,4 +406,4 @@ CMakeFiles/MiniKind_k-induction.dir/src/SymbolTable/Symbol/ConstSymbol.cpp.obj: 
  G:\Github\MiniKind_k-induction\src\SymbolTable\Symbol\ConstArray.h \
  G:\Github\MiniKind_k-induction\src\SymbolTable\Symbol\ConstStruct.h \
  G:\Github\MiniKind_k-induction\src\SymbolTable\Symbol\ConstID.h \
- G:/Github/MiniKind_k-induction/src/lustre/tool/LustreVisitorTool.h
+ G:/Github/MiniKind_k-induction/src/Lustre/tool/LustreVisitorTool.h

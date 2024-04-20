@@ -654,6 +654,7 @@ MiniKind_k-induction.exe: CMakeFiles/MiniKind_k-induction.dir/src/Translation/Va
 MiniKind_k-induction.exe: CMakeFiles/MiniKind_k-induction.dir/src/Translation/VarStateList.cpp.obj
 MiniKind_k-induction.exe: CMakeFiles/MiniKind_k-induction.dir/build.make
 MiniKind_k-induction.exe: runtime/libantlr4-runtime-static.a
+MiniKind_k-induction.exe: D:/vcpkg/vcpkg/installed/x64-windows/debug/lib/libz3.lib
 MiniKind_k-induction.exe: CMakeFiles/MiniKind_k-induction.dir/linkLibs.rsp
 MiniKind_k-induction.exe: CMakeFiles/MiniKind_k-induction.dir/objects1.rsp
 MiniKind_k-induction.exe: CMakeFiles/MiniKind_k-induction.dir/link.txt

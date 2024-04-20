@@ -1,6 +1,6 @@
-CMakeFiles/MiniKind_k-induction.dir/src/lustre/generated/LustreLexer.cpp.obj: \
- G:\Github\MiniKind_k-induction\src\lustre\generated\LustreLexer.cpp \
- G:\Github\MiniKind_k-induction\src\lustre\generated\LustreLexer.h \
+CMakeFiles/MiniKind_k-induction.dir/src/Lustre/generated/LustreLexer.cpp.obj: \
+ G:\Github\MiniKind_k-induction\src\Lustre\generated\LustreLexer.cpp \
+ G:\Github\MiniKind_k-induction\src\Lustre\generated\LustreLexer.h \
  G:/Github/MiniKind_k-induction/runtime/src/antlr4-runtime.h \
  G:/Github/MiniKind_k-induction/runtime/src/antlr4-common.h \
  D:/msys64/mingw64/include/c++/13.2.0/algorithm \

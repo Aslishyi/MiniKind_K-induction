@@ -1,1 +1,0 @@
-  -L"G:/Github/MiniKind_k-induction/DD:/boost/boost_1_84_0/libs"  "runtime/libantlr4-runtime-static.a" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

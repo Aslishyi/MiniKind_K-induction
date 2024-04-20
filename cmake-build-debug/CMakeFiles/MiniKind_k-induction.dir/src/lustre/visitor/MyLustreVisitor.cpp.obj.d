@@ -1,7 +1,7 @@
-CMakeFiles/MiniKind_k-induction.dir/src/lustre/visitor/MyLustreVisitor.cpp.obj: \
- G:\Github\MiniKind_k-induction\src\lustre\visitor\MyLustreVisitor.cpp \
- G:\Github\MiniKind_k-induction\src\lustre\visitor\MyLustreVisitor.h \
- G:/Github/MiniKind_k-induction/src/lustre/generated/LustreBaseVisitor.h \
+CMakeFiles/MiniKind_k-induction.dir/src/Lustre/visitor/MyLustreVisitor.cpp.obj: \
+ G:\Github\MiniKind_k-induction\src\Lustre\visitor\MyLustreVisitor.cpp \
+ G:\Github\MiniKind_k-induction\src\Lustre\visitor\MyLustreVisitor.h \
+ G:/Github/MiniKind_k-induction/src/Lustre/generated/LustreBaseVisitor.h \
  G:/Github/MiniKind_k-induction/runtime/src/antlr4-runtime.h \
  G:/Github/MiniKind_k-induction/runtime/src/antlr4-common.h \
  D:/msys64/mingw64/include/c++/13.2.0/algorithm \
@@ -398,10 +398,10 @@ CMakeFiles/MiniKind_k-induction.dir/src/lustre/visitor/MyLustreVisitor.cpp.obj: 
  G:/Github/MiniKind_k-induction/runtime/src/tree/xpath/XPathTokenElement.h \
  G:/Github/MiniKind_k-induction/runtime/src/tree/xpath/XPathWildcardAnywhereElement.h \
  G:/Github/MiniKind_k-induction/runtime/src/tree/xpath/XPathWildcardElement.h \
- G:/Github/MiniKind_k-induction/src/lustre/generated/LustreVisitor.h \
- G:/Github/MiniKind_k-induction/src/lustre/generated/LustreParser.h \
+ G:/Github/MiniKind_k-induction/src/Lustre/generated/LustreVisitor.h \
+ G:/Github/MiniKind_k-induction/src/Lustre/generated/LustreParser.h \
  G:/Github/MiniKind_k-induction/src/SymbolTable/Scope/Scope.h \
  G:/Github/MiniKind_k-induction/src/SymbolTable/Symbol/Symbol.h \
  G:/Github/MiniKind_k-induction/src/SymbolTable/Scope/GlobalScope.h \
  G:/Github/MiniKind_k-induction/src/SymbolTable/Scope/Scope.h \
- G:/Github/MiniKind_k-induction/src/lustre/tool/LustreVisitorTool.h
+ G:/Github/MiniKind_k-induction/src/Lustre/tool/LustreVisitorTool.h

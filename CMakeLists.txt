@@ -3,52 +3,40 @@ project(MiniKind_k-induction)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#add_executable(YourProjectName src/main.cpp
-#        src/main.cpp
-#        src/Tool/GetInput.h
-#        src/Tool/GetInput.cpp
-#        src/Tool/ExportOutput.h
-#        src/Tool/ExportOutput.cpp
-#        src/Translation/ExtractLustreInfo.cpp
-#        src/Translation/ExtractLustreInfo.h
-#        src/Tool/CheckTool.cpp
-#        src/Tool/CheckTool.h
-#        src/Tool/StringVectorTool.cpp
-#        src/Tool/StringVectorTool.h
-#        src/Translation/LustreNode.cpp
-#        src/Translation/LustreNode.h
-#        src/Translation/VarState.cpp
-#        src/Translation/VarState.h
-#        src/Translation/VarStateList.cpp
-#        src/Translation/VarStateList.h
-#        src/Tool/StringTool.cpp
-#        src/Tool/StringTool.h)
+# Boost库
+# 以下三个编译选项为可选 set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
 
-find_package(Boost 1.83.0 REQUIRED)
+find_package(Boost)
+
+set(INCLUDE_DIR include)
+
 if(Boost_FOUND)
-    set(Boost_LIBRARY_DIRS DD:/boost/boost_1_84_0/libs)
-    message(Boost_INCLUDE_DIRS " ${Boost_INCLUDE_DIRS}")
-    message(Boost_LIBRARY_DIRS " ${Boost_LIBRARY_DIRS}")
+    list(APPEND INCLUDE_DIR ${Boost_INCLUDE_DIRS})
+    include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIRS})
+else()
+    message(STATUS "Find Boost_Lib error")
 endif()
+aux_source_directory(. SRC_DIR)
+include_directories(${INCLUDE_DIR})
 
-include_directories(${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIRS})
+# Z3库
+find_package(Z3 REQUIRED)
 
+# Vcpkg设置
 option(VCPKG_CMAKE "设置使用vcpkg安装依赖" OFF)
-
 if(VCPKG_CMAKE)
     if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-        set(CMAKE_TOOLCHAIN_FILE "/home/blcm/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake"
-                CACHE STRING "Vcpkg toolchain file" FORCE)
+        set(CMAKE_TOOLCHAIN_FILE "/home/blcm/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file" FORCE)
     else()
         message(STATUS "Using manually specified CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
     endif()
 endif()
 
-#设置输出compile_commands.json以供LSP服务器读取
+# 设置输出compile_commands.json以供LSP服务器读取
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
-#project(Ql2c)
-
 
 if(VCPKG_CMAKE)
     find_package(antlr4-runtime CONFIG REQUIRED)
@@ -69,7 +57,12 @@ if(NOT VCPKG_CMAKE)
             ${PROJECT_SOURCE_DIR}/runtime/src/tree/xpath
     )
 endif()
-include_directories(${ANTLR4_INCLUDE_DIR} ${PROJECT_BINARY_DIR})
+
+include_directories(
+        ${Boost_INCLUDE_DIR}
+        ${ANTLR4_INCLUDE_DIR}
+        ${PROJECT_BINARY_DIR}
+)
 
 file(GLOB_RECURSE Ql2c_SRC
         "src/Tool/*.cpp"
@@ -97,10 +90,11 @@ file(GLOB_RECURSE Ql2c_SRC
         "src/*.h"
         "src/*.cpp"
 )
+
 add_executable(
         MiniKind_k-induction src/main.cpp ${Ql2c_SRC}
-
 )
+
 add_dependencies(
         MiniKind_k-induction
         antlr4_static
@@ -108,4 +102,7 @@ add_dependencies(
 
 target_link_libraries(
         MiniKind_k-induction
-        antlr4_static)
+        antlr4_static
+        ${Z3_LIBRARIES}  # 链接z3库
+        ${Boost_LIBRARY_DIR}
+)
