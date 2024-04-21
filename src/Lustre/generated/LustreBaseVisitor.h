@@ -1,5 +1,5 @@
 
-// Generated from Lustre.g4 by ANTLR 4.13.1
+// Generated from ./Lustre.g4 by ANTLR 4.13.1
 
 #pragma once
 
@@ -75,47 +75,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitDecls_kind2(LustreParser::Decls_kind2Context *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitDecls_mode(LustreParser::Decls_modeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitDecls_ghost_var(LustreParser::Decls_ghost_varContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitDecls_assume(LustreParser::Decls_assumeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitDecls_guarantee(LustreParser::Decls_guaranteeContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitMode_decl(LustreParser::Mode_declContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitRequirement(LustreParser::RequirementContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitAssurance(LustreParser::AssuranceContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitVar_decl(LustreParser::Var_declContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitAssume_decl(LustreParser::Assume_declContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitGuarantee_decl(LustreParser::Guarantee_declContext *ctx) override {
+  virtual std::any visitDecls_contract_node(LustreParser::Decls_contract_nodeContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -279,23 +239,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitContract_statement(LustreParser::Contract_statementContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitMerge_decl(LustreParser::Merge_declContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitLet_block_equation(LustreParser::Let_block_equationContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitLet_block_kind2_kind2_Statement(LustreParser::Let_block_kind2_kind2_StatementContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitLet_block_kind2_frame_block(LustreParser::Let_block_kind2_frame_blockContext *ctx) override {
+  virtual std::any visitContract(LustreParser::ContractContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -303,23 +247,111 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitKind2_Statement(LustreParser::Kind2_StatementContext *ctx) override {
+  virtual std::any visitLet_block_equation(LustreParser::Let_block_equationContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitMainStatement(LustreParser::MainStatementContext *ctx) override {
+  virtual std::any visitLet_block_k2_property(LustreParser::Let_block_k2_propertyContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitPropertyStatement(LustreParser::PropertyStatementContext *ctx) override {
+  virtual std::any visitLet_block_k2_if_block(LustreParser::Let_block_k2_if_blockContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitCheckStatement(LustreParser::CheckStatementContext *ctx) override {
+  virtual std::any visitLet_block_k2_frame_block(LustreParser::Let_block_k2_frame_blockContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitFrame_block(LustreParser::Frame_blockContext *ctx) override {
+  virtual std::any visitExternal_contract(LustreParser::External_contractContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitContract_body(LustreParser::Contract_bodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDecls_mode(LustreParser::Decls_modeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDecls_const_ghost_var(LustreParser::Decls_const_ghost_varContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDecls_ghost_var(LustreParser::Decls_ghost_varContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDecls_assume(LustreParser::Decls_assumeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDecls_guarantee(LustreParser::Decls_guaranteeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDecls_imports(LustreParser::Decls_importsContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMode_decl(LustreParser::Mode_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMode_body(LustreParser::Mode_bodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitRequirement(LustreParser::RequirementContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitAssurance(LustreParser::AssuranceContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_const_item(LustreParser::Kind2_const_itemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_var_item(LustreParser::Kind2_var_itemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitAssume_item(LustreParser::Assume_itemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitGuarantee_item(LustreParser::Guarantee_itemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitImport_item(LustreParser::Import_itemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_if_block(LustreParser::Kind2_if_blockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_if_body(LustreParser::Kind2_if_bodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_statement_main(LustreParser::Kind2_statement_mainContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_statement_property(LustreParser::Kind2_statement_propertyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_statement_check(LustreParser::Kind2_statement_checkContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_frame_block(LustreParser::Kind2_frame_blockContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -375,6 +407,14 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitUnless_tran(LustreParser::Unless_tranContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitUntil_tran(LustreParser::Until_tranContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -423,7 +463,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitExpr_kind2(LustreParser::Expr_kind2Context *ctx) override {
+  virtual std::any visitExpr_kind2_expr(LustreParser::Expr_kind2_exprContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -440,6 +480,18 @@ public:
   }
 
   virtual std::any visitRestart_expr(LustreParser::Restart_exprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitKind2_param(LustreParser::Kind2_paramContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitActivate(LustreParser::ActivateContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitRestart(LustreParser::RestartContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -468,6 +520,10 @@ public:
   }
 
   virtual std::any visitTempo_expr_merge(LustreParser::Tempo_expr_mergeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitTempo_kind2_merge(LustreParser::Tempo_kind2_mergeContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -535,11 +591,23 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitApply_iterator(LustreParser::Apply_iteratorContext *ctx) override {
+  virtual std::any visitApply_map(LustreParser::Apply_mapContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitApply_iterator_lv6(LustreParser::Apply_iterator_lv6Context *ctx) override {
+  virtual std::any visitApply_fold(LustreParser::Apply_foldContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitApply_mapi(LustreParser::Apply_mapiContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitApply_foldi(LustreParser::Apply_foldiContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitApply_mapfold(LustreParser::Apply_mapfoldContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -547,7 +615,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitApply_mapwI(LustreParser::Apply_mapwIContext *ctx) override {
+  virtual std::any visitApply_mapwi(LustreParser::Apply_mapwiContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -587,59 +655,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitIterator_map(LustreParser::Iterator_mapContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_fold(LustreParser::Iterator_foldContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_mapi(LustreParser::Iterator_mapiContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_foldi(LustreParser::Iterator_foldiContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_mapfold(LustreParser::Iterator_mapfoldContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_red(LustreParser::Iterator_redContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_fill(LustreParser::Iterator_fillContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_fillred(LustreParser::Iterator_fillredContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_boolred(LustreParser::Iterator_boolredContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_lv6_red(LustreParser::Iterator_lv6_redContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_lv6_fill(LustreParser::Iterator_lv6_fillContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_lv6_fillred(LustreParser::Iterator_lv6_fillredContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIterator_lv6_boolred(LustreParser::Iterator_lv6_boolredContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual std::any visitSimple_expr_unary_arith(LustreParser::Simple_expr_unary_arithContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSimple_kind2_expr(LustreParser::Simple_kind2_exprContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -752,6 +772,10 @@ public:
   }
 
   virtual std::any visitAtom_SHORT(LustreParser::Atom_SHORTContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMerge_expr(LustreParser::Merge_exprContext *ctx) override {
     return visitChildren(ctx);
   }
 

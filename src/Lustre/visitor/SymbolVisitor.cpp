@@ -7,6 +7,11 @@
 #include "../tool/LustreVisitorTool.h"
 #include "../../SymbolTable/Scope/MethodScope.h"
 #include "../../SymbolTable/Scope/LocalScope.h"
+#include "../tool/SpdlogTool.h"
+#include "../../SymbolTable/Scope/AutomatonScope.h"
+#include "../generated/LustreLexer.h"
+#include "../../SymbolTable/Scope/StateScope.h"
+#include "../src/SymbolTable/Symbol/TransitionSymbol.h"
 
 
 SymbolVisitor::SymbolVisitor() : scopes(std::make_shared<antlr4::tree::ParseTreeProperty<std::shared_ptr<Scope
@@ -15,11 +20,12 @@ SymbolVisitor::SymbolVisitor() : scopes(std::make_shared<antlr4::tree::ParseTree
 
 }
 
+//visit方法程序入口
 std::any SymbolVisitor::visitProgram(LustreParser::ProgramContext *ctx) {
     globals = std::make_shared<GlobalScope>();
     currentScope = globals;
     LustreBaseVisitor::visitChildren(ctx);
-    std::cout << globals->toString() << std::endl;
+//    std::cout << globals->toString() << std::endl;
     return "";
 }
 
@@ -162,7 +168,7 @@ std::any SymbolVisitor::visitType_id(LustreParser::Type_idContext *ctx) {
     auto typeIDSymbol = std::make_shared<TypeId>(IDString, IDSymbol);
 
 
-    auto constSymbol = std::make_shared<TypeDefSymbol>("", Symbol::TYPEDEF, nullptr, currentScope, Symbol::REFERENCE,
+    auto constSymbol = std::make_shared<TypeDefSymbol>("", nullptr, currentScope, Symbol::REFERENCE,
                                                        typeIDSymbol);
 
     return constSymbol;
@@ -188,27 +194,38 @@ std::any SymbolVisitor::visitType_array(LustreParser::Type_arrayContext *ctx) {
 //    arrayDim.emplace_back(constExprValuePair);
 
     auto arraySymbol = std::make_shared<TypeArray>(typeDefVar, constSymbol);
-    return std::make_shared<TypeDefSymbol>("", Symbol::TYPEDEF, nullptr, currentScope, Symbol::ARRAY, arraySymbol);
+    return std::make_shared<TypeDefSymbol>("", nullptr, currentScope, Symbol::ARRAY, arraySymbol);
 
 }
 
 
 std::any SymbolVisitor::visitConst_bin_arith(LustreParser::Const_bin_arithContext *ctx) {
+    //获取左侧的Symbol
     auto left = visit(ctx->const_expr(0));
     auto leftConstSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(left);
     std::any leftValue = leftConstSymbol->getConstValue();
+
+    //如果左侧运算数是引用类型，返回引用值
+    if (leftConstSymbol->getDefType() == Symbol::REFERENCE) {
+        leftValue = getConstRefValue(leftConstSymbol, false);
+    }
+    //获取右侧的Symbol
     auto right = visit(ctx->const_expr(1));
     std::string op = ctx->bin_arith_op()->getText();
     auto rightConstSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(right);
     std::any rightValue = rightConstSymbol->getConstValue();
 
+    //如果右侧运算数是引用类型，返回引用值
+    if (rightConstSymbol->getDefType() == Symbol::REFERENCE) {
+        rightValue = getConstRefValue(rightConstSymbol, false);
+    }
     auto constExpr = LustreVisitorTool::classifyPropertyType(leftValue, rightValue, op, false);
 //    auto constExpr= LustreVisitorTool::classifyPropertyType(leftConstSymbol->constValue, rightConstSymbol->constValue, op, false);
     std::pair<Symbol::varType, std::any> constExprValuePair = LustreVisitorTool::properTypeToEnum(constExpr);
     auto constSymbol = std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr,
                                                      Symbol::BASETYPE,
                                                      constExprValuePair.first,
-                                                     constExprValuePair.second);
+                                                     constExprValuePair.second, false, nullptr);
     return constSymbol;
 
 
@@ -261,9 +278,12 @@ std::any SymbolVisitor::visitAtom_REAL(LustreParser::Atom_REALContext *ctx) {
 
 std::any SymbolVisitor::visitConst_decl(LustreParser::Const_declContext *ctx) {
     std::string name = ctx->ID()->getText();
+    std::shared_ptr<ConstSymbol> constSymbol = std::make_shared<ConstSymbol>();
     //获取const的值
-    std::any constExpr = visit(ctx->const_expr());
-    auto constSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(constExpr);
+    if (ctx->const_expr()) {
+        std::any constExpr = visit(ctx->const_expr());
+        constSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(constExpr);
+    }
     auto typeDefSymbol = std::shared_ptr<TypeDefSymbol>();
     if (ctx->type()) {
         //获取type
@@ -276,17 +296,13 @@ std::any SymbolVisitor::visitConst_decl(LustreParser::Const_declContext *ctx) {
 //    std::pair<Symbol::varType, std::string> constExprValuePair = LustreVisitorTool::properTypeToEnum(constExpr);
     //此处建立一个Token类型的智能指针会出现段错误，得创建一个CommonToken类型的智能指针
     auto nameToken = std::make_shared<antlr4::CommonToken>(ctx->ID()->getSymbol());
-    constSymbol->setName(name);
-    constSymbol->setToken(nameToken);
-    constSymbol->setConstType(typeDefSymbol);
+    constSymbol->setName(name).setToken(nameToken);
+    constSymbol->setConstType(typeDefSymbol).setIsValueVerify(false).setConstCtx(ctx);
 
     //在当前作用域下定义一个const
     defineConst(constSymbol);
-
-
     return std::string("");
 
-//    return LustreBaseVisitor::visitConst_decl(ctx);
 }
 
 std::any SymbolVisitor::visitConst_unary_arith(LustreParser::Const_unary_arithContext *ctx) {
@@ -295,13 +311,21 @@ std::any SymbolVisitor::visitConst_unary_arith(LustreParser::Const_unary_arithCo
     auto constSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(constExpr);
     auto constValue = constSymbol->getConstValue();
 
-
     std::string op = ctx->unary_arith_op()->getText();
+    //如果右侧运算数是引用类型，返回引用值
+    if (constSymbol->getDefType() == Symbol::REFERENCE) {
+        constValue = getConstRefValue(constSymbol, false);
+
+        //当没找到引用，并且是bool运算时返回false
+        if (op == "not" && !constSymbol->getConstID()->getConstIDSymbol()) {
+            constValue = false;
+        }
+    }
     auto constExprValue = LustreVisitorTool::classifyPropertyType(constValue, op);
     std::pair<Symbol::varType, std::any> constExprValuePair = LustreVisitorTool::properTypeToEnum(constExprValue);
     return std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr, Symbol::BASETYPE,
                                          constExprValuePair.first,
-                                         constExprValuePair.second);
+                                         constExprValuePair.second, false, nullptr);
 }
 
 std::any SymbolVisitor::visitConst_paren(LustreParser::Const_parenContext *ctx) {
@@ -313,10 +337,11 @@ std::any SymbolVisitor::visitUser_op_decl(LustreParser::User_op_declContext *ctx
 
 
     auto nameToken = std::make_shared<antlr4::CommonToken>(ctx->ID()->getSymbol());
-    std::shared_ptr<MethodScope> function = std::make_shared<MethodScope>(name, Symbol::FUNCTION, nameToken,
+    std::shared_ptr<MethodScope> function = std::make_shared<MethodScope>(currentScope,name, Symbol::FUNCTION, nameToken,
                                                                           currentScope);
     //在全局scope中添加function的符号
     currentScope->define(function);
+    currentScope->addNestedScopes(function);
     saveScope(ctx, function);
     currentScope = function;
 
@@ -325,7 +350,21 @@ std::any SymbolVisitor::visitUser_op_decl(LustreParser::User_op_declContext *ctx
 
     LustreBaseVisitor::visit(ctx->op_body());
 
-    std::cout << "Func: " << currentScope->toString() << std::endl;
+    //访问return中的params,构造符号表
+//    LustreBaseVisitor::visit(ctx->params()[1]);
+    auto return_params = dynamic_cast<LustreParser::ParamsContext *>(ctx->params()[1]);
+    if (return_params) {
+        for (auto var_decl: return_params->var_decls()) {
+            auto varSymbolVisitor = visit(var_decl);
+            auto varSymbolVector = std::any_cast<std::vector<std::shared_ptr<VariableSymbol>>>(varSymbolVisitor);
+            for (const auto &varSymbol: varSymbolVector) {
+                varSymbol->setType(Symbol::PARAMETER);
+                function->defineReturns(varSymbol);
+            }
+        }
+    }
+
+//    std::cout << "Func: " << currentScope->toString() << std::endl;
     currentScope = currentScope->getEnclosingScope();
     return std::string{""};
 }
@@ -342,7 +381,7 @@ std::any SymbolVisitor::visitParams(LustreParser::ParamsContext *ctx) {
 }
 
 std::any SymbolVisitor::visitVar_decls(LustreParser::Var_declsContext *ctx) {
-    std::cout<<ctx->getText()<<std::endl;
+//    std::cout << ctx->getText() << std::endl;
     std::any typeVisitor = visit(ctx->type());
     std::vector<std::shared_ptr<VariableSymbol>> varSymbolVector;
     auto typeSymbol = std::any_cast<std::shared_ptr<TypeDefSymbol >>(typeVisitor);
@@ -370,7 +409,7 @@ std::any SymbolVisitor::visitVar_decls(LustreParser::Var_declsContext *ctx) {
         auto nameToken = std::make_shared<antlr4::CommonToken>(varIDContext->getSymbol());
 
 //        defineParam(*typeSymbol, clockID);
-        std::shared_ptr<VariableSymbol> varSymbol = std::make_shared<VariableSymbol>(varIDString, Symbol::VARIABLE,
+        std::shared_ptr<VariableSymbol> varSymbol = std::make_shared<VariableSymbol>(varIDString,
                                                                                      nameToken, currentScope,
                                                                                      typeSymbol, clockID, lastSymbol);
         varSymbolVector.push_back(varSymbol);
@@ -383,6 +422,7 @@ std::any SymbolVisitor::visitLocal_block(LustreParser::Local_blockContext *ctx) 
 
 
     std::shared_ptr<LocalScope> localScope = std::make_shared<LocalScope>(currentScope);
+    currentScope->addNestedScopes(localScope);
     saveScope(ctx, localScope);
     currentScope = localScope;
     //设置节点中的形参
@@ -398,7 +438,7 @@ std::any SymbolVisitor::visitLocal_block(LustreParser::Local_blockContext *ctx) 
     }
     LustreBaseVisitor::visitChildren(ctx);
 
-    std::cout << currentScope->toString() << std::endl;
+//    std::cout << currentScope->toString() << std::endl;
     currentScope = currentScope->getEnclosingScope();
 
     return std::string{""};
@@ -406,16 +446,16 @@ std::any SymbolVisitor::visitLocal_block(LustreParser::Local_blockContext *ctx) 
 
 std::any SymbolVisitor::visitType_struct(LustreParser::Type_structContext *ctx) {
 
-    std::unordered_set<std::shared_ptr<TypeDefSymbol>> structSet;
+    std::vector<std::shared_ptr<TypeDefSymbol>> structSet;
 
     for (auto field_decl: ctx->field_decl()) {
         auto fieldVisitor = visit(field_decl);
         auto fieldSymbol = std::any_cast<std::shared_ptr<TypeDefSymbol>>(fieldVisitor);
-        structSet.insert(fieldSymbol);
+        structSet.push_back(fieldSymbol);
     }
-//    auto structSymbol = std::make_shared<TypeStruct>(structSet);
+//    auto structSymbol = std::make_shared<TypeStruct>(structVector);
 
-    return std::make_shared<TypeDefSymbol>("", Symbol::TYPEDEF, nullptr, currentScope, Symbol::STRUCT,
+    return std::make_shared<TypeDefSymbol>("", nullptr, currentScope, Symbol::STRUCT,
                                            std::make_shared<TypeStruct>(structSet));
 }
 
@@ -448,37 +488,62 @@ std::any SymbolVisitor::visitField_decl(LustreParser::Field_declContext *ctx) {
 std::any SymbolVisitor::visitConst_bin_bool(LustreParser::Const_bin_boolContext *ctx) {
     auto left = visit(ctx->const_expr(0));
     auto leftConstSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(left);
+
+    std::any leftValue = leftConstSymbol->getConstValue();
+
+    //如果右侧运算数是引用类型，返回引用值
+    if (leftConstSymbol->getDefType() == Symbol::REFERENCE) {
+        leftValue = getConstRefValue(leftConstSymbol, true);
+    }
     auto right = visit(ctx->const_expr(1));
     std::string op = ctx->bin_bool_op()->getText();
     auto rightConstSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(right);
+    std::any rightValue = rightConstSymbol->getConstValue();
 
-    auto constExpr = LustreVisitorTool::classifyPropertyType(leftConstSymbol->getConstValue(),
-                                                             rightConstSymbol->getConstValue(),
+    //如果右侧运算数是引用类型，返回引用值
+    if (rightConstSymbol->getDefType() == Symbol::REFERENCE) {
+        rightValue = getConstRefValue(rightConstSymbol, true);
+    }
+
+    auto constExpr = LustreVisitorTool::classifyPropertyType(leftValue, rightValue,
                                                              op, false);
 
     std::pair<Symbol::varType, std::any> constExprValuePair = LustreVisitorTool::properTypeToEnum(constExpr);
     auto constSymbol = std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr,
                                                      Symbol::BASETYPE,
                                                      constExprValuePair.first,
-                                                     constExprValuePair.second);
+                                                     constExprValuePair.second, false, nullptr);
     return constSymbol;
 }
 
 std::any SymbolVisitor::visitConst_bin_relation(LustreParser::Const_bin_relationContext *ctx) {
     auto left = visit(ctx->const_expr(0));
     auto leftConstSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(left);
+    std::any leftValue = leftConstSymbol->getConstValue();
+
+    //如果右侧运算数是引用类型，返回引用值
+    if (leftConstSymbol->getDefType() == Symbol::REFERENCE) {
+        leftValue = getConstRefValue(leftConstSymbol, false);
+    }
+
     auto right = visit(ctx->const_expr(1));
     std::string op = ctx->bin_relation_op()->getText();
     auto rightConstSymbol = std::any_cast<std::shared_ptr<ConstSymbol>>(right);
+    std::any rightValue = leftConstSymbol->getConstValue();
 
-    auto constExpr = LustreVisitorTool::classifyPropertyType(leftConstSymbol->getConstValue(),
-                                                             rightConstSymbol->getConstValue(),
-                                                             op, false);
+    //如果右侧运算数是引用类型，返回引用值
+    if (rightConstSymbol->getDefType() == Symbol::REFERENCE) {
+        rightValue = getConstRefValue(rightConstSymbol, false);
+    }
+
+
+    auto constExpr = LustreVisitorTool::classifyPropertyType(leftValue, rightValue,
+                                                             op, true);
     std::pair<Symbol::varType, std::any> constExprValuePair = LustreVisitorTool::properTypeToEnum(constExpr);
     auto constSymbol = std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr,
                                                      Symbol::BASETYPE,
                                                      constExprValuePair.first,
-                                                     constExprValuePair.second);
+                                                     constExprValuePair.second, false, nullptr);
     return constSymbol;
 }
 
@@ -489,7 +554,7 @@ std::any SymbolVisitor::visitConst_atom(LustreParser::Const_atomContext *ctx) {
     auto constSymbol = std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr,
                                                      Symbol::BASETYPE,
                                                      constExprValuePair.first,
-                                                     constExprValuePair.second);
+                                                     constExprValuePair.second, false, nullptr);
     return constSymbol;
 //    return LustreBaseVisitor::visitChildren(ctx);
 
@@ -502,7 +567,7 @@ std::any SymbolVisitor::visitConst_array(LustreParser::Const_arrayContext *ctx) 
     auto constArray = std::make_shared<ConstArray>(constSymbolVector);
 
     auto constSymbol = std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr,
-                                                     Symbol::ARRAY, constArray);
+                                                     Symbol::ARRAY, constArray, false, nullptr);
     return constSymbol;
 }
 
@@ -530,8 +595,7 @@ std::any SymbolVisitor::visitConst_struct(LustreParser::Const_structContext *ctx
     auto constStruct = std::make_shared<ConstStruct>(structSet);
 
     auto constSymbol = std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr,
-                                                     Symbol::STRUCT,
-                                                     constStruct);
+                                                     Symbol::STRUCT, constStruct, false, nullptr);
     return constSymbol;
 }
 
@@ -551,7 +615,7 @@ std::any SymbolVisitor::visitConst_id(LustreParser::Const_idContext *ctx) {
 
     auto constSymbol = std::make_shared<ConstSymbol>("", Symbol::CONSTANT, nullptr, currentScope, nullptr,
                                                      Symbol::REFERENCE,
-                                                     constIDSymbol);
+                                                     constIDSymbol, false, nullptr);
 
     return constSymbol;
 }
@@ -563,6 +627,169 @@ std::any SymbolVisitor::visitType_def_enum(LustreParser::Type_def_enumContext *c
     }
     auto enumSymbol = std::make_shared<EnumSymbol>("", Symbol::ENUM, nullptr, currentScope, enumMap);
     return enumSymbol;
+}
+
+std::any SymbolVisitor::getConstRefValue(std::shared_ptr<ConstSymbol> constSymbol, bool isBool) const {
+
+    std::shared_ptr<Symbol> refSymbol = constSymbol->getConstID()->getConstIDSymbol();
+    if (!refSymbol) {
+        SpdlogTool::logErr->error("在常量运算时未找到Const:" + constSymbol->getConstID()->getConstID() + "的引用\n");
+
+        return isBool ? false : std::int32_t(0);
+    }
+    std::shared_ptr<ConstSymbol> refConstSymbol = std::dynamic_pointer_cast<ConstSymbol>(refSymbol);
+    return refConstSymbol->getConstValue();
+
+}
+
+/**
+ * 定义状态机的作用域
+ * @param ctx
+ * @return
+ */
+std::any SymbolVisitor::visitState_machine(LustreParser::State_machineContext *ctx) {
+    std::string name = ctx->ID()->getText();
+
+    auto nameToken = std::make_shared<antlr4::CommonToken>(ctx->ID()->getSymbol());
+    std::shared_ptr<AutomatonScope> automatonScope = std::make_shared<AutomatonScope>(currentScope,name, Symbol::AUTOMATON,
+                                                                                      nameToken,
+                                                                                      currentScope);
+
+    //在局部scope中添加状态机的符号
+    currentScope->define(automatonScope);
+    currentScope->addNestedScopes(automatonScope);
+    saveScope(ctx, automatonScope);
+    currentScope = automatonScope;
+
+    //访问每个状态
+    for (int i = 0; i < ctx->state_decl().size(); ++i) {
+        visit(ctx->state_decl()[i]);
+    }
+
+    currentScope = currentScope->getEnclosingScope();
+    return std::string{""};
+}
+
+/**
+ * 定义state的作用域
+ * @param ctx
+ * @return
+ */
+std::any SymbolVisitor::visitState_decl(LustreParser::State_declContext *ctx) {
+    // 检查State_declContext中的token，判断是否存在initial或final关键字
+    bool hasInitial = ctx->INITIAL();
+    bool hasFinal = ctx->FINAL();
+
+
+    std::string name = ctx->ID()->getText();
+
+    auto nameToken = std::make_shared<antlr4::CommonToken>(ctx->ID()->getSymbol());
+    std::shared_ptr<StateScope> automatonScope = std::make_shared<StateScope>(currentScope,name, Symbol::AUTOMATON,
+                                                                              nameToken,
+                                                                              currentScope, hasInitial, hasFinal);
+
+    //在局部scope中添加状态机的符号
+    currentScope->define(automatonScope);
+    currentScope->addNestedScopes(automatonScope);
+    saveScope(ctx, automatonScope);
+    currentScope = automatonScope;
+
+
+    /**
+     * 定义转换语句Symbol
+     */
+//    if (ctx->unless_tran()) {
+//        auto tranSymbolVector = std::any_cast<std::vector<std::shared_ptr<TransitionSymbol>>>(
+//                visit(ctx->unless_tran()));
+//        for (auto &tranSymbol: tranSymbolVector) {
+//            //TODO:名字可能重名
+//            tranSymbol->setName(name + "_" + (tranSymbol->strongTran ? "strong" : "weak") + "_" +
+//                                (tranSymbol->resume ? "resume" : "restart") + "_" + tranSymbol->stateSymbol.first);
+//            currentScope->define(tranSymbol);
+//        }
+//    }
+    /**
+     * 访问节点内部
+     */
+    visit(ctx->data_def());
+    /**
+     * 定义转换语句Symbol
+     */
+//    if (ctx->until_tran()) {
+//        auto tranSymbolVector = std::any_cast<std::vector<std::shared_ptr<TransitionSymbol>>>(
+//                visit(ctx->until_tran()));
+//        for (auto &tranSymbol: tranSymbolVector) {
+//            //TODO:名字可能重名
+//            tranSymbol->setName(name + "_" + (tranSymbol->strongTran ? "strong" : "weak") + "_" +
+//                                (tranSymbol->resume ? "resume" : "restart") + "_" + tranSymbol->stateSymbol.first);
+//            currentScope->define(tranSymbol);
+//        }
+//
+//    }
+
+    currentScope = currentScope->getEnclosingScope();
+    return std::string{""};
+}
+
+std::any
+SymbolVisitor::visitState_machine_transition_restart(LustreParser::State_machine_transition_restartContext *ctx) {
+
+    std::string name = ctx->ID()->getText();
+
+    auto nameToken = std::make_shared<antlr4::CommonToken>(ctx->ID()->getSymbol());
+
+    auto transitionSymbol = std::make_shared<TransitionSymbol>("", nameToken, currentScope, false, false, ctx->expr(),
+                                                               std::make_pair(name,
+                                                                              nullptr));
+    return transitionSymbol;
+}
+
+std::any
+SymbolVisitor::visitState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext *ctx) {
+
+
+    std::string name = ctx->ID()->getText();
+
+    auto nameToken = std::make_shared<antlr4::CommonToken>(ctx->ID()->getSymbol());
+
+    auto transitionSymbol = std::make_shared<TransitionSymbol>("", nameToken, currentScope, false, true, ctx->expr(),
+                                                               std::make_pair(name,
+                                                                              nullptr));
+    return transitionSymbol;
+}
+
+std::any SymbolVisitor::visitUntil_tran(LustreParser::Until_tranContext *ctx) {
+    std::vector<std::shared_ptr<TransitionSymbol>> tranSymbolVector;
+    for (int i = 0; i < ctx->transition().size(); ++i) {
+        auto tranSymbol = std::any_cast<std::shared_ptr<TransitionSymbol>>(visit(ctx->transition()[i]));
+        tranSymbol->strongTran = false;
+        tranSymbolVector.emplace_back(tranSymbol);
+    }
+    return tranSymbolVector;
+}
+
+std::any SymbolVisitor::visitUnless_tran(LustreParser::Unless_tranContext *ctx) {
+    std::vector<std::shared_ptr<TransitionSymbol>> tranSymbolVector;
+    for (int i = 0; i < ctx->transition().size(); ++i) {
+        auto tranSymbol = std::any_cast<std::shared_ptr<TransitionSymbol>>(visit(ctx->transition()[i]));
+        tranSymbol->strongTran = true;
+        tranSymbolVector.emplace_back(tranSymbol);
+    }
+    return tranSymbolVector;
+}
+
+std::any
+SymbolVisitor::visitState_machine_data_def_equation(LustreParser::State_machine_data_def_equationContext *ctx) {
+
+    return {};
+}
+
+std::any
+SymbolVisitor::visitState_machine_data_def_local_block(LustreParser::State_machine_data_def_local_blockContext *ctx) {
+    if (ctx->local_block()) {
+        visit(ctx->local_block());
+    }
+    return {};
 }
 
 

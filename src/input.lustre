@@ -1,4 +1,4 @@
-node Counter(init1: int; init2: int) returns (count1: int; count2: int);
+node Counter(init1: int;init2: int) returns (count1: int;count2: int);
 var
     x: int;
     y: int;
@@ -8,6 +8,5 @@ let
   init2 = y + 1;
   count1 = init1 -> pre count1 + 1;
   count1 = count1 + x;
-  t = 0 -> if reset or pre t = max then 0 else pre t + 1;
   count2 = t + 2;
 tel;

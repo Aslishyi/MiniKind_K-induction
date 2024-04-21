@@ -4,6 +4,7 @@
 
 #include "VariableSymbol.h"
 #include "ConstSymbol.h"
+#include "../../lustre/tool/LustreVisitorTool.h"
 
 #include <utility>
 
@@ -19,9 +20,9 @@ std::string VariableSymbol::toAstString() const {
     }
 }
 
-VariableSymbol::VariableSymbol(const std::string &name, Symbol::Type type, std::shared_ptr<antlr4::Token> token,
+VariableSymbol::VariableSymbol(const std::string &name, std::shared_ptr<antlr4::Token> token,
                                std::shared_ptr<Scope> scope)
-        : Symbol(name, type, std::move(token), scope) {
+        : Symbol(name, Symbol::VARIABLE, std::move(token), scope) {
 
 }
 
@@ -31,10 +32,10 @@ std::string VariableSymbol::getVarDeclString() const {
            "last(" + toLastAstString() + ")" + ")";
 }
 
-VariableSymbol::VariableSymbol(const std::string &name, Symbol::Type type, std::shared_ptr<antlr4::Token> token,
+VariableSymbol::VariableSymbol(const std::string &name, std::shared_ptr<antlr4::Token> token,
                                std::shared_ptr<Scope> scope, std::shared_ptr<TypeDefSymbol> typeDefSymbol,
                                std::pair<bool, std::string> clockID, std::shared_ptr<ConstSymbol> lastSymbol)
-        : Symbol(name, type, std::move(token), scope), typeDefSymbol(std::move(typeDefSymbol)),
+        : Symbol(name, Symbol::VARIABLE, std::move(token), scope), typeDefSymbol(std::move(typeDefSymbol)),
           clockID(std::move(clockID)), lastSymbol(std::move(lastSymbol)) {
 
 }
@@ -70,4 +71,17 @@ std::string VariableSymbol::toClockAstString() const {
     ss << (clockID.first ? "" : "not ");
     ss << clockID.second;
     return ss.str();
+}
+
+VariableSymbol &VariableSymbol::setTypeDefSymbol(std::shared_ptr<TypeDefSymbol> typeDefSymbol) {
+    this->typeDefSymbol = typeDefSymbol;
+    return *this;
+
+}
+
+std::string VariableSymbol::getLastLus() const {
+    if (!lastSymbol) {
+        return std::string("");
+    }
+    return lastSymbol->getDefTypeLusString(lastSymbol->getDefType());
 }

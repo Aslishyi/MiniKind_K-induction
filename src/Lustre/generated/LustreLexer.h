@@ -1,5 +1,5 @@
 
-// Generated from Lustre.g4 by ANTLR 4.13.1
+// Generated from ./Lustre.g4 by ANTLR 4.13.1
 
 #pragma once
 
@@ -33,12 +33,11 @@ public:
     T__109 = 110, T__110 = 111, T__111 = 112, T__112 = 113, T__113 = 114, 
     T__114 = 115, T__115 = 116, T__116 = 117, T__117 = 118, T__118 = 119, 
     T__119 = 120, T__120 = 121, T__121 = 122, T__122 = 123, T__123 = 124, 
-    T__124 = 125, T__125 = 126, T__126 = 127, T__127 = 128, T__128 = 129, 
-    T__129 = 130, T__130 = 131, T__131 = 132, T__132 = 133, T__133 = 134, 
-    T__134 = 135, T__135 = 136, T__136 = 137, T__137 = 138, BOOL = 139, 
-    INTEGER = 140, UINT = 141, REAL = 142, CHAR = 143, FLOAT = 144, USHORT = 145, 
-    SHORT = 146, ID = 147, SL_COMMENT = 148, ML_COMMENT = 149, MLX_COMMENT = 150, 
-    PRAGMA = 151, STRING = 152, WS = 153, ERROR = 154
+    T__124 = 125, T__125 = 126, T__126 = 127, T__127 = 128, INITIAL = 129, 
+    FINAL = 130, UNLESS = 131, UNTIL = 132, BOOL = 133, INTEGER = 134, UINT = 135, 
+    REAL = 136, CHAR = 137, FLOAT = 138, USHORT = 139, SHORT = 140, ID = 141, 
+    SL_COMMENT = 142, ML_COMMENT = 143, PRAGMA = 144, STRING = 145, MAIN = 146, 
+    PROPERTY = 147, CHECK = 148, WS = 149, ERROR = 150
   };
 
   explicit LustreLexer(antlr4::CharStream *input);

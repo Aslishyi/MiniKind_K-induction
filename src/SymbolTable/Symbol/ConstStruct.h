@@ -23,6 +23,8 @@ public:
     //打印具体的symbol类型：包括array，基础类型打印
     std::string toAstString() const;
 
+    std::string toLusString() const;
+
     std::unordered_set<std::shared_ptr<ConstSymbol>> structSet;
 
 };

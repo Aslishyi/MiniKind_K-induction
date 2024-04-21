@@ -8,6 +8,13 @@
 
 class Scope;
 
+/*
+ * Symbol用于收集实体信息：变量名、类型、作用域
+ * 每个类别用单独的类定义
+ * 名称、类型为类中的属性
+ *
+ * 继承Symbol类可以派生出各种类：如该项目中的VariableSymbol代表变量
+ * */
 class Symbol {
 public:
 
@@ -15,24 +22,18 @@ public:
     enum Type {
         //basetype:基础类型：int，bool……
         BASETYPE,
-        LV6,
-        VOID,
         ARRAY,
         STRUCT,
         FUNCTION,
-        PROCEDURE,
         PARAMETER,
         VARIABLE,
         CONSTANT,
         REFERENCE,
         TYPEDEF,
-        PROGRAM,
         ENUM,
-        SET,
         FILE,
-        CLASS,
-        INTERFACE,
-        OBJECT,
+        AUTOMATON,
+        STATE,
         UNKNOWN
     };
     //变量的类型
@@ -55,7 +56,10 @@ public:
     virtual std::string toShortAstString() const;
 
     //用Lustre V6格式打印
-    virtual std::string toLustreString() const;
+    virtual std::string toLusString() const;
+
+    //判断两个Symbol的内容是否相同
+    virtual bool isEqual(std::shared_ptr<Symbol>symbol);
 
 
     //对VarType类型进行打印

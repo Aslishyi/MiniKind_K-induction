@@ -31,13 +31,18 @@ public:
 
     const std::string toString() const;
 
+    std::unordered_map<std::string, std::shared_ptr<Symbol>> getAllSymbols();
+
+    GlobalScope &setSymbolBySymbolName(std::shared_ptr<Symbol> symbol);
+
+    std::shared_ptr<Symbol> resolveNested(const std::string &name) const override;
 
 private:
     std::string name = "Global";
 
+    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<Symbol>>>
+            symbols;
 
-    std::shared_ptr <std::unordered_map<std::string, std::shared_ptr < Symbol>>>
-    symbols;
 };
 
 

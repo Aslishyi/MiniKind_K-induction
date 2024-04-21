@@ -105,6 +105,15 @@ public:
     std::any visitConst_id(LustreParser::Const_idContext *ctx) override;
     std::any visitType_def_enum(LustreParser::Type_def_enumContext *ctx) override;
 
+    std::any visitState_machine(LustreParser::State_machineContext *ctx) override;
+    std::any visitState_decl(LustreParser::State_declContext *ctx) override;
+    std::any visitUnless_tran(LustreParser::Unless_tranContext *ctx) override;
+    std::any visitUntil_tran(LustreParser::Until_tranContext *ctx) override;
+    std::any visitState_machine_data_def_equation(LustreParser::State_machine_data_def_equationContext *ctx) override;
+    std::any visitState_machine_data_def_local_block(LustreParser::State_machine_data_def_local_blockContext *ctx) override;
+    std::any visitState_machine_transition_restart(LustreParser::State_machine_transition_restartContext *ctx) override;
+    std::any visitState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext *ctx) override;
+
 
     void defineType( std::shared_ptr<TypeDefSymbol> typeDefSymbol);
 
@@ -115,6 +124,10 @@ public:
     void defineConst(std::shared_ptr<ConstSymbol> constSymbol);
 
     void defineEnum(std::shared_ptr<EnumSymbol> enumSymbol);
+
+    //工具方法
+    //当Const是引用的时候，在当前作用域获得这个引用的值,isBool:是否是Bool运算
+    std::any getConstRefValue(std::shared_ptr<ConstSymbol> constSymbol, bool isBool) const;
 };
 
 

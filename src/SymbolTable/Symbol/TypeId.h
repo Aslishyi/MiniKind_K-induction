@@ -27,6 +27,10 @@ public:
 
     std::shared_ptr<Symbol> getTypeIDSymbol() const;
 
+    TypeId &setTypeIdSymbol(std::shared_ptr<Symbol> typeIdSymbol);
+
+    bool isEqual(std::shared_ptr<TypeId> typeId);
+
 protected:
     std::string typeIDString;
     std::shared_ptr<Symbol> typeIdSymbol;

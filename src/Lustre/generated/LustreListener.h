@@ -1,5 +1,5 @@
 
-// Generated from Lustre.g4 by ANTLR 4.13.1
+// Generated from ./Lustre.g4 by ANTLR 4.13.1
 
 #pragma once
 
@@ -59,38 +59,8 @@ public:
   virtual void enterDecls_user_op(LustreParser::Decls_user_opContext *ctx) = 0;
   virtual void exitDecls_user_op(LustreParser::Decls_user_opContext *ctx) = 0;
 
-  virtual void enterDecls_kind2(LustreParser::Decls_kind2Context *ctx) = 0;
-  virtual void exitDecls_kind2(LustreParser::Decls_kind2Context *ctx) = 0;
-
-  virtual void enterDecls_mode(LustreParser::Decls_modeContext *ctx) = 0;
-  virtual void exitDecls_mode(LustreParser::Decls_modeContext *ctx) = 0;
-
-  virtual void enterDecls_ghost_var(LustreParser::Decls_ghost_varContext *ctx) = 0;
-  virtual void exitDecls_ghost_var(LustreParser::Decls_ghost_varContext *ctx) = 0;
-
-  virtual void enterDecls_assume(LustreParser::Decls_assumeContext *ctx) = 0;
-  virtual void exitDecls_assume(LustreParser::Decls_assumeContext *ctx) = 0;
-
-  virtual void enterDecls_guarantee(LustreParser::Decls_guaranteeContext *ctx) = 0;
-  virtual void exitDecls_guarantee(LustreParser::Decls_guaranteeContext *ctx) = 0;
-
-  virtual void enterMode_decl(LustreParser::Mode_declContext *ctx) = 0;
-  virtual void exitMode_decl(LustreParser::Mode_declContext *ctx) = 0;
-
-  virtual void enterRequirement(LustreParser::RequirementContext *ctx) = 0;
-  virtual void exitRequirement(LustreParser::RequirementContext *ctx) = 0;
-
-  virtual void enterAssurance(LustreParser::AssuranceContext *ctx) = 0;
-  virtual void exitAssurance(LustreParser::AssuranceContext *ctx) = 0;
-
-  virtual void enterVar_decl(LustreParser::Var_declContext *ctx) = 0;
-  virtual void exitVar_decl(LustreParser::Var_declContext *ctx) = 0;
-
-  virtual void enterAssume_decl(LustreParser::Assume_declContext *ctx) = 0;
-  virtual void exitAssume_decl(LustreParser::Assume_declContext *ctx) = 0;
-
-  virtual void enterGuarantee_decl(LustreParser::Guarantee_declContext *ctx) = 0;
-  virtual void exitGuarantee_decl(LustreParser::Guarantee_declContext *ctx) = 0;
+  virtual void enterDecls_contract_node(LustreParser::Decls_contract_nodeContext *ctx) = 0;
+  virtual void exitDecls_contract_node(LustreParser::Decls_contract_nodeContext *ctx) = 0;
 
   virtual void enterType_block(LustreParser::Type_blockContext *ctx) = 0;
   virtual void exitType_block(LustreParser::Type_blockContext *ctx) = 0;
@@ -212,38 +182,92 @@ public:
   virtual void enterOp_body_ctx(LustreParser::Op_body_ctxContext *ctx) = 0;
   virtual void exitOp_body_ctx(LustreParser::Op_body_ctxContext *ctx) = 0;
 
-  virtual void enterContract_statement(LustreParser::Contract_statementContext *ctx) = 0;
-  virtual void exitContract_statement(LustreParser::Contract_statementContext *ctx) = 0;
-
-  virtual void enterMerge_decl(LustreParser::Merge_declContext *ctx) = 0;
-  virtual void exitMerge_decl(LustreParser::Merge_declContext *ctx) = 0;
-
-  virtual void enterLet_block_equation(LustreParser::Let_block_equationContext *ctx) = 0;
-  virtual void exitLet_block_equation(LustreParser::Let_block_equationContext *ctx) = 0;
-
-  virtual void enterLet_block_kind2_kind2_Statement(LustreParser::Let_block_kind2_kind2_StatementContext *ctx) = 0;
-  virtual void exitLet_block_kind2_kind2_Statement(LustreParser::Let_block_kind2_kind2_StatementContext *ctx) = 0;
-
-  virtual void enterLet_block_kind2_frame_block(LustreParser::Let_block_kind2_frame_blockContext *ctx) = 0;
-  virtual void exitLet_block_kind2_frame_block(LustreParser::Let_block_kind2_frame_blockContext *ctx) = 0;
+  virtual void enterContract(LustreParser::ContractContext *ctx) = 0;
+  virtual void exitContract(LustreParser::ContractContext *ctx) = 0;
 
   virtual void enterLocal_block(LustreParser::Local_blockContext *ctx) = 0;
   virtual void exitLocal_block(LustreParser::Local_blockContext *ctx) = 0;
 
-  virtual void enterKind2_Statement(LustreParser::Kind2_StatementContext *ctx) = 0;
-  virtual void exitKind2_Statement(LustreParser::Kind2_StatementContext *ctx) = 0;
+  virtual void enterLet_block_equation(LustreParser::Let_block_equationContext *ctx) = 0;
+  virtual void exitLet_block_equation(LustreParser::Let_block_equationContext *ctx) = 0;
 
-  virtual void enterMainStatement(LustreParser::MainStatementContext *ctx) = 0;
-  virtual void exitMainStatement(LustreParser::MainStatementContext *ctx) = 0;
+  virtual void enterLet_block_k2_property(LustreParser::Let_block_k2_propertyContext *ctx) = 0;
+  virtual void exitLet_block_k2_property(LustreParser::Let_block_k2_propertyContext *ctx) = 0;
 
-  virtual void enterPropertyStatement(LustreParser::PropertyStatementContext *ctx) = 0;
-  virtual void exitPropertyStatement(LustreParser::PropertyStatementContext *ctx) = 0;
+  virtual void enterLet_block_k2_if_block(LustreParser::Let_block_k2_if_blockContext *ctx) = 0;
+  virtual void exitLet_block_k2_if_block(LustreParser::Let_block_k2_if_blockContext *ctx) = 0;
 
-  virtual void enterCheckStatement(LustreParser::CheckStatementContext *ctx) = 0;
-  virtual void exitCheckStatement(LustreParser::CheckStatementContext *ctx) = 0;
+  virtual void enterLet_block_k2_frame_block(LustreParser::Let_block_k2_frame_blockContext *ctx) = 0;
+  virtual void exitLet_block_k2_frame_block(LustreParser::Let_block_k2_frame_blockContext *ctx) = 0;
 
-  virtual void enterFrame_block(LustreParser::Frame_blockContext *ctx) = 0;
-  virtual void exitFrame_block(LustreParser::Frame_blockContext *ctx) = 0;
+  virtual void enterExternal_contract(LustreParser::External_contractContext *ctx) = 0;
+  virtual void exitExternal_contract(LustreParser::External_contractContext *ctx) = 0;
+
+  virtual void enterContract_body(LustreParser::Contract_bodyContext *ctx) = 0;
+  virtual void exitContract_body(LustreParser::Contract_bodyContext *ctx) = 0;
+
+  virtual void enterDecls_mode(LustreParser::Decls_modeContext *ctx) = 0;
+  virtual void exitDecls_mode(LustreParser::Decls_modeContext *ctx) = 0;
+
+  virtual void enterDecls_const_ghost_var(LustreParser::Decls_const_ghost_varContext *ctx) = 0;
+  virtual void exitDecls_const_ghost_var(LustreParser::Decls_const_ghost_varContext *ctx) = 0;
+
+  virtual void enterDecls_ghost_var(LustreParser::Decls_ghost_varContext *ctx) = 0;
+  virtual void exitDecls_ghost_var(LustreParser::Decls_ghost_varContext *ctx) = 0;
+
+  virtual void enterDecls_assume(LustreParser::Decls_assumeContext *ctx) = 0;
+  virtual void exitDecls_assume(LustreParser::Decls_assumeContext *ctx) = 0;
+
+  virtual void enterDecls_guarantee(LustreParser::Decls_guaranteeContext *ctx) = 0;
+  virtual void exitDecls_guarantee(LustreParser::Decls_guaranteeContext *ctx) = 0;
+
+  virtual void enterDecls_imports(LustreParser::Decls_importsContext *ctx) = 0;
+  virtual void exitDecls_imports(LustreParser::Decls_importsContext *ctx) = 0;
+
+  virtual void enterMode_decl(LustreParser::Mode_declContext *ctx) = 0;
+  virtual void exitMode_decl(LustreParser::Mode_declContext *ctx) = 0;
+
+  virtual void enterMode_body(LustreParser::Mode_bodyContext *ctx) = 0;
+  virtual void exitMode_body(LustreParser::Mode_bodyContext *ctx) = 0;
+
+  virtual void enterRequirement(LustreParser::RequirementContext *ctx) = 0;
+  virtual void exitRequirement(LustreParser::RequirementContext *ctx) = 0;
+
+  virtual void enterAssurance(LustreParser::AssuranceContext *ctx) = 0;
+  virtual void exitAssurance(LustreParser::AssuranceContext *ctx) = 0;
+
+  virtual void enterKind2_const_item(LustreParser::Kind2_const_itemContext *ctx) = 0;
+  virtual void exitKind2_const_item(LustreParser::Kind2_const_itemContext *ctx) = 0;
+
+  virtual void enterKind2_var_item(LustreParser::Kind2_var_itemContext *ctx) = 0;
+  virtual void exitKind2_var_item(LustreParser::Kind2_var_itemContext *ctx) = 0;
+
+  virtual void enterAssume_item(LustreParser::Assume_itemContext *ctx) = 0;
+  virtual void exitAssume_item(LustreParser::Assume_itemContext *ctx) = 0;
+
+  virtual void enterGuarantee_item(LustreParser::Guarantee_itemContext *ctx) = 0;
+  virtual void exitGuarantee_item(LustreParser::Guarantee_itemContext *ctx) = 0;
+
+  virtual void enterImport_item(LustreParser::Import_itemContext *ctx) = 0;
+  virtual void exitImport_item(LustreParser::Import_itemContext *ctx) = 0;
+
+  virtual void enterKind2_if_block(LustreParser::Kind2_if_blockContext *ctx) = 0;
+  virtual void exitKind2_if_block(LustreParser::Kind2_if_blockContext *ctx) = 0;
+
+  virtual void enterKind2_if_body(LustreParser::Kind2_if_bodyContext *ctx) = 0;
+  virtual void exitKind2_if_body(LustreParser::Kind2_if_bodyContext *ctx) = 0;
+
+  virtual void enterKind2_statement_main(LustreParser::Kind2_statement_mainContext *ctx) = 0;
+  virtual void exitKind2_statement_main(LustreParser::Kind2_statement_mainContext *ctx) = 0;
+
+  virtual void enterKind2_statement_property(LustreParser::Kind2_statement_propertyContext *ctx) = 0;
+  virtual void exitKind2_statement_property(LustreParser::Kind2_statement_propertyContext *ctx) = 0;
+
+  virtual void enterKind2_statement_check(LustreParser::Kind2_statement_checkContext *ctx) = 0;
+  virtual void exitKind2_statement_check(LustreParser::Kind2_statement_checkContext *ctx) = 0;
+
+  virtual void enterKind2_frame_block(LustreParser::Kind2_frame_blockContext *ctx) = 0;
+  virtual void exitKind2_frame_block(LustreParser::Kind2_frame_blockContext *ctx) = 0;
 
   virtual void enterFrame_init(LustreParser::Frame_initContext *ctx) = 0;
   virtual void exitFrame_init(LustreParser::Frame_initContext *ctx) = 0;
@@ -284,6 +308,12 @@ public:
   virtual void enterState_machine_data_def_local_block(LustreParser::State_machine_data_def_local_blockContext *ctx) = 0;
   virtual void exitState_machine_data_def_local_block(LustreParser::State_machine_data_def_local_blockContext *ctx) = 0;
 
+  virtual void enterUnless_tran(LustreParser::Unless_tranContext *ctx) = 0;
+  virtual void exitUnless_tran(LustreParser::Unless_tranContext *ctx) = 0;
+
+  virtual void enterUntil_tran(LustreParser::Until_tranContext *ctx) = 0;
+  virtual void exitUntil_tran(LustreParser::Until_tranContext *ctx) = 0;
+
   virtual void enterState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext *ctx) = 0;
   virtual void exitState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext *ctx) = 0;
 
@@ -320,8 +350,8 @@ public:
   virtual void enterExpr_apply_expr(LustreParser::Expr_apply_exprContext *ctx) = 0;
   virtual void exitExpr_apply_expr(LustreParser::Expr_apply_exprContext *ctx) = 0;
 
-  virtual void enterExpr_kind2(LustreParser::Expr_kind2Context *ctx) = 0;
-  virtual void exitExpr_kind2(LustreParser::Expr_kind2Context *ctx) = 0;
+  virtual void enterExpr_kind2_expr(LustreParser::Expr_kind2_exprContext *ctx) = 0;
+  virtual void exitExpr_kind2_expr(LustreParser::Expr_kind2_exprContext *ctx) = 0;
 
   virtual void enterList(LustreParser::ListContext *ctx) = 0;
   virtual void exitList(LustreParser::ListContext *ctx) = 0;
@@ -334,6 +364,15 @@ public:
 
   virtual void enterRestart_expr(LustreParser::Restart_exprContext *ctx) = 0;
   virtual void exitRestart_expr(LustreParser::Restart_exprContext *ctx) = 0;
+
+  virtual void enterKind2_param(LustreParser::Kind2_paramContext *ctx) = 0;
+  virtual void exitKind2_param(LustreParser::Kind2_paramContext *ctx) = 0;
+
+  virtual void enterActivate(LustreParser::ActivateContext *ctx) = 0;
+  virtual void exitActivate(LustreParser::ActivateContext *ctx) = 0;
+
+  virtual void enterRestart(LustreParser::RestartContext *ctx) = 0;
+  virtual void exitRestart(LustreParser::RestartContext *ctx) = 0;
 
   virtual void enterTempo_expr_pre(LustreParser::Tempo_expr_preContext *ctx) = 0;
   virtual void exitTempo_expr_pre(LustreParser::Tempo_expr_preContext *ctx) = 0;
@@ -355,6 +394,9 @@ public:
 
   virtual void enterTempo_expr_merge(LustreParser::Tempo_expr_mergeContext *ctx) = 0;
   virtual void exitTempo_expr_merge(LustreParser::Tempo_expr_mergeContext *ctx) = 0;
+
+  virtual void enterTempo_kind2_merge(LustreParser::Tempo_kind2_mergeContext *ctx) = 0;
+  virtual void exitTempo_kind2_merge(LustreParser::Tempo_kind2_mergeContext *ctx) = 0;
 
   virtual void enterBool_expr(LustreParser::Bool_exprContext *ctx) = 0;
   virtual void exitBool_expr(LustreParser::Bool_exprContext *ctx) = 0;
@@ -404,17 +446,26 @@ public:
   virtual void enterApply_prefix(LustreParser::Apply_prefixContext *ctx) = 0;
   virtual void exitApply_prefix(LustreParser::Apply_prefixContext *ctx) = 0;
 
-  virtual void enterApply_iterator(LustreParser::Apply_iteratorContext *ctx) = 0;
-  virtual void exitApply_iterator(LustreParser::Apply_iteratorContext *ctx) = 0;
+  virtual void enterApply_map(LustreParser::Apply_mapContext *ctx) = 0;
+  virtual void exitApply_map(LustreParser::Apply_mapContext *ctx) = 0;
 
-  virtual void enterApply_iterator_lv6(LustreParser::Apply_iterator_lv6Context *ctx) = 0;
-  virtual void exitApply_iterator_lv6(LustreParser::Apply_iterator_lv6Context *ctx) = 0;
+  virtual void enterApply_fold(LustreParser::Apply_foldContext *ctx) = 0;
+  virtual void exitApply_fold(LustreParser::Apply_foldContext *ctx) = 0;
+
+  virtual void enterApply_mapi(LustreParser::Apply_mapiContext *ctx) = 0;
+  virtual void exitApply_mapi(LustreParser::Apply_mapiContext *ctx) = 0;
+
+  virtual void enterApply_foldi(LustreParser::Apply_foldiContext *ctx) = 0;
+  virtual void exitApply_foldi(LustreParser::Apply_foldiContext *ctx) = 0;
+
+  virtual void enterApply_mapfold(LustreParser::Apply_mapfoldContext *ctx) = 0;
+  virtual void exitApply_mapfold(LustreParser::Apply_mapfoldContext *ctx) = 0;
 
   virtual void enterApply_mapw(LustreParser::Apply_mapwContext *ctx) = 0;
   virtual void exitApply_mapw(LustreParser::Apply_mapwContext *ctx) = 0;
 
-  virtual void enterApply_mapwI(LustreParser::Apply_mapwIContext *ctx) = 0;
-  virtual void exitApply_mapwI(LustreParser::Apply_mapwIContext *ctx) = 0;
+  virtual void enterApply_mapwi(LustreParser::Apply_mapwiContext *ctx) = 0;
+  virtual void exitApply_mapwi(LustreParser::Apply_mapwiContext *ctx) = 0;
 
   virtual void enterApply_foldw(LustreParser::Apply_foldwContext *ctx) = 0;
   virtual void exitApply_foldw(LustreParser::Apply_foldwContext *ctx) = 0;
@@ -443,47 +494,11 @@ public:
   virtual void enterPrefix_binary_operator(LustreParser::Prefix_binary_operatorContext *ctx) = 0;
   virtual void exitPrefix_binary_operator(LustreParser::Prefix_binary_operatorContext *ctx) = 0;
 
-  virtual void enterIterator_map(LustreParser::Iterator_mapContext *ctx) = 0;
-  virtual void exitIterator_map(LustreParser::Iterator_mapContext *ctx) = 0;
-
-  virtual void enterIterator_fold(LustreParser::Iterator_foldContext *ctx) = 0;
-  virtual void exitIterator_fold(LustreParser::Iterator_foldContext *ctx) = 0;
-
-  virtual void enterIterator_mapi(LustreParser::Iterator_mapiContext *ctx) = 0;
-  virtual void exitIterator_mapi(LustreParser::Iterator_mapiContext *ctx) = 0;
-
-  virtual void enterIterator_foldi(LustreParser::Iterator_foldiContext *ctx) = 0;
-  virtual void exitIterator_foldi(LustreParser::Iterator_foldiContext *ctx) = 0;
-
-  virtual void enterIterator_mapfold(LustreParser::Iterator_mapfoldContext *ctx) = 0;
-  virtual void exitIterator_mapfold(LustreParser::Iterator_mapfoldContext *ctx) = 0;
-
-  virtual void enterIterator_red(LustreParser::Iterator_redContext *ctx) = 0;
-  virtual void exitIterator_red(LustreParser::Iterator_redContext *ctx) = 0;
-
-  virtual void enterIterator_fill(LustreParser::Iterator_fillContext *ctx) = 0;
-  virtual void exitIterator_fill(LustreParser::Iterator_fillContext *ctx) = 0;
-
-  virtual void enterIterator_fillred(LustreParser::Iterator_fillredContext *ctx) = 0;
-  virtual void exitIterator_fillred(LustreParser::Iterator_fillredContext *ctx) = 0;
-
-  virtual void enterIterator_boolred(LustreParser::Iterator_boolredContext *ctx) = 0;
-  virtual void exitIterator_boolred(LustreParser::Iterator_boolredContext *ctx) = 0;
-
-  virtual void enterIterator_lv6_red(LustreParser::Iterator_lv6_redContext *ctx) = 0;
-  virtual void exitIterator_lv6_red(LustreParser::Iterator_lv6_redContext *ctx) = 0;
-
-  virtual void enterIterator_lv6_fill(LustreParser::Iterator_lv6_fillContext *ctx) = 0;
-  virtual void exitIterator_lv6_fill(LustreParser::Iterator_lv6_fillContext *ctx) = 0;
-
-  virtual void enterIterator_lv6_fillred(LustreParser::Iterator_lv6_fillredContext *ctx) = 0;
-  virtual void exitIterator_lv6_fillred(LustreParser::Iterator_lv6_fillredContext *ctx) = 0;
-
-  virtual void enterIterator_lv6_boolred(LustreParser::Iterator_lv6_boolredContext *ctx) = 0;
-  virtual void exitIterator_lv6_boolred(LustreParser::Iterator_lv6_boolredContext *ctx) = 0;
-
   virtual void enterSimple_expr_unary_arith(LustreParser::Simple_expr_unary_arithContext *ctx) = 0;
   virtual void exitSimple_expr_unary_arith(LustreParser::Simple_expr_unary_arithContext *ctx) = 0;
+
+  virtual void enterSimple_kind2_expr(LustreParser::Simple_kind2_exprContext *ctx) = 0;
+  virtual void exitSimple_kind2_expr(LustreParser::Simple_kind2_exprContext *ctx) = 0;
 
   virtual void enterSimple_expr_paren(LustreParser::Simple_expr_parenContext *ctx) = 0;
   virtual void exitSimple_expr_paren(LustreParser::Simple_expr_parenContext *ctx) = 0;
@@ -568,6 +583,9 @@ public:
 
   virtual void enterAtom_SHORT(LustreParser::Atom_SHORTContext *ctx) = 0;
   virtual void exitAtom_SHORT(LustreParser::Atom_SHORTContext *ctx) = 0;
+
+  virtual void enterMerge_expr(LustreParser::Merge_exprContext *ctx) = 0;
+  virtual void exitMerge_expr(LustreParser::Merge_exprContext *ctx) = 0;
 
 
 };

@@ -1,5 +1,8 @@
 grammar Lustre;
 
+//语法分析器规则以小写字母开头
+//词法分析器规则以大写字母开头
+
 /*1、程序定义
   program ::= {{ decls }}
   decls ::= type_block                   //类型块
@@ -36,7 +39,7 @@ decls: type_block                               # decls_type
      | const_block                              # decls_const
      | import_op_decl                           # decls_import_op
      | user_op_decl                             # decls_user_op
-     | kind2_decl                               # decls_kind2
+     | external_contract                        # decls_contract_node
      ;
 /*
 mode <id> (
@@ -50,19 +53,6 @@ assume <expr> ;
 guarantee <expr> ;
 */
 
-
-kind2_decl:  mode_decl                          # decls_mode
-            |var_decl                           # decls_ghost_var
-            |assume_decl                        # decls_assume
-            |guarantee_decl                     # decls_guarantee
-            ;
-
-mode_decl: 'mode' ID '(' requirement* assurance* ')' ';';
-requirement: 'require' .*? ';';
-assurance: 'ensure' .*? ';';
-var_decl: 'var' ID ':' type '=' expr ';';
-assume_decl: 'assume' .*? ';';
-guarantee_decl: 'guarantee' .*? ';';
 
 /*
 2、类型定义
@@ -145,7 +135,7 @@ c6: float = 7.5f+6.4f;					//float常量表达式
 const_block: 'const'  (const_decl ';')* ;
 //修改，原：     const_decl:  ID (':' type)? '=' const_expr;
 //测试kind2：const x1: int = 1;            const x1: int;          const x1 = 1;         均通过
-const_decl:  ID ':' type ('=' const_expr)?;
+const_decl:  ID  (':' type)? ('=' const_expr)?;
 
 const_expr:ID                                                       #const_id
           | atom                                                    #const_atom
@@ -219,23 +209,61 @@ op_kind : 'function'                      #op_kind_funtion                      
 params : '(' ( var_decls ( ';' var_decls)* )? ';'? ')';      //参数列表定义
 //Add Kind2 Blocks
 op_body : ';'                                                   #op_body_null      //空节点
-          | contract_statement ?
-            merge_decl ?
-            local_block ?      //局部变量定义可以为空
-            'let'(let_block ';')*
+          | contract?       //kind2契约语法
+            local_block?      //局部变量定义可以为空
+            'let'
+            // let_block ';'
+             let_block*
 //        (equation | property | assertion | main | realizabilityInputs | ivc)*
             'tel' ';' ?                                         #op_body_ctx
           ;
-//(*@contract [item]+ *)	/*@contract [item]+ */
-contract_statement:'(*@contract' .*? '*)' | '/*@contract' .*? '*/';
-//merge( <clock> ; <e_1> ; <e_2> )
-merge_decl: 'merge' ID '(' .*? ')' ';';
-let_block : equation                                        #let_block_equation
-//          | call_fun                                        #let_block_call_fun
-          | kind2_Statement                                  #let_block_kind2_kind2_Statement     //起名
-          | frame_block                                     #let_block_kind2_frame_block
-          ;
+contract:'(*@contract' kind2_contract_item* '*)'
+        |'/*@contract' kind2_contract_item* '*/'
+ //       |CONTRACT
+        ;
 local_block : 'var' (var_decls ';')*;                   //局部变量定义
+let_block:
+            equation ';'                                      #let_block_equation
+//          | call_fun                                        #let_block_call_fun
+            | kind2_property                                  #let_block_k2_property
+            | kind2_if_block 'fi'                             #let_block_k2_if_block
+            | kind2_frame_block                               #let_block_k2_frame_block
+            ;
+//(*@contract [item]+ *)	/*@contract [item]+ */
+//Or can ues kind2_contract_decl to specify
+//contract_statement:CONTRACT;
+external_contract: 'contract' ID  /*static_parameters? */                                   //节点定义
+                    params 'returns' params ';'?                        //输入参数和输出参数
+                    contract_body                                                 //节点体
+                    ;
+
+contract_body:'let' kind2_contract_item+ 'tel';
+
+kind2_contract_item:
+            mode_decl                           # decls_mode
+            |kind2_const_item                   # decls_const_ghost_var
+            |kind2_var_item                     # decls_ghost_var
+            |assume_item                        # decls_assume
+            |guarantee_item                     # decls_guarantee
+            |import_item                        # decls_imports
+            ;
+
+mode_decl: 'mode' ID '(' mode_body ')' ';';
+mode_body: (requirement | assurance)+ ;
+requirement: 'require' .*? ';';
+assurance: 'ensure' .*? ';';
+
+kind2_const_item: ID (':' type)? '=' .*? ';';
+kind2_var_item: 'var' ID ':' type '=' .*? ';';
+assume_item: 'assume' .*? ';';
+guarantee_item: 'guarantee' .*? ';';
+import_item: 'import' ID '('( expr',')* expr ')' 'returns' '(' (ID',')* ID ')'';';
+
+kind2_if_block: 'if' simple_expr 'then' (simple_expr';')+ kind2_if_body*;
+kind2_if_body:	'elsif' simple_expr 'then' (simple_expr';')+
+				|'else' (simple_expr';')+
+				;
+
 
 /*
 --%PROPERTY ["<name>"] <bool_expr> ;
@@ -246,25 +274,26 @@ check reachable ["<name>"] <bool_expr> at <int>;
 --%MAIN ;
 */
 
-kind2_Statement: mainStatement|propertyStatement|checkStatement;
-mainStatement: '--%MAIN' ';';
-propertyStatement: '--%PROPERTY' .*? ';';
-checkStatement: 'check' .*? ';';
+kind2_property: MAIN           #kind2_statement_main
+            | PROPERTY         #kind2_statement_property
+            | CHECK            #kind2_statement_check;
+//mainStatement: '--%MAIN' ';';
+//propertyStatement: '--%PROPERTY' .*? ';';
+//checkStatement: 'check' .*? ';';
 
 /*
 frame ( y1, y2, y3 )
-(* Initializations *)
-y1 = 0; y2 = 100; y3 = 5;
-(* Body *)
-let
-y2 = pre counter();
-y3 = counter();
+    (* Initializations *)
+    y1 = 0; y2 = 100; y3 = 5;
+    (* Body *)
+    let
+    y2 = pre counter();
+    y3 = counter();
 tel
 */
-
-frame_block: frame_init .*? frame_body;
-frame_init: 'frame' '(' .*? ')';
-frame_body: 'let' .*? 'tel';
+kind2_frame_block: frame_init  frame_body;
+frame_init: 'frame' '(' ID (','ID)* ')' (simple_expr ';')*;
+frame_body: 'let' (equation ';')* 'tel' ;
 
 /*
 6、外部函数定义
@@ -325,16 +354,19 @@ transition ::= if expr resume ID                       //resume切换的状态�
       ｜ if expr restart ID                        //restart切换的状态迁移语句
 */
 state_machine : 'automaton'  ID?   state_decl+;   //状态机声明
-state_decl  :  'initial' ?  'final' ? 'state' ID             //状态声明
-            ( 'unless' ( transition ';' )+ )?           //强迁移列表
+state_decl  :  INITIAL?  FINAL? 'state' ID             //状态声明
+            ( unless_tran )?           //强迁移列表
             data_def                            //状态内语句
-            ( 'until' ( transition ';' )* )?               //弱迁移列表
+            ( until_tran )?               //弱迁移列表
             ;
 
 data_def : equation                                             #state_machine_data_def_equation    //等式
          | local_block ? ( 'let' ( equation ';' )* 'tel' )?     #state_machine_data_def_local_block    //子变量和等式列表
 
          ;
+//为了在visitor中区分transition到底是强迁移还是弱迁移，所以分开书写
+unless_tran : UNLESS ( transition ';' )+;
+until_tran : UNTIL ( transition ';' )*;
 
 transition : 'if' expr 'resume' ID                              #state_machine_transition_resume     //resume切换的状态迁移语句
            |'if' expr 'restart' ID                              #state_machine_transition_restart   //restart切换的状态迁移语句
@@ -362,11 +394,11 @@ expr : simple_expr 		            #expr_simple_expr           //简单表达式
 	| array_expr			        #expr_array_expr            //数组运算表达式
 //	| array_expr expr               #expr_array_expr_expr       //数组运算表达式
 	| struct_expr			        #expr_struct_expr           //结构体运算表达式
-	| mixed_constructor		        #expr_mixed_constructor     //mix运算表达式
+	| mixed_constructor             #expr_mixed_constructor     //mix运算表达式
 	| switch_expr 			        #expr_switch_expr           //条件分支表达式
 	| '(' expr ')'                  #expr_paren                 //括号表达式
 	| apply_expr			        #expr_apply_expr            //prefix和高阶运算表达式。
-    | kind2_expr                    #expr_kind2
+	| kind2_expr                    #expr_kind2_expr
 	;
 
 list : ( simple_expr (',' simple_expr)* )?;				//表达式列表
@@ -374,12 +406,18 @@ list : ( simple_expr (',' simple_expr)* )?;				//表达式列表
 /*
 = (activate <node_name> every <clock>)(<input_1>, <input_2>, ...)
 = (restart n every c)(x1, ..., xn)
+(activate (restart n every r) every c)(a1, ..., an)
+(activate n every c restart every r)(a1, ..., an)
 */
 
 kind2_expr:activate_expr | restart_expr;
-activate_expr: '(activate' ID 'every' ID ')' params;
-restart_expr: '(restart' ID 'every' ID ')' params;
-
+activate_expr: '('activate')' kind2_param
+                |'(''activate' '('restart')' 'every' ID ')' kind2_param ;
+restart_expr: '('restart')'kind2_param
+                | '('activate 'restart' 'every' ID')' kind2_param;
+kind2_param: '('(ID|atom) (','(ID|atom))*')';
+activate: 'activate' ID 'every' ID ;
+restart: 'restart' ID 'every' ID ;
 /*时态运算表达式
 tempo_expr ::= pre simple_expr 							//pre表达式
             | simple_expr -> simple_expr					//arrow表达式
@@ -387,6 +425,7 @@ tempo_expr ::= pre simple_expr 							//pre表达式
             | simple_expr fby simple_expr				//不带常数的fby表达式
             | simple_expr when clock_expr				//when表达式
             | merge ID (simple_expr)  (simple_expr)		//merge表达式
+Kind2: merge( <clock> ; <e_1> ; <e_2> )
 */
 tempo_expr  : 'pre' simple_expr 							#tempo_expr_pre         //pre表达式
             | simple_expr '->' tempo_expr				    #tempo_expr_arrow_tempo         //arrow表达式
@@ -395,13 +434,14 @@ tempo_expr  : 'pre' simple_expr 							#tempo_expr_pre         //pre表达式
             | simple_expr 'fby' simple_expr				    #tempo_expr_fby_noconst//不带常数的fby表达式
 			| simple_expr 'when' clock_expr				    #tempo_expr_when        //when表达式
 			| 'merge' ID (simple_expr)  (simple_expr)		#tempo_expr_merge       //merge表达式
+			| 'merge' '(' merge_expr (';' merge_expr)* ')'                          #tempo_kind2_merge
 			//| 'current' simple_expr                      //lv6 current运算
 			;
 
 /*布尔运算
 bool_expr ::= #（list）									//bool运算表达式
 */
-bool_expr : '#'? '('? list ')'?;									//bool运算表达式     //修改，原：  '#'? '('? list ')'?
+bool_expr : '#' '('? list ')'?;									//bool运算表达式     //修改，原：  '#'? '('? list ')'?
 
 /*
 数组运算
@@ -437,6 +477,7 @@ index : '[' simple_expr ']';
 label_or_index : '.' ID             #mix_label
 			| index                 #mix_index
 			;
+
 /*
 条件分支运算
 swith_expr ::= if simple_expr then simple_expr else simple_expr 	//ifelse运算
@@ -484,13 +525,19 @@ interator ::= map | fold | mapi | foldi
 		| mapfold
 
 */
-apply_expr : prefix_operator '('list')'                                                         #apply_prefix
-            | iterator  '<<' prefix_operator','  const_expr '>>''('list')'                      #apply_iterator
-            | iterator_lv6  '<<' list '>>''('list')'                                            #apply_iterator_lv6
-            | 'mapw'  '<<' prefix_operator',' const_expr '>>''if' simple_expr 'default' '('list')''('list')'    #apply_mapw
-            | 'mapwi'  '<<'prefix_operator','  const_expr'>>' 'if' simple_expr 'default' '('list')''('list')'   #apply_mapwI
-            | 'foldw'   '<<' prefix_operator','  const_expr '>>' 'if' simple_expr'('list')'     #apply_foldw
-            | 'foldwi'  '<<'prefix_operator','  const_expr'>>' 'if' simple_expr'('list')'       #apply_foldwi
+
+apply_expr : prefix_operator '('list')'                                                                         #apply_prefix
+//            | iterator  '<<' prefix_operator','  const_expr '>>''('list')'                                     #apply_iterator
+            | 'map'  '<<' prefix_operator';'  const_expr '>>''('list')'                                         #apply_map
+            | 'fold'  '<<' prefix_operator';'  const_expr '>>''('list')'                                        #apply_fold
+            | 'mapi'  '<<' prefix_operator';'  const_expr '>>''('list')'                                        #apply_mapi
+            | 'foldi'  '<<' prefix_operator';'  const_expr '>>''('list')'                                       #apply_foldi
+            | 'mapfold'  '<<' prefix_operator';'  const_expr '>>''('list')'                                     #apply_mapfold
+//            | 'boolred'  '<<' const_expr','  const_expr (','const_expr)? '>>' '('list')'                        #apply_boolred
+            | 'mapw'  '<<' prefix_operator';' const_expr '>>''if' simple_expr 'default' '('list')''('list')'    #apply_mapw
+            | 'mapwi'  '<<'prefix_operator';'  const_expr'>>' 'if' simple_expr 'default' '('list')''('list')'   #apply_mapwi
+            | 'foldw'   '<<' prefix_operator';'  const_expr '>>' 'if' simple_expr'('list')'                     #apply_foldw
+            | 'foldwi'  '<<'prefix_operator';'  const_expr'>>' 'if' simple_expr'('list')'                       #apply_foldwi
             ;
 
 prefix_operator : ID                              #perfix_ID
@@ -500,29 +547,25 @@ prefix_operator : ID                              #perfix_ID
 		        | '(' 'make' ID ')'				      #perfix_make      //make运算        //修改
 		        | '(' 'flatten' ID ')'				  #perfix_flatten      //flatten运算        //修改
 		        ;
-prefix_unary_operator : '+$' | '-$' | 'not$' | 'short$' | 'int$' | 'float$' | 'real$'
-                        |'not'|'fby'|'pre'|'current'|'->'|'and'|'or'|'xor'
-                        | '=>'|'='|'<>'|'<'|'<='|'>'|'>='|'div'|'mod'|'-'|'+'|'*'|'/'|'if';
+prefix_unary_operator : '+$' | '-$' | 'not$' | 'short$' | 'int$' | 'float$' | 'real$';
+//                        |'not'|'fby'|'pre'|'current'|'->'|'and'|'or'|'xor'
+//                        | '=>'|'='|'<>'|'<'|'<='|'>'|'>='|'div'|'mod'|'-'|'+'|'*'|'/'|'if';
 prefix_binary_operator : '$+$' | '$-$' | '$*$' | '$/$' | '$mod$' | '$div$'
                         | '$=$' | '$<>$' | '$<$' | '$>$' | '$<=$' | '$>=$'
  		                | '$and$' | '$or$' | '$xor$'
  		                ;
-iterator : 'map'                                    #iterator_map
-        | 'fold'                                    #iterator_fold
-        | 'mapi'                                    #iterator_mapi
-        | 'foldi'                                   #iterator_foldi
-        | 'mapfold'                                 #iterator_mapfold
-        | 'red'                                     #iterator_red
-        | 'fill'                                    #iterator_fill
-        | 'fillred'                                 #iterator_fillred
-        | 'boolred'                                 #iterator_boolred
-        ;
-iterator_lv6: 'red'                                     #iterator_lv6_red
-            | 'fill'                                    #iterator_lv6_fill
-            | 'fillred'                                 #iterator_lv6_fillred
-            | 'boolred'                                 #iterator_lv6_boolred
-        ;
+//下面5行改到上一级的 apply_expr 中实现
+//iterator : 'map'                                    #iterator_map
+//        | 'fold'                                    #iterator_fold
+//        | 'mapi'                                    #iterator_mapi
+//        | 'foldi'                                   #iterator_foldi
+//        | 'mapfold'                                 #iterator_mapfold
 
+//        | 'red'                                     #iterator_red
+//        | 'fill'                                    #iterator_fill
+//        | 'fillred'                                 #iterator_fillred
+//        | 'boolred'                                 #iterator_boolred
+//        ;
 /*
 simple_expr ::= ID									//变量或常量id
 		| atom									//基本常量表达式
@@ -550,7 +593,7 @@ simple_expr : ID                                                #simple_expr_id
         | simple_expr  bin_relation_op  simple_expr             #simple_expr_bin_relation        	//二元比较运算
 		| type  simple_expr                                     #simple_expr_type        	//强制类型转换，修改，删掉了括号，expr中有对应括号实现
             //数组初始化运算
-
+        | bin_relation_op kind2_expr                            #simple_kind2_expr
 //	    | type '^' '('? const_expr ')'?
 
 //        |  type
@@ -591,6 +634,17 @@ atom    : BOOL        #atom_BOOL          //bool常量      //true|false
         | SHORT       #atom_SHORT          //带符号16位整型常量
         ;
 
+//Kind2_merge
+merge_expr: ID
+            |tempo_expr
+            |kind2_expr
+            ;
+
+//状态机的词法符号,得放在上面，不然会被识别为string
+INITIAL: 'initial';
+FINAL: 'final';
+UNLESS: 'unless';
+UNTIL: 'until';
 
 //类型定义
 BOOL: 'true' | 'false';
@@ -604,17 +658,20 @@ USHORT: INTEGER 'us';
 SHORT: INTEGER 's';
 
 // ~ is used internally. Users should not use it.
-ID: [a-zA-Z_~!][a-zA-Z_0-9~!]*;
+ID: [a-zA-Z_~!][a-zA-Z_0-9~!]*; //匹配标识符
 
-SL_COMMENT: '--' ~[\r\n]* -> skip;
-ML_COMMENT: '(*' .*? '*)' -> skip;
-MLX_COMMENT: '/*' .*? '*/' -> skip;
+//CONTRACT: '(*@contract' .*? '*)' | '/*@contract' .*? '*/';
+SL_COMMENT: '--' ~[%\r\n]* -> skip;
+ML_COMMENT: (('/*'~[@].*?'*/') | '(''*'~[@].*?'*'')') -> skip;
 PRAGMA: '%' .*? ('\r'? '\n' | EOF) -> skip;
 STRING: '"' (~[ %\r\n])* '"';
 
+MAIN : '--%MAIN';
+PROPERTY: '--%PROPERTY' ~[;\r\n]*;
+CHECK: 'check' ~[;\r\n]*;
 
 
 
-WS: [ \t\n\r\f]+ -> skip;
+WS: [ \t\n\r\f]+ -> skip;   //丢弃空白字符
 ERROR: .;
 

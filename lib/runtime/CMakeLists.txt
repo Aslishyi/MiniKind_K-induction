@@ -8,28 +8,28 @@ if (NOT ANTLR_BUILD_SHARED AND NOT ANTLR_BUILD_STATIC)
 endif()
 
 include_directories(
-  ${PROJECT_SOURCE_DIR}/runtime/src
-  ${PROJECT_SOURCE_DIR}/runtime/src/atn
-  ${PROJECT_SOURCE_DIR}/runtime/src/dfa
-  ${PROJECT_SOURCE_DIR}/runtime/src/internal
-  ${PROJECT_SOURCE_DIR}/runtime/src/misc
-  ${PROJECT_SOURCE_DIR}/runtime/src/support
-  ${PROJECT_SOURCE_DIR}/runtime/src/tree
-  ${PROJECT_SOURCE_DIR}/runtime/src/tree/pattern
-  ${PROJECT_SOURCE_DIR}/runtime/src/tree/xpath
+        src
+        src/atn
+        src/dfa
+        src/internal
+        src/misc
+        src/support
+        src/tree
+        src/tree/pattern
+        src/tree/xpath
 )
 
 
 file(GLOB libantlrcpp_SRC
-  "${PROJECT_SOURCE_DIR}/runtime/src/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/atn/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/dfa/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/internal/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/misc/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/support/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/tree/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/tree/pattern/*.cpp"
-  "${PROJECT_SOURCE_DIR}/runtime/src/tree/xpath/*.cpp"
+  "src/*.cpp"
+  "src/atn/*.cpp"
+  "src/dfa/*.cpp"
+  "src/internal/*.cpp"
+  "src/misc/*.cpp"
+  "src/support/*.cpp"
+  "src/tree/*.cpp"
+  "src/tree/pattern/*.cpp"
+  "src/tree/xpath/*.cpp"
 )
 
 if (ANTLR_BUILD_SHARED)
@@ -72,7 +72,7 @@ if (ANTLR_BUILD_CPP_TESTS)
   FetchContent_MakeAvailable(googletest)
 
   file(GLOB libantlrcpp_TESTS
-    "${PROJECT_SOURCE_DIR}/runtime/tests/*.cpp"
+    "tests/*.cpp"
   )
 
   add_executable(
@@ -184,7 +184,7 @@ if (TARGET antlr4_static)
           RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif()
 
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/runtime/src/"
+install(DIRECTORY "src"
         DESTINATION "include/antlr4-runtime"
         COMPONENT dev
         FILES_MATCHING PATTERN "*.h"

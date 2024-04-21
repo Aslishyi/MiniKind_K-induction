@@ -15,9 +15,11 @@ ConstSymbol::ConstSymbol(const std::string &name, Symbol::Type type, std::shared
 ConstSymbol::ConstSymbol(const std::string &name, Symbol::Type type, std::shared_ptr<antlr4::Token> token,
                          std::shared_ptr<Scope> scope,
                          std::shared_ptr<TypeDefSymbol> typeDefSymbol, Symbol::Type defType,
-                         Symbol::varType constValueType, std::any constValue) : Symbol(
-        name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType), constValueType(constValueType),
-                                                                                constValue(std::move(constValue)) {
+                         Symbol::varType constValueType, std::any constValue,
+                         bool isValueVerify, LustreParser::Const_declContext *constCtx) :
+        Symbol(name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType),
+        constValueType(constValueType),
+        constValue(std::move(constValue)), constCtx(constCtx), isValueVerify(isValueVerify) {
 
 }
 
@@ -35,11 +37,11 @@ std::string ConstSymbol::getDefTypeString(Type defType) const {
             return constArray->toAstString();
         case BASETYPE:
             return getTypeStringInCaps(constValueType) +
-                   "(" + LustreVisitorTool::properTypeToString(constValue) + ")";
+                   "(" + getConstValueString() + ")";
         case REFERENCE:
             return "ref(" + constID->toAstString() + ")";
         case STRUCT:
-            return constStruct->toAstString();
+            return "structValue(" + constStruct->toAstString() + ")";
         default:
             return Symbol::getTypeString(type);
     }
@@ -52,28 +54,41 @@ std::string ConstSymbol::toShortAstString() const {
            "," + getDefTypeString(defType);
 }
 
+std::string ConstSymbol::toShortLusString() const {
+
+
+    return name + " : " + (typeDefSymbol ? typeDefSymbol->getDefTypeLusString(typeDefSymbol->getDefType()) : "") +
+           "=" + getDefTypeLusString(defType);
+}
+
 
 ConstSymbol::ConstSymbol(const std::string &name, Symbol::Type type, std::shared_ptr<antlr4::Token> token,
                          std::shared_ptr<Scope> scope,
                          std::shared_ptr<TypeDefSymbol> typeDefSymbol, Symbol::Type defType,
-                         std::shared_ptr<ConstArray> constArray) : Symbol(
-        name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType), constArray(constArray) {
+                         std::shared_ptr<ConstArray> constArray, bool isValueVerify,
+                         LustreParser::Const_declContext *constCtx) : Symbol(
+        name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType), constArray(constArray),
+                                                                      isValueVerify(isValueVerify), constCtx(constCtx) {
 
 }
 
 ConstSymbol::ConstSymbol(const std::string &name, Symbol::Type type, std::shared_ptr<antlr4::Token> token,
                          std::shared_ptr<Scope> scope,
                          std::shared_ptr<TypeDefSymbol> typeDefSymbol, Symbol::Type defType,
-                         std::shared_ptr<ConstStruct> constArray) : Symbol(
-        name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType), constStruct(constArray) {
+                         std::shared_ptr<ConstStruct> constArray, bool isValueVerify,
+                         LustreParser::Const_declContext *constCtx) : Symbol(
+        name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType), constStruct(constArray),
+                                                                      isValueVerify(isValueVerify), constCtx(constCtx) {
 
 }
 
 ConstSymbol::ConstSymbol(const std::string &name, Symbol::Type type, std::shared_ptr<antlr4::Token> token,
                          std::shared_ptr<Scope> scope,
                          std::shared_ptr<TypeDefSymbol> typeDefSymbol, Symbol::Type defType,
-                         std::shared_ptr<ConstID> constId) : Symbol(
-        name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType), constID(constId) {
+                         std::shared_ptr<ConstID> constId, bool isValueVerify,
+                         LustreParser::Const_declContext *constCtx) : Symbol(
+        name, type, token, scope), typeDefSymbol(typeDefSymbol), defType(defType), constID(constId),
+                                                                      isValueVerify(isValueVerify), constCtx(constCtx) {
 
 }
 
@@ -106,9 +121,72 @@ std::shared_ptr<ConstID> ConstSymbol::getConstID() const {
 }
 
 ConstSymbol &ConstSymbol::setConstType(std::shared_ptr<TypeDefSymbol> typeDefSymbol) {
-    this-> typeDefSymbol=typeDefSymbol;
+    this->typeDefSymbol = typeDefSymbol;
     return *this;
 }
+
+std::string ConstSymbol::getConstValueString() const {
+    return LustreVisitorTool::properTypeToString(constValue);
+}
+
+std::shared_ptr<TypeDefSymbol> ConstSymbol::getDefTypeSymbol() const {
+    return typeDefSymbol;
+}
+
+const bool &ConstSymbol::getIsValueVerify() const {
+    return isValueVerify;
+}
+
+ConstSymbol &ConstSymbol::setIsValueVerify(bool isValueVerify) {
+    this->isValueVerify = isValueVerify;
+    return *this;
+}
+
+LustreParser::Const_declContext *const ConstSymbol::getConstCtx() const {
+    return constCtx;
+}
+
+ConstSymbol &ConstSymbol::setConstCtx(LustreParser::Const_declContext *constCtx) {
+    this->constCtx = constCtx;
+    return *this;
+}
+
+ConstSymbol &ConstSymbol::setConstValue(std::any constValue) {
+    this->constValue = constValue;
+    return *this;
+}
+
+ConstSymbol &ConstSymbol::setConstValueType(varType constValueType) {
+    this->constValueType = constValueType;
+    return *this;
+}
+
+ConstSymbol &ConstSymbol::setDefType(Symbol::Type type) {
+    this->defType = type;
+    return *this;
+}
+
+std::string ConstSymbol::getDefTypeLusString(Symbol::Type defType) const {
+    switch (defType) {
+        case ARRAY:
+            return " [ "+ constArray->toLusString() +" ] ";
+        case BASETYPE:
+            return getConstValueString();
+        case REFERENCE:
+            return  constID->getConstID() ;
+        case STRUCT:
+            return " { " + constStruct->toLusString() + " } ";
+        default:
+            return Symbol::getTypeString(type);
+    }
+}
+
+std::string ConstSymbol::toLusString() const {
+    return "const " + toShortLusString() ;
+
+}
+
+
 
 
 

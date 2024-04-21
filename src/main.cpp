@@ -8,14 +8,14 @@
 #include "Translation/LustreNode.h"
 #include "Tool/CheckTool.h"
 #include "Translation/VarStateList.h"
-#include <iostream>
 #include <memory>
 #include "lustre/generated/LustreLexer.h"
 #include "lustre/generated/LustreParser.h"
-#include "CommonToken.h"
 #include "tree/ParseTree.h"
 #include "lustre/visitor/MyLustreVisitor.h"
 #include "lustre/visitor/SymbolVisitor.h"
+#include "lustre/visitor/SecondSymbolVisitor.h"
+#include "lustre/tool/SpdlogTool.h"
 #include <z3++.h>
 using namespace std;
 
@@ -23,58 +23,52 @@ int main(int argc, char **argv) {
 #ifdef __WIN32
     system("chcp 65001");         //解决windows下中文编码问题
 #endif
-    /*============================== 项目模块一: L2C解析模块 ======================================*/
-//    cout << "==============================================";
-//    std::cout << "输入:";
-//    cout << "==============================================" << endl;
-    string inputFile;
-    if (argc >= 2) {
-        inputFile = argv[1];
-        cout << "inputFile : " << inputFile << endl;
-    } else {        //在build目录下新建test.Lustre，可以将测试数据复制进去使用
-        cout << "使用默认路径 : " << "./test.Lustre" << endl;
-        inputFile = "./test.Lustre";
-    }
 
-    auto inputStream = make_unique<ifstream>(inputFile);
-    if (inputStream->is_open()) {
+    /*============================== 项目模块一:  L2C解析模块 ======================================*/
+    string inputFile = "G:\\Github\\MiniKind_k-induction\\src\\input.Lustre";
+    //设置日志输出级别
+    spdlog::set_level(spdlog::level::info);
+    string inputString;
 
-        auto input = make_unique<antlr4::ANTLRInputStream>(*inputStream);
-        auto lexer = make_unique<LustreLexer>(input.get());
-        auto tokens = make_unique<antlr4::CommonTokenStream>(lexer.get());
-//            tokens->fill();
-//    for (auto token: tokens->getTokens()) {
-//        std::cout << token->toString() << std::endl;
-//    }
-
-        auto parser = make_unique<LustreParser>(tokens.get());
-        antlr4::tree::ParseTree *tree = parser->program();
-//        cout << "==============================================";
-//        std::cout << "语法树";
-//        cout << "==============================================" << endl;
-//        cout << tree->toStringTree(parser.get()) << endl;
-        tree->toStringTree(parser.get());
-//        cout << "==============================================";
-//        std::cout << "符号表";
-//        cout << "==============================================" << endl;
-        //预先构建符号表
-        auto symbolVisitor = make_unique<SymbolVisitor>();
-        symbolVisitor->visit(tree);
-
-//        cout << "==============================================";
-//        std::cout << "转换后";
-//        cout << "==============================================" << endl;
-        //转换语法
-        auto myLustreVisitor = make_unique<MyLustreVisitor>(symbolVisitor->scopes, symbolVisitor->globals);
-        myLustreVisitor->visit(tree);
-//        antlr4::tree::ParseTree *processedTree = myLustreVisitor->getProcessedTree();
-
-        inputStream->close();
+    auto inputStream = make_unique<ifstream>();
+    std::unique_ptr<antlr4::ANTLRInputStream> input;
+    if (!inputFile.empty()) {
+        // 读入数据流
+        inputStream->open(inputFile);
+        //文件无法打开
+        if (!inputStream->is_open()) {
+            SpdlogTool::logErr->error("文件无法打开:" + inputFile);
+            return -1;
+        }
+        input = make_unique<antlr4::ANTLRInputStream>(*inputStream);
     } else {
-        cout << "文件无法打开" << endl;
-        //return 1;
+        // 从字符串中创建输入流
+        input = make_unique<antlr4::ANTLRInputStream>(inputString);
     }
+    //新建词法分析器处理数据流
+    auto lexer = make_unique<LustreLexer>(input.get());
+    //新建词法符号缓冲区 存储词法分析器将生成的词法符号
+    auto tokens = make_unique<antlr4::CommonTokenStream>(lexer.get());
+    //新建语法分析器处理词法符号缓冲区内容
+    auto parser = make_unique<LustreParser>(tokens.get());
+    //新建一个通用的、能触发回调函数的语法分析树遍历器
+    antlr4::tree::ParseTree *tree = parser->program();
 
+    //预先构建符号表
+    auto symbolVisitor = make_unique<SymbolVisitor>();
+    symbolVisitor->visit(tree);
+    //二次遍历，解决符号表先调用后定义问题
+    auto secondSymbolVisitor = make_unique<SecondSymbolVisitor>(symbolVisitor->scopes, symbolVisitor->globals);
+    secondSymbolVisitor->visit(tree);
+    //转换语法
+    auto myLustreVisitor = make_unique<MyLustreVisitor>(secondSymbolVisitor->scopes, secondSymbolVisitor->globals);
+    //输出转换后的语法
+    auto SSA = std::any_cast<std::string>(myLustreVisitor->visit(tree));
+
+    inputStream->close();
+
+    std::cout<<SSA<<std::endl;
+    ExportOutput::exportOutputToFile("SSA.lustre", SSA);
 
     /*============================== 项目模块二:  模型验证模块 ======================================*/
     //将控制台输出信息转移到cmdMessage.txt
@@ -84,7 +78,7 @@ int main(int argc, char **argv) {
 
 
     // 从Lustre文件中读取lustre代码;
-    string inFilename = "input.Lustre";
+    string inFilename = "SSA.lustre";
     string outFilename = "output.txt";
     string lustreContent = GetInput::getInputByFilename(inFilename);
 

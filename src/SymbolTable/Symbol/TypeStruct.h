@@ -16,15 +16,20 @@ public:
     TypeStruct();
 
     //array类型的构造函数
-     explicit TypeStruct(std::unordered_set<std::shared_ptr<TypeDefSymbol>> structVector);
+     explicit TypeStruct(std::vector<std::shared_ptr<TypeDefSymbol>> structVector);
 
     //打印具体的symbol类型：包括array，基础类型打印
     std::string toAstString() const;
 
+    std::string toLusString() const;
 
-    const std::unordered_set<std::shared_ptr<TypeDefSymbol>> &getStructSet() const;
+    bool isEqual(std::shared_ptr<TypeStruct> typeStruct);
+    std::shared_ptr<TypeDefSymbol> getFieldSymbolByName(const std::string& fieldName);
+
+
+    const std::vector<std::shared_ptr<TypeDefSymbol>> &getStructSet() const;
 protected:
-    std::unordered_set<std::shared_ptr<TypeDefSymbol>> structSet;
+    std::vector<std::shared_ptr<TypeDefSymbol>> structVector;
 
 };
 

@@ -1,26 +1,41 @@
 ====================LustreNode类信息==========================
 NodeName: : [Counter]
-NodeInput: : [init1: int;  init2: int; ]
-NodeOutput: [count1: int; count2: int; ]
-NodeVars: [x: int; y: int; t: int; ]
-NodeBodys: [init1 = x + 1;; init2 = y + 1;; count1 = init1 -> pre count1 + 1;; count1 = count1 + x;; t = 0 -> if reset or pre t = max then 0 else pre t + 1;; count2 = t + 2;; ]
+NodeInput: : [init1 : int;  init2 : int; ]
+NodeOutput: [count1 : int; count2 : int; ]
+NodeVars: [x : int; y : int; t : int; count1_0 : int; count1_1 : int; ]
+NodeBodys: [init1 = x + 1;; init2 = y + 1;; count1_0 = init1 -> pre count1 + 1;; count1_1 = count1_0 + x;; count2 = t + 2;; count1 = count1_1;; ]
 NodeStates:
 From [init1] to [x + 1]
 From [init2] to [y + 1]
-From [count1] to [init1 -> pre count1 + 1]
-From [count1] to [count1 + x]
-From [t] to [0 -> if reset or pre t = max then 0 else pre t + 1]
+From [count1_0] to [init1 -> pre count1 + 1]
+From [count1_1] to [count1_0 + x]
 From [count2] to [t + 2]
+From [count1] to [count1_1]
 ====================VarStateList类信息==========================
 
 [count1]'s state:
 1.VarName is: [count1], VarType is: [int]
 2.[count1]'s Pre:
-{count1 + x}
+{count1_1}
 3.[count1]'s Guard:
 4.[count1]'s Translate:
-{init1 -> pre count1 + 1}
 5.[count1]'s Post:
+
+[count1_0]'s state:
+1.VarName is: [count1_0], VarType is: [int]
+2.[count1_0]'s Pre:
+3.[count1_0]'s Guard:
+4.[count1_0]'s Translate:
+{init1 -> pre count1 + 1}
+5.[count1_0]'s Post:
+
+[count1_1]'s state:
+1.VarName is: [count1_1], VarType is: [int]
+2.[count1_1]'s Pre:
+{count1_0 + x}
+3.[count1_1]'s Guard:
+4.[count1_1]'s Translate:
+5.[count1_1]'s Post:
 
 [count2]'s state:
 1.VarName is: [count2], VarType is: [int]
@@ -49,13 +64,9 @@ From [count2] to [t + 2]
 [t]'s state:
 1.VarName is: [t], VarType is: [int]
 2.[t]'s Pre:
-{0}
 3.[t]'s Guard:
-{reset or pre t = max}
 4.[t]'s Translate:
-{pre t + 1}
 5.[t]'s Post:
-{0}
 
 [x]'s state:
 1.VarName is: [x], VarType is: [int]

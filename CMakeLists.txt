@@ -25,6 +25,10 @@ include_directories(${INCLUDE_DIR})
 # Z3库
 find_package(Z3 REQUIRED)
 
+
+
+include_directories(${ANTLR4_INCLUDE_DIR} ${PROJECT_BINARY_DIR})
+
 # Vcpkg设置
 option(VCPKG_CMAKE "设置使用vcpkg安装依赖" OFF)
 if(VCPKG_CMAKE)
@@ -41,22 +45,26 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 if(VCPKG_CMAKE)
     find_package(antlr4-runtime CONFIG REQUIRED)
     find_package(antlr4-generator CONFIG REQUIRED)
+    find_package(spdlog CONFIG REQUIRED)
 endif()
 
 if(NOT VCPKG_CMAKE)
-    add_subdirectory(runtime)
+    add_subdirectory(lib/runtime)
     set(ANTLR4_INCLUDE_DIR
-            ${PROJECT_SOURCE_DIR}/runtime/src
-            ${PROJECT_SOURCE_DIR}/runtime/src/atn
-            ${PROJECT_SOURCE_DIR}/runtime/src/dfa
-            ${PROJECT_SOURCE_DIR}/runtime/src/internal
-            ${PROJECT_SOURCE_DIR}/runtime/src/misc
-            ${PROJECT_SOURCE_DIR}/runtime/src/support
-            ${PROJECT_SOURCE_DIR}/runtime/src/tree
-            ${PROJECT_SOURCE_DIR}/runtime/src/tree/pattern
-            ${PROJECT_SOURCE_DIR}/runtime/src/tree/xpath
+            lib/runtime/src
+            lib/runtime/src/atn
+            lib/runtime/src/dfa
+            lib/runtime/src/internal
+            lib/runtime/src/misc
+            lib/runtime/src/support
+            lib/runtime/src/tree
+            lib/runtime/src/tree/pattern
+            lib/runtime/src/tree/xpath
     )
+    # spdlog的部分配置
+    add_subdirectory(lib/spdlog-1.13.0)
 endif()
+include_directories(${ANTLR4_INCLUDE_DIR} ${PROJECT_BINARY_DIR})
 
 include_directories(
         ${Boost_INCLUDE_DIR}
@@ -93,6 +101,7 @@ file(GLOB_RECURSE Ql2c_SRC
 
 add_executable(
         MiniKind_k-induction src/main.cpp ${Ql2c_SRC}
+        src/Lustre/expr/ApplyExprVisitor.h
 )
 
 add_dependencies(
@@ -103,6 +112,7 @@ add_dependencies(
 target_link_libraries(
         MiniKind_k-induction
         antlr4_static
+        spdlog::spdlog
         ${Z3_LIBRARIES}  # 链接z3库
         ${Boost_LIBRARY_DIR}
 )

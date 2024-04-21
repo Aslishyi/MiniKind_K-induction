@@ -1,5 +1,5 @@
 
-// Generated from Lustre.g4 by ANTLR 4.13.1
+// Generated from ./Lustre.g4 by ANTLR 4.13.1
 
 #pragma once
 
@@ -49,27 +49,7 @@ public:
 
     virtual std::any visitDecls_user_op(LustreParser::Decls_user_opContext *context) = 0;
 
-    virtual std::any visitDecls_kind2(LustreParser::Decls_kind2Context *context) = 0;
-
-    virtual std::any visitDecls_mode(LustreParser::Decls_modeContext *context) = 0;
-
-    virtual std::any visitDecls_ghost_var(LustreParser::Decls_ghost_varContext *context) = 0;
-
-    virtual std::any visitDecls_assume(LustreParser::Decls_assumeContext *context) = 0;
-
-    virtual std::any visitDecls_guarantee(LustreParser::Decls_guaranteeContext *context) = 0;
-
-    virtual std::any visitMode_decl(LustreParser::Mode_declContext *context) = 0;
-
-    virtual std::any visitRequirement(LustreParser::RequirementContext *context) = 0;
-
-    virtual std::any visitAssurance(LustreParser::AssuranceContext *context) = 0;
-
-    virtual std::any visitVar_decl(LustreParser::Var_declContext *context) = 0;
-
-    virtual std::any visitAssume_decl(LustreParser::Assume_declContext *context) = 0;
-
-    virtual std::any visitGuarantee_decl(LustreParser::Guarantee_declContext *context) = 0;
+    virtual std::any visitDecls_contract_node(LustreParser::Decls_contract_nodeContext *context) = 0;
 
     virtual std::any visitType_block(LustreParser::Type_blockContext *context) = 0;
 
@@ -151,27 +131,63 @@ public:
 
     virtual std::any visitOp_body_ctx(LustreParser::Op_body_ctxContext *context) = 0;
 
-    virtual std::any visitContract_statement(LustreParser::Contract_statementContext *context) = 0;
-
-    virtual std::any visitMerge_decl(LustreParser::Merge_declContext *context) = 0;
-
-    virtual std::any visitLet_block_equation(LustreParser::Let_block_equationContext *context) = 0;
-
-    virtual std::any visitLet_block_kind2_kind2_Statement(LustreParser::Let_block_kind2_kind2_StatementContext *context) = 0;
-
-    virtual std::any visitLet_block_kind2_frame_block(LustreParser::Let_block_kind2_frame_blockContext *context) = 0;
+    virtual std::any visitContract(LustreParser::ContractContext *context) = 0;
 
     virtual std::any visitLocal_block(LustreParser::Local_blockContext *context) = 0;
 
-    virtual std::any visitKind2_Statement(LustreParser::Kind2_StatementContext *context) = 0;
+    virtual std::any visitLet_block_equation(LustreParser::Let_block_equationContext *context) = 0;
 
-    virtual std::any visitMainStatement(LustreParser::MainStatementContext *context) = 0;
+    virtual std::any visitLet_block_k2_property(LustreParser::Let_block_k2_propertyContext *context) = 0;
 
-    virtual std::any visitPropertyStatement(LustreParser::PropertyStatementContext *context) = 0;
+    virtual std::any visitLet_block_k2_if_block(LustreParser::Let_block_k2_if_blockContext *context) = 0;
 
-    virtual std::any visitCheckStatement(LustreParser::CheckStatementContext *context) = 0;
+    virtual std::any visitLet_block_k2_frame_block(LustreParser::Let_block_k2_frame_blockContext *context) = 0;
 
-    virtual std::any visitFrame_block(LustreParser::Frame_blockContext *context) = 0;
+    virtual std::any visitExternal_contract(LustreParser::External_contractContext *context) = 0;
+
+    virtual std::any visitContract_body(LustreParser::Contract_bodyContext *context) = 0;
+
+    virtual std::any visitDecls_mode(LustreParser::Decls_modeContext *context) = 0;
+
+    virtual std::any visitDecls_const_ghost_var(LustreParser::Decls_const_ghost_varContext *context) = 0;
+
+    virtual std::any visitDecls_ghost_var(LustreParser::Decls_ghost_varContext *context) = 0;
+
+    virtual std::any visitDecls_assume(LustreParser::Decls_assumeContext *context) = 0;
+
+    virtual std::any visitDecls_guarantee(LustreParser::Decls_guaranteeContext *context) = 0;
+
+    virtual std::any visitDecls_imports(LustreParser::Decls_importsContext *context) = 0;
+
+    virtual std::any visitMode_decl(LustreParser::Mode_declContext *context) = 0;
+
+    virtual std::any visitMode_body(LustreParser::Mode_bodyContext *context) = 0;
+
+    virtual std::any visitRequirement(LustreParser::RequirementContext *context) = 0;
+
+    virtual std::any visitAssurance(LustreParser::AssuranceContext *context) = 0;
+
+    virtual std::any visitKind2_const_item(LustreParser::Kind2_const_itemContext *context) = 0;
+
+    virtual std::any visitKind2_var_item(LustreParser::Kind2_var_itemContext *context) = 0;
+
+    virtual std::any visitAssume_item(LustreParser::Assume_itemContext *context) = 0;
+
+    virtual std::any visitGuarantee_item(LustreParser::Guarantee_itemContext *context) = 0;
+
+    virtual std::any visitImport_item(LustreParser::Import_itemContext *context) = 0;
+
+    virtual std::any visitKind2_if_block(LustreParser::Kind2_if_blockContext *context) = 0;
+
+    virtual std::any visitKind2_if_body(LustreParser::Kind2_if_bodyContext *context) = 0;
+
+    virtual std::any visitKind2_statement_main(LustreParser::Kind2_statement_mainContext *context) = 0;
+
+    virtual std::any visitKind2_statement_property(LustreParser::Kind2_statement_propertyContext *context) = 0;
+
+    virtual std::any visitKind2_statement_check(LustreParser::Kind2_statement_checkContext *context) = 0;
+
+    virtual std::any visitKind2_frame_block(LustreParser::Kind2_frame_blockContext *context) = 0;
 
     virtual std::any visitFrame_init(LustreParser::Frame_initContext *context) = 0;
 
@@ -199,6 +215,10 @@ public:
 
     virtual std::any visitState_machine_data_def_local_block(LustreParser::State_machine_data_def_local_blockContext *context) = 0;
 
+    virtual std::any visitUnless_tran(LustreParser::Unless_tranContext *context) = 0;
+
+    virtual std::any visitUntil_tran(LustreParser::Until_tranContext *context) = 0;
+
     virtual std::any visitState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext *context) = 0;
 
     virtual std::any visitState_machine_transition_restart(LustreParser::State_machine_transition_restartContext *context) = 0;
@@ -223,7 +243,7 @@ public:
 
     virtual std::any visitExpr_apply_expr(LustreParser::Expr_apply_exprContext *context) = 0;
 
-    virtual std::any visitExpr_kind2(LustreParser::Expr_kind2Context *context) = 0;
+    virtual std::any visitExpr_kind2_expr(LustreParser::Expr_kind2_exprContext *context) = 0;
 
     virtual std::any visitList(LustreParser::ListContext *context) = 0;
 
@@ -232,6 +252,12 @@ public:
     virtual std::any visitActivate_expr(LustreParser::Activate_exprContext *context) = 0;
 
     virtual std::any visitRestart_expr(LustreParser::Restart_exprContext *context) = 0;
+
+    virtual std::any visitKind2_param(LustreParser::Kind2_paramContext *context) = 0;
+
+    virtual std::any visitActivate(LustreParser::ActivateContext *context) = 0;
+
+    virtual std::any visitRestart(LustreParser::RestartContext *context) = 0;
 
     virtual std::any visitTempo_expr_pre(LustreParser::Tempo_expr_preContext *context) = 0;
 
@@ -246,6 +272,8 @@ public:
     virtual std::any visitTempo_expr_when(LustreParser::Tempo_expr_whenContext *context) = 0;
 
     virtual std::any visitTempo_expr_merge(LustreParser::Tempo_expr_mergeContext *context) = 0;
+
+    virtual std::any visitTempo_kind2_merge(LustreParser::Tempo_kind2_mergeContext *context) = 0;
 
     virtual std::any visitBool_expr(LustreParser::Bool_exprContext *context) = 0;
 
@@ -279,13 +307,19 @@ public:
 
     virtual std::any visitApply_prefix(LustreParser::Apply_prefixContext *context) = 0;
 
-    virtual std::any visitApply_iterator(LustreParser::Apply_iteratorContext *context) = 0;
+    virtual std::any visitApply_map(LustreParser::Apply_mapContext *context) = 0;
 
-    virtual std::any visitApply_iterator_lv6(LustreParser::Apply_iterator_lv6Context *context) = 0;
+    virtual std::any visitApply_fold(LustreParser::Apply_foldContext *context) = 0;
+
+    virtual std::any visitApply_mapi(LustreParser::Apply_mapiContext *context) = 0;
+
+    virtual std::any visitApply_foldi(LustreParser::Apply_foldiContext *context) = 0;
+
+    virtual std::any visitApply_mapfold(LustreParser::Apply_mapfoldContext *context) = 0;
 
     virtual std::any visitApply_mapw(LustreParser::Apply_mapwContext *context) = 0;
 
-    virtual std::any visitApply_mapwI(LustreParser::Apply_mapwIContext *context) = 0;
+    virtual std::any visitApply_mapwi(LustreParser::Apply_mapwiContext *context) = 0;
 
     virtual std::any visitApply_foldw(LustreParser::Apply_foldwContext *context) = 0;
 
@@ -305,33 +339,9 @@ public:
 
     virtual std::any visitPrefix_binary_operator(LustreParser::Prefix_binary_operatorContext *context) = 0;
 
-    virtual std::any visitIterator_map(LustreParser::Iterator_mapContext *context) = 0;
-
-    virtual std::any visitIterator_fold(LustreParser::Iterator_foldContext *context) = 0;
-
-    virtual std::any visitIterator_mapi(LustreParser::Iterator_mapiContext *context) = 0;
-
-    virtual std::any visitIterator_foldi(LustreParser::Iterator_foldiContext *context) = 0;
-
-    virtual std::any visitIterator_mapfold(LustreParser::Iterator_mapfoldContext *context) = 0;
-
-    virtual std::any visitIterator_red(LustreParser::Iterator_redContext *context) = 0;
-
-    virtual std::any visitIterator_fill(LustreParser::Iterator_fillContext *context) = 0;
-
-    virtual std::any visitIterator_fillred(LustreParser::Iterator_fillredContext *context) = 0;
-
-    virtual std::any visitIterator_boolred(LustreParser::Iterator_boolredContext *context) = 0;
-
-    virtual std::any visitIterator_lv6_red(LustreParser::Iterator_lv6_redContext *context) = 0;
-
-    virtual std::any visitIterator_lv6_fill(LustreParser::Iterator_lv6_fillContext *context) = 0;
-
-    virtual std::any visitIterator_lv6_fillred(LustreParser::Iterator_lv6_fillredContext *context) = 0;
-
-    virtual std::any visitIterator_lv6_boolred(LustreParser::Iterator_lv6_boolredContext *context) = 0;
-
     virtual std::any visitSimple_expr_unary_arith(LustreParser::Simple_expr_unary_arithContext *context) = 0;
+
+    virtual std::any visitSimple_kind2_expr(LustreParser::Simple_kind2_exprContext *context) = 0;
 
     virtual std::any visitSimple_expr_paren(LustreParser::Simple_expr_parenContext *context) = 0;
 
@@ -388,6 +398,8 @@ public:
     virtual std::any visitAtom_USHORT(LustreParser::Atom_USHORTContext *context) = 0;
 
     virtual std::any visitAtom_SHORT(LustreParser::Atom_SHORTContext *context) = 0;
+
+    virtual std::any visitMerge_expr(LustreParser::Merge_exprContext *context) = 0;
 
 
 };

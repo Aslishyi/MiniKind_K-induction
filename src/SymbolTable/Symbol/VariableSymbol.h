@@ -16,11 +16,11 @@ public:
 
 
     //普通Symbol类型的构造函数
-    VariableSymbol(const std::string &name, Type type, std::shared_ptr<antlr4::Token> token,
+    VariableSymbol(const std::string &name, std::shared_ptr<antlr4::Token> token,
                    std::shared_ptr<Scope> scope);
 
     //变量类型的构造函数
-    VariableSymbol(const std::string &name, Type type, std::shared_ptr<antlr4::Token> token,
+    VariableSymbol(const std::string &name,  std::shared_ptr<antlr4::Token> token,
                    std::shared_ptr<Scope> scope, std::shared_ptr<TypeDefSymbol> typeDefSymbol,
                    std::pair<bool, std::string> clockID,std::shared_ptr<ConstSymbol> lastSymbol);
 
@@ -32,11 +32,16 @@ public:
 
     std::shared_ptr<TypeDefSymbol> getTypeDefSymbol() const;
 
+    VariableSymbol &setTypeDefSymbol(std::shared_ptr<TypeDefSymbol> typeDefSymbol);
+
     //when关键字
     const std::pair<bool, std::string> &getClockID() const;
 
     //last关键字
     std::shared_ptr<ConstSymbol> getLastSymbol() const;
+
+    //获得last字段的lus
+    std::string getLastLus() const;
 
 protected:
     //变量的类型

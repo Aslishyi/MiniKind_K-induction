@@ -7,9 +7,10 @@ using std::stringstream;
 Symbol::~Symbol() = default;
 
 Symbol::Symbol(std::string name, Type type,
-               std::shared_ptr<antlr4::Token> token, const std::shared_ptr<Scope>& scope) : name(std::move(name)), type(type),
-                                                                                     token(std::move(token)),
-                                                                                     scope(scope) {
+               std::shared_ptr<antlr4::Token> token, const std::shared_ptr<Scope> &scope) : name(std::move(name)),
+                                                                                            type(type),
+                                                                                            token(std::move(token)),
+                                                                                            scope(scope) {
 }
 
 std::shared_ptr<antlr4::Token> Symbol::getToken() const {
@@ -26,7 +27,7 @@ std::string Symbol::toAstString() const {
 }
 
 
-std::string Symbol::toLustreString() const {
+std::string Symbol::toLusString() const {
     return getTypeString();
 }
 
@@ -38,6 +39,10 @@ std::string Symbol::getTypeString(Type type1) const {
 
         case FUNCTION:
             return "function:" + name;
+        case AUTOMATON:
+            return "Automaton:" + name;
+        case STATE:
+            return "State:" + name;
         default:
             return "unknown:" + name;
 
@@ -49,15 +54,15 @@ std::string Symbol::getVarTypeString(varType varType) {
         case INTEGER:
             return "int";
         case UINT:
-            return "uint";
+            return "uint32";
         case REAL:
             return "real";
         case FLOAT:
-            return "float";
+            return "real";
         case SHORT:
-            return "short";
+            return "int16";
         case USHORT:
-            return "ushort";
+            return "uint16";
         case CHAR:
             return "char";
         case BOOL:
@@ -114,6 +119,11 @@ const Symbol::Type &Symbol::getType() const {
 
 std::weak_ptr<Scope> Symbol::getScope() const {
     return scope;
+}
+
+bool Symbol::isEqual(std::shared_ptr<Symbol> symbol) {
+    //TODO:
+    return false;
 }
 
 

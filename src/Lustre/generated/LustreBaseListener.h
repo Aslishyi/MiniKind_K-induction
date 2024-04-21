@@ -1,5 +1,5 @@
 
-// Generated from Lustre.g4 by ANTLR 4.13.1
+// Generated from ./Lustre.g4 by ANTLR 4.13.1
 
 #pragma once
 
@@ -61,38 +61,8 @@ public:
   virtual void enterDecls_user_op(LustreParser::Decls_user_opContext * /*ctx*/) override { }
   virtual void exitDecls_user_op(LustreParser::Decls_user_opContext * /*ctx*/) override { }
 
-  virtual void enterDecls_kind2(LustreParser::Decls_kind2Context * /*ctx*/) override { }
-  virtual void exitDecls_kind2(LustreParser::Decls_kind2Context * /*ctx*/) override { }
-
-  virtual void enterDecls_mode(LustreParser::Decls_modeContext * /*ctx*/) override { }
-  virtual void exitDecls_mode(LustreParser::Decls_modeContext * /*ctx*/) override { }
-
-  virtual void enterDecls_ghost_var(LustreParser::Decls_ghost_varContext * /*ctx*/) override { }
-  virtual void exitDecls_ghost_var(LustreParser::Decls_ghost_varContext * /*ctx*/) override { }
-
-  virtual void enterDecls_assume(LustreParser::Decls_assumeContext * /*ctx*/) override { }
-  virtual void exitDecls_assume(LustreParser::Decls_assumeContext * /*ctx*/) override { }
-
-  virtual void enterDecls_guarantee(LustreParser::Decls_guaranteeContext * /*ctx*/) override { }
-  virtual void exitDecls_guarantee(LustreParser::Decls_guaranteeContext * /*ctx*/) override { }
-
-  virtual void enterMode_decl(LustreParser::Mode_declContext * /*ctx*/) override { }
-  virtual void exitMode_decl(LustreParser::Mode_declContext * /*ctx*/) override { }
-
-  virtual void enterRequirement(LustreParser::RequirementContext * /*ctx*/) override { }
-  virtual void exitRequirement(LustreParser::RequirementContext * /*ctx*/) override { }
-
-  virtual void enterAssurance(LustreParser::AssuranceContext * /*ctx*/) override { }
-  virtual void exitAssurance(LustreParser::AssuranceContext * /*ctx*/) override { }
-
-  virtual void enterVar_decl(LustreParser::Var_declContext * /*ctx*/) override { }
-  virtual void exitVar_decl(LustreParser::Var_declContext * /*ctx*/) override { }
-
-  virtual void enterAssume_decl(LustreParser::Assume_declContext * /*ctx*/) override { }
-  virtual void exitAssume_decl(LustreParser::Assume_declContext * /*ctx*/) override { }
-
-  virtual void enterGuarantee_decl(LustreParser::Guarantee_declContext * /*ctx*/) override { }
-  virtual void exitGuarantee_decl(LustreParser::Guarantee_declContext * /*ctx*/) override { }
+  virtual void enterDecls_contract_node(LustreParser::Decls_contract_nodeContext * /*ctx*/) override { }
+  virtual void exitDecls_contract_node(LustreParser::Decls_contract_nodeContext * /*ctx*/) override { }
 
   virtual void enterType_block(LustreParser::Type_blockContext * /*ctx*/) override { }
   virtual void exitType_block(LustreParser::Type_blockContext * /*ctx*/) override { }
@@ -214,38 +184,92 @@ public:
   virtual void enterOp_body_ctx(LustreParser::Op_body_ctxContext * /*ctx*/) override { }
   virtual void exitOp_body_ctx(LustreParser::Op_body_ctxContext * /*ctx*/) override { }
 
-  virtual void enterContract_statement(LustreParser::Contract_statementContext * /*ctx*/) override { }
-  virtual void exitContract_statement(LustreParser::Contract_statementContext * /*ctx*/) override { }
-
-  virtual void enterMerge_decl(LustreParser::Merge_declContext * /*ctx*/) override { }
-  virtual void exitMerge_decl(LustreParser::Merge_declContext * /*ctx*/) override { }
-
-  virtual void enterLet_block_equation(LustreParser::Let_block_equationContext * /*ctx*/) override { }
-  virtual void exitLet_block_equation(LustreParser::Let_block_equationContext * /*ctx*/) override { }
-
-  virtual void enterLet_block_kind2_kind2_Statement(LustreParser::Let_block_kind2_kind2_StatementContext * /*ctx*/) override { }
-  virtual void exitLet_block_kind2_kind2_Statement(LustreParser::Let_block_kind2_kind2_StatementContext * /*ctx*/) override { }
-
-  virtual void enterLet_block_kind2_frame_block(LustreParser::Let_block_kind2_frame_blockContext * /*ctx*/) override { }
-  virtual void exitLet_block_kind2_frame_block(LustreParser::Let_block_kind2_frame_blockContext * /*ctx*/) override { }
+  virtual void enterContract(LustreParser::ContractContext * /*ctx*/) override { }
+  virtual void exitContract(LustreParser::ContractContext * /*ctx*/) override { }
 
   virtual void enterLocal_block(LustreParser::Local_blockContext * /*ctx*/) override { }
   virtual void exitLocal_block(LustreParser::Local_blockContext * /*ctx*/) override { }
 
-  virtual void enterKind2_Statement(LustreParser::Kind2_StatementContext * /*ctx*/) override { }
-  virtual void exitKind2_Statement(LustreParser::Kind2_StatementContext * /*ctx*/) override { }
+  virtual void enterLet_block_equation(LustreParser::Let_block_equationContext * /*ctx*/) override { }
+  virtual void exitLet_block_equation(LustreParser::Let_block_equationContext * /*ctx*/) override { }
 
-  virtual void enterMainStatement(LustreParser::MainStatementContext * /*ctx*/) override { }
-  virtual void exitMainStatement(LustreParser::MainStatementContext * /*ctx*/) override { }
+  virtual void enterLet_block_k2_property(LustreParser::Let_block_k2_propertyContext * /*ctx*/) override { }
+  virtual void exitLet_block_k2_property(LustreParser::Let_block_k2_propertyContext * /*ctx*/) override { }
 
-  virtual void enterPropertyStatement(LustreParser::PropertyStatementContext * /*ctx*/) override { }
-  virtual void exitPropertyStatement(LustreParser::PropertyStatementContext * /*ctx*/) override { }
+  virtual void enterLet_block_k2_if_block(LustreParser::Let_block_k2_if_blockContext * /*ctx*/) override { }
+  virtual void exitLet_block_k2_if_block(LustreParser::Let_block_k2_if_blockContext * /*ctx*/) override { }
 
-  virtual void enterCheckStatement(LustreParser::CheckStatementContext * /*ctx*/) override { }
-  virtual void exitCheckStatement(LustreParser::CheckStatementContext * /*ctx*/) override { }
+  virtual void enterLet_block_k2_frame_block(LustreParser::Let_block_k2_frame_blockContext * /*ctx*/) override { }
+  virtual void exitLet_block_k2_frame_block(LustreParser::Let_block_k2_frame_blockContext * /*ctx*/) override { }
 
-  virtual void enterFrame_block(LustreParser::Frame_blockContext * /*ctx*/) override { }
-  virtual void exitFrame_block(LustreParser::Frame_blockContext * /*ctx*/) override { }
+  virtual void enterExternal_contract(LustreParser::External_contractContext * /*ctx*/) override { }
+  virtual void exitExternal_contract(LustreParser::External_contractContext * /*ctx*/) override { }
+
+  virtual void enterContract_body(LustreParser::Contract_bodyContext * /*ctx*/) override { }
+  virtual void exitContract_body(LustreParser::Contract_bodyContext * /*ctx*/) override { }
+
+  virtual void enterDecls_mode(LustreParser::Decls_modeContext * /*ctx*/) override { }
+  virtual void exitDecls_mode(LustreParser::Decls_modeContext * /*ctx*/) override { }
+
+  virtual void enterDecls_const_ghost_var(LustreParser::Decls_const_ghost_varContext * /*ctx*/) override { }
+  virtual void exitDecls_const_ghost_var(LustreParser::Decls_const_ghost_varContext * /*ctx*/) override { }
+
+  virtual void enterDecls_ghost_var(LustreParser::Decls_ghost_varContext * /*ctx*/) override { }
+  virtual void exitDecls_ghost_var(LustreParser::Decls_ghost_varContext * /*ctx*/) override { }
+
+  virtual void enterDecls_assume(LustreParser::Decls_assumeContext * /*ctx*/) override { }
+  virtual void exitDecls_assume(LustreParser::Decls_assumeContext * /*ctx*/) override { }
+
+  virtual void enterDecls_guarantee(LustreParser::Decls_guaranteeContext * /*ctx*/) override { }
+  virtual void exitDecls_guarantee(LustreParser::Decls_guaranteeContext * /*ctx*/) override { }
+
+  virtual void enterDecls_imports(LustreParser::Decls_importsContext * /*ctx*/) override { }
+  virtual void exitDecls_imports(LustreParser::Decls_importsContext * /*ctx*/) override { }
+
+  virtual void enterMode_decl(LustreParser::Mode_declContext * /*ctx*/) override { }
+  virtual void exitMode_decl(LustreParser::Mode_declContext * /*ctx*/) override { }
+
+  virtual void enterMode_body(LustreParser::Mode_bodyContext * /*ctx*/) override { }
+  virtual void exitMode_body(LustreParser::Mode_bodyContext * /*ctx*/) override { }
+
+  virtual void enterRequirement(LustreParser::RequirementContext * /*ctx*/) override { }
+  virtual void exitRequirement(LustreParser::RequirementContext * /*ctx*/) override { }
+
+  virtual void enterAssurance(LustreParser::AssuranceContext * /*ctx*/) override { }
+  virtual void exitAssurance(LustreParser::AssuranceContext * /*ctx*/) override { }
+
+  virtual void enterKind2_const_item(LustreParser::Kind2_const_itemContext * /*ctx*/) override { }
+  virtual void exitKind2_const_item(LustreParser::Kind2_const_itemContext * /*ctx*/) override { }
+
+  virtual void enterKind2_var_item(LustreParser::Kind2_var_itemContext * /*ctx*/) override { }
+  virtual void exitKind2_var_item(LustreParser::Kind2_var_itemContext * /*ctx*/) override { }
+
+  virtual void enterAssume_item(LustreParser::Assume_itemContext * /*ctx*/) override { }
+  virtual void exitAssume_item(LustreParser::Assume_itemContext * /*ctx*/) override { }
+
+  virtual void enterGuarantee_item(LustreParser::Guarantee_itemContext * /*ctx*/) override { }
+  virtual void exitGuarantee_item(LustreParser::Guarantee_itemContext * /*ctx*/) override { }
+
+  virtual void enterImport_item(LustreParser::Import_itemContext * /*ctx*/) override { }
+  virtual void exitImport_item(LustreParser::Import_itemContext * /*ctx*/) override { }
+
+  virtual void enterKind2_if_block(LustreParser::Kind2_if_blockContext * /*ctx*/) override { }
+  virtual void exitKind2_if_block(LustreParser::Kind2_if_blockContext * /*ctx*/) override { }
+
+  virtual void enterKind2_if_body(LustreParser::Kind2_if_bodyContext * /*ctx*/) override { }
+  virtual void exitKind2_if_body(LustreParser::Kind2_if_bodyContext * /*ctx*/) override { }
+
+  virtual void enterKind2_statement_main(LustreParser::Kind2_statement_mainContext * /*ctx*/) override { }
+  virtual void exitKind2_statement_main(LustreParser::Kind2_statement_mainContext * /*ctx*/) override { }
+
+  virtual void enterKind2_statement_property(LustreParser::Kind2_statement_propertyContext * /*ctx*/) override { }
+  virtual void exitKind2_statement_property(LustreParser::Kind2_statement_propertyContext * /*ctx*/) override { }
+
+  virtual void enterKind2_statement_check(LustreParser::Kind2_statement_checkContext * /*ctx*/) override { }
+  virtual void exitKind2_statement_check(LustreParser::Kind2_statement_checkContext * /*ctx*/) override { }
+
+  virtual void enterKind2_frame_block(LustreParser::Kind2_frame_blockContext * /*ctx*/) override { }
+  virtual void exitKind2_frame_block(LustreParser::Kind2_frame_blockContext * /*ctx*/) override { }
 
   virtual void enterFrame_init(LustreParser::Frame_initContext * /*ctx*/) override { }
   virtual void exitFrame_init(LustreParser::Frame_initContext * /*ctx*/) override { }
@@ -286,6 +310,12 @@ public:
   virtual void enterState_machine_data_def_local_block(LustreParser::State_machine_data_def_local_blockContext * /*ctx*/) override { }
   virtual void exitState_machine_data_def_local_block(LustreParser::State_machine_data_def_local_blockContext * /*ctx*/) override { }
 
+  virtual void enterUnless_tran(LustreParser::Unless_tranContext * /*ctx*/) override { }
+  virtual void exitUnless_tran(LustreParser::Unless_tranContext * /*ctx*/) override { }
+
+  virtual void enterUntil_tran(LustreParser::Until_tranContext * /*ctx*/) override { }
+  virtual void exitUntil_tran(LustreParser::Until_tranContext * /*ctx*/) override { }
+
   virtual void enterState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext * /*ctx*/) override { }
   virtual void exitState_machine_transition_resume(LustreParser::State_machine_transition_resumeContext * /*ctx*/) override { }
 
@@ -322,8 +352,8 @@ public:
   virtual void enterExpr_apply_expr(LustreParser::Expr_apply_exprContext * /*ctx*/) override { }
   virtual void exitExpr_apply_expr(LustreParser::Expr_apply_exprContext * /*ctx*/) override { }
 
-  virtual void enterExpr_kind2(LustreParser::Expr_kind2Context * /*ctx*/) override { }
-  virtual void exitExpr_kind2(LustreParser::Expr_kind2Context * /*ctx*/) override { }
+  virtual void enterExpr_kind2_expr(LustreParser::Expr_kind2_exprContext * /*ctx*/) override { }
+  virtual void exitExpr_kind2_expr(LustreParser::Expr_kind2_exprContext * /*ctx*/) override { }
 
   virtual void enterList(LustreParser::ListContext * /*ctx*/) override { }
   virtual void exitList(LustreParser::ListContext * /*ctx*/) override { }
@@ -336,6 +366,15 @@ public:
 
   virtual void enterRestart_expr(LustreParser::Restart_exprContext * /*ctx*/) override { }
   virtual void exitRestart_expr(LustreParser::Restart_exprContext * /*ctx*/) override { }
+
+  virtual void enterKind2_param(LustreParser::Kind2_paramContext * /*ctx*/) override { }
+  virtual void exitKind2_param(LustreParser::Kind2_paramContext * /*ctx*/) override { }
+
+  virtual void enterActivate(LustreParser::ActivateContext * /*ctx*/) override { }
+  virtual void exitActivate(LustreParser::ActivateContext * /*ctx*/) override { }
+
+  virtual void enterRestart(LustreParser::RestartContext * /*ctx*/) override { }
+  virtual void exitRestart(LustreParser::RestartContext * /*ctx*/) override { }
 
   virtual void enterTempo_expr_pre(LustreParser::Tempo_expr_preContext * /*ctx*/) override { }
   virtual void exitTempo_expr_pre(LustreParser::Tempo_expr_preContext * /*ctx*/) override { }
@@ -357,6 +396,9 @@ public:
 
   virtual void enterTempo_expr_merge(LustreParser::Tempo_expr_mergeContext * /*ctx*/) override { }
   virtual void exitTempo_expr_merge(LustreParser::Tempo_expr_mergeContext * /*ctx*/) override { }
+
+  virtual void enterTempo_kind2_merge(LustreParser::Tempo_kind2_mergeContext * /*ctx*/) override { }
+  virtual void exitTempo_kind2_merge(LustreParser::Tempo_kind2_mergeContext * /*ctx*/) override { }
 
   virtual void enterBool_expr(LustreParser::Bool_exprContext * /*ctx*/) override { }
   virtual void exitBool_expr(LustreParser::Bool_exprContext * /*ctx*/) override { }
@@ -406,17 +448,26 @@ public:
   virtual void enterApply_prefix(LustreParser::Apply_prefixContext * /*ctx*/) override { }
   virtual void exitApply_prefix(LustreParser::Apply_prefixContext * /*ctx*/) override { }
 
-  virtual void enterApply_iterator(LustreParser::Apply_iteratorContext * /*ctx*/) override { }
-  virtual void exitApply_iterator(LustreParser::Apply_iteratorContext * /*ctx*/) override { }
+  virtual void enterApply_map(LustreParser::Apply_mapContext * /*ctx*/) override { }
+  virtual void exitApply_map(LustreParser::Apply_mapContext * /*ctx*/) override { }
 
-  virtual void enterApply_iterator_lv6(LustreParser::Apply_iterator_lv6Context * /*ctx*/) override { }
-  virtual void exitApply_iterator_lv6(LustreParser::Apply_iterator_lv6Context * /*ctx*/) override { }
+  virtual void enterApply_fold(LustreParser::Apply_foldContext * /*ctx*/) override { }
+  virtual void exitApply_fold(LustreParser::Apply_foldContext * /*ctx*/) override { }
+
+  virtual void enterApply_mapi(LustreParser::Apply_mapiContext * /*ctx*/) override { }
+  virtual void exitApply_mapi(LustreParser::Apply_mapiContext * /*ctx*/) override { }
+
+  virtual void enterApply_foldi(LustreParser::Apply_foldiContext * /*ctx*/) override { }
+  virtual void exitApply_foldi(LustreParser::Apply_foldiContext * /*ctx*/) override { }
+
+  virtual void enterApply_mapfold(LustreParser::Apply_mapfoldContext * /*ctx*/) override { }
+  virtual void exitApply_mapfold(LustreParser::Apply_mapfoldContext * /*ctx*/) override { }
 
   virtual void enterApply_mapw(LustreParser::Apply_mapwContext * /*ctx*/) override { }
   virtual void exitApply_mapw(LustreParser::Apply_mapwContext * /*ctx*/) override { }
 
-  virtual void enterApply_mapwI(LustreParser::Apply_mapwIContext * /*ctx*/) override { }
-  virtual void exitApply_mapwI(LustreParser::Apply_mapwIContext * /*ctx*/) override { }
+  virtual void enterApply_mapwi(LustreParser::Apply_mapwiContext * /*ctx*/) override { }
+  virtual void exitApply_mapwi(LustreParser::Apply_mapwiContext * /*ctx*/) override { }
 
   virtual void enterApply_foldw(LustreParser::Apply_foldwContext * /*ctx*/) override { }
   virtual void exitApply_foldw(LustreParser::Apply_foldwContext * /*ctx*/) override { }
@@ -445,47 +496,11 @@ public:
   virtual void enterPrefix_binary_operator(LustreParser::Prefix_binary_operatorContext * /*ctx*/) override { }
   virtual void exitPrefix_binary_operator(LustreParser::Prefix_binary_operatorContext * /*ctx*/) override { }
 
-  virtual void enterIterator_map(LustreParser::Iterator_mapContext * /*ctx*/) override { }
-  virtual void exitIterator_map(LustreParser::Iterator_mapContext * /*ctx*/) override { }
-
-  virtual void enterIterator_fold(LustreParser::Iterator_foldContext * /*ctx*/) override { }
-  virtual void exitIterator_fold(LustreParser::Iterator_foldContext * /*ctx*/) override { }
-
-  virtual void enterIterator_mapi(LustreParser::Iterator_mapiContext * /*ctx*/) override { }
-  virtual void exitIterator_mapi(LustreParser::Iterator_mapiContext * /*ctx*/) override { }
-
-  virtual void enterIterator_foldi(LustreParser::Iterator_foldiContext * /*ctx*/) override { }
-  virtual void exitIterator_foldi(LustreParser::Iterator_foldiContext * /*ctx*/) override { }
-
-  virtual void enterIterator_mapfold(LustreParser::Iterator_mapfoldContext * /*ctx*/) override { }
-  virtual void exitIterator_mapfold(LustreParser::Iterator_mapfoldContext * /*ctx*/) override { }
-
-  virtual void enterIterator_red(LustreParser::Iterator_redContext * /*ctx*/) override { }
-  virtual void exitIterator_red(LustreParser::Iterator_redContext * /*ctx*/) override { }
-
-  virtual void enterIterator_fill(LustreParser::Iterator_fillContext * /*ctx*/) override { }
-  virtual void exitIterator_fill(LustreParser::Iterator_fillContext * /*ctx*/) override { }
-
-  virtual void enterIterator_fillred(LustreParser::Iterator_fillredContext * /*ctx*/) override { }
-  virtual void exitIterator_fillred(LustreParser::Iterator_fillredContext * /*ctx*/) override { }
-
-  virtual void enterIterator_boolred(LustreParser::Iterator_boolredContext * /*ctx*/) override { }
-  virtual void exitIterator_boolred(LustreParser::Iterator_boolredContext * /*ctx*/) override { }
-
-  virtual void enterIterator_lv6_red(LustreParser::Iterator_lv6_redContext * /*ctx*/) override { }
-  virtual void exitIterator_lv6_red(LustreParser::Iterator_lv6_redContext * /*ctx*/) override { }
-
-  virtual void enterIterator_lv6_fill(LustreParser::Iterator_lv6_fillContext * /*ctx*/) override { }
-  virtual void exitIterator_lv6_fill(LustreParser::Iterator_lv6_fillContext * /*ctx*/) override { }
-
-  virtual void enterIterator_lv6_fillred(LustreParser::Iterator_lv6_fillredContext * /*ctx*/) override { }
-  virtual void exitIterator_lv6_fillred(LustreParser::Iterator_lv6_fillredContext * /*ctx*/) override { }
-
-  virtual void enterIterator_lv6_boolred(LustreParser::Iterator_lv6_boolredContext * /*ctx*/) override { }
-  virtual void exitIterator_lv6_boolred(LustreParser::Iterator_lv6_boolredContext * /*ctx*/) override { }
-
   virtual void enterSimple_expr_unary_arith(LustreParser::Simple_expr_unary_arithContext * /*ctx*/) override { }
   virtual void exitSimple_expr_unary_arith(LustreParser::Simple_expr_unary_arithContext * /*ctx*/) override { }
+
+  virtual void enterSimple_kind2_expr(LustreParser::Simple_kind2_exprContext * /*ctx*/) override { }
+  virtual void exitSimple_kind2_expr(LustreParser::Simple_kind2_exprContext * /*ctx*/) override { }
 
   virtual void enterSimple_expr_paren(LustreParser::Simple_expr_parenContext * /*ctx*/) override { }
   virtual void exitSimple_expr_paren(LustreParser::Simple_expr_parenContext * /*ctx*/) override { }
@@ -570,6 +585,9 @@ public:
 
   virtual void enterAtom_SHORT(LustreParser::Atom_SHORTContext * /*ctx*/) override { }
   virtual void exitAtom_SHORT(LustreParser::Atom_SHORTContext * /*ctx*/) override { }
+
+  virtual void enterMerge_expr(LustreParser::Merge_exprContext * /*ctx*/) override { }
+  virtual void exitMerge_expr(LustreParser::Merge_exprContext * /*ctx*/) override { }
 
 
   virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }

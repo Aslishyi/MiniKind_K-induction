@@ -24,6 +24,8 @@ public:
     //打印具体的symbol类型：包括array，基础类型打印
     std::string toAstString() const;
 
+    std::string toLusString() const;
+
     //array的维度值：可能是多维，所以用数组存储
     std::vector<std::shared_ptr<ConstSymbol>> constSymbolVector;
 

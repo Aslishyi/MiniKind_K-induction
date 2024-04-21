@@ -27,3 +27,16 @@ std::string ConstArray::toAstString() const {
 ConstArray::ConstArray(std::vector<std::shared_ptr<ConstSymbol>> constSymbolVector) :constSymbolVector(std::move(constSymbolVector)){
 
 }
+
+std::string ConstArray::toLusString() const {
+    std::stringstream  ss;
+    for (int i = 0; i < constSymbolVector.size(); ++i) {
+
+        ss <<  (constSymbolVector[i])->getDefTypeLusString(constSymbolVector[i]->getDefType()) ;
+
+        if (i < constSymbolVector.size() - 1)
+            ss << " , ";
+
+    }
+    return ss.str();
+}

@@ -26,3 +26,12 @@ const std::string &TypeId::getTypeID() const {
 std::shared_ptr<Symbol> TypeId::getTypeIDSymbol() const {
     return typeIdSymbol;
 }
+
+TypeId &TypeId::setTypeIdSymbol(std::shared_ptr<Symbol> typeIdSymbol) {
+    this->typeIdSymbol = typeIdSymbol;
+    return *this;
+}
+
+bool TypeId::isEqual(std::shared_ptr<TypeId> typeId) {
+    return typeIDString == typeId->typeIDString;
+}
