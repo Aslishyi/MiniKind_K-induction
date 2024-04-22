@@ -18,11 +18,9 @@ private:
     std::map<std::string,VarState> varStateList;
 public:
     VarStateList();
+    std::string getNodeName();
+    std::map<std::string,VarState> getVarStateList();
     explicit VarStateList(const LustreNode& lustreNode);
-    void PushPreByName (const std::string& name, const std::string& words);
-    void PushGuardByName (const std::string& name, const std::string& words);
-    void PushTranslateByName (const std::string& name, const std::string& words);
-    void PushPostByName (const std::string& name, const std::string& words);
     void BuildVarStateList(LustreNode lustreNode);
     void ShowMessage();
 };

@@ -11,21 +11,6 @@ VarState::VarState(std::string name) {
     this->varName = std::move(name);
 }
 
-void VarState::pre_pushback(const std::string& str) {
-    this->pre.emplace_back(str);
-}
-
-void VarState::guard_pushback(const std::string& str) {
-    this->guard.emplace_back(str);
-}
-
-void VarState::translate_pushback(const std::string& str) {
-    this->translate.emplace_back(str);
-}
-
-void VarState::post_pushback(const std::string& str) {
-    this->post.emplace_back(str);
-}
 
 void VarState::setName(const std::string& name) {
     this->varName = name;
@@ -50,20 +35,13 @@ std::string VarState::getType() const {
     return this->type;
 }
 
-std::vector<std::string> VarState::getPre() const {
-    return this->pre;
+
+std::vector<std::string> VarState::getStatement() const {
+    return this -> statement;
 }
 
-std::vector<std::string> VarState::getGuard()  const{
-    return this->guard;
-}
-
-std::vector<std::string> VarState::getTranslate() const {
-    return this->translate;
-}
-
-std::vector<std::string> VarState::getPost() const {
-    return this->post;
+void VarState::statement_pushback(const std::string &str) {
+    this -> statement.emplace_back(str);
 }
 
 VarState::VarState() = default;

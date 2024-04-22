@@ -16,8 +16,11 @@
 #include "lustre/visitor/SymbolVisitor.h"
 #include "lustre/visitor/SecondSymbolVisitor.h"
 #include "lustre/tool/SpdlogTool.h"
+#include "Z3Solver/CreateSolver.h"
+#include "Tool/Z3Tool.h"
 #include <z3++.h>
 using namespace std;
+using namespace z3;
 
 int main(int argc, char **argv) {
 #ifdef __WIN32
@@ -71,10 +74,10 @@ int main(int argc, char **argv) {
     ExportOutput::exportOutputToFile("SSA.lustre", SSA);
 
     /*============================== 项目模块二:  模型验证模块 ======================================*/
-    //将控制台输出信息转移到cmdMessage.txt
+    /*//将控制台输出信息转移到cmdMessage.txt
     std::ostringstream oss;
     std::streambuf* pCoutBuf = std::cout.rdbuf();  // 保存旧的 cout buffer
-    std::cout.rdbuf(oss.rdbuf());
+    std::cout.rdbuf(oss.rdbuf());*/
 
 
     // 从Lustre文件中读取lustre代码;
@@ -92,36 +95,26 @@ int main(int argc, char **argv) {
     VarStateList varStateList = *new VarStateList(lustreNode);
     varStateList.ShowMessage();
 
+    // 利用VarStateList类生成CreateSolver类
+    CheckTool::print("====================CreateSolver类信息==========================");
+
+    CreateSolver createSolver = CreateSolver();
+    z3::solver solver  = createSolver.add_constraints(varStateList);
+    //z3::solver solver = Z3Tool::create_solver();
+    cout << "Solver:\n" << solver << endl;
 
     // 导出结果信息到output.txt
     string result = lustreNode.getNodeMessage();
     ExportOutput::exportOutputToFile(outFilename, result);
 
-
+/*
     //将控制台输出信息转移到cmdMessage.txt
     std::cout.rdbuf(pCoutBuf);
     std::string cmdMessage = oss.str();  // 获取输出的字符串
-    ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);
+    ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);*/
 
     /*========= z3 test ==========*/
-    std::cout << "de-Morgan example\n";
 
-    z3::context c;
-
-    z3::expr x = c.bool_const("x");
-    z3::expr y = c.bool_const("y");
-    z3::expr conjecture = (!(x && y)) == (!x || !y);
-
-    z3::solver s(c);
-    // adding the negation of the conjecture as a constraint.
-    s.add(!conjecture);
-    std::cout << s << "\n";
-    std::cout << s.to_smt2() << "\n";
-    switch (s.check()) {
-        case z3::unsat:   std::cout << "de-Morgan is valid\n"; break;
-        case z3::sat:     std::cout << "de-Morgan is not valid\n"; break;
-        case z3::unknown: std::cout << "unknown\n"; break;
-    }
 
     return 0;
 }

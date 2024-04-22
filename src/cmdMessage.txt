@@ -1,83 +1,101 @@
 ====================LustreNode类信息==========================
-NodeName: : [Counter]
-NodeInput: : [init1 : int;  init2 : int; ]
-NodeOutput: [count1 : int; count2 : int; ]
-NodeVars: [x : int; y : int; t : int; count1_0 : int; count1_1 : int; ]
-NodeBodys: [init1 = x + 1;; init2 = y + 1;; count1_0 = init1 -> pre count1 + 1;; count1_1 = count1_0 + x;; count2 = t + 2;; count1 = count1_1;; ]
+NodeName: : [fun1]
+NodeInput: : [var1 : int;  var2 : int;  var3 : int;  var4 : int;  var5 : int;  var6 : int; ]
+NodeOutput: [y : int; ]
+NodeVars: [y_0 : int; y_1 : int; y_2 : int; y_3 : int; y_4 : int; y_5 : int; ]
+NodeBodys: [y_0 = var1 + 1;; y_1 = y_0 + 2;; y_2 = var3 + 4;; y_3 = var4 + 5;; y_4 = y_3 + 6;; y_5 = var6 + 7;; y = y_5;; ]
 NodeStates:
-From [init1] to [x + 1]
-From [init2] to [y + 1]
-From [count1_0] to [init1 -> pre count1 + 1]
-From [count1_1] to [count1_0 + x]
-From [count2] to [t + 2]
-From [count1] to [count1_1]
+From [y_0] to [var1 + 1]
+From [y_1] to [y_0 + 2]
+From [y_2] to [var3 + 4]
+From [y_3] to [var4 + 5]
+From [y_4] to [y_3 + 6]
+From [y_5] to [var6 + 7]
+From [y] to [y_5]
 ====================VarStateList类信息==========================
 
-[count1]'s state:
-1.VarName is: [count1], VarType is: [int]
-2.[count1]'s Pre:
-{count1_1}
-3.[count1]'s Guard:
-4.[count1]'s Translate:
-5.[count1]'s Post:
+[var1]'s state:
+1.VarName is: [var1], VarType is: [int]
+2.[var1]'s Statements:
 
-[count1_0]'s state:
-1.VarName is: [count1_0], VarType is: [int]
-2.[count1_0]'s Pre:
-3.[count1_0]'s Guard:
-4.[count1_0]'s Translate:
-{init1 -> pre count1 + 1}
-5.[count1_0]'s Post:
+[var2]'s state:
+1.VarName is: [var2], VarType is: [int]
+2.[var2]'s Statements:
 
-[count1_1]'s state:
-1.VarName is: [count1_1], VarType is: [int]
-2.[count1_1]'s Pre:
-{count1_0 + x}
-3.[count1_1]'s Guard:
-4.[count1_1]'s Translate:
-5.[count1_1]'s Post:
+[var3]'s state:
+1.VarName is: [var3], VarType is: [int]
+2.[var3]'s Statements:
 
-[count2]'s state:
-1.VarName is: [count2], VarType is: [int]
-2.[count2]'s Pre:
-{t + 2}
-3.[count2]'s Guard:
-4.[count2]'s Translate:
-5.[count2]'s Post:
+[var4]'s state:
+1.VarName is: [var4], VarType is: [int]
+2.[var4]'s Statements:
 
-[init1]'s state:
-1.VarName is: [init1], VarType is: [int]
-2.[init1]'s Pre:
-{x + 1}
-3.[init1]'s Guard:
-4.[init1]'s Translate:
-5.[init1]'s Post:
+[var5]'s state:
+1.VarName is: [var5], VarType is: [int]
+2.[var5]'s Statements:
 
-[init2]'s state:
-1.VarName is: [init2], VarType is: [int]
-2.[init2]'s Pre:
-{y + 1}
-3.[init2]'s Guard:
-4.[init2]'s Translate:
-5.[init2]'s Post:
-
-[t]'s state:
-1.VarName is: [t], VarType is: [int]
-2.[t]'s Pre:
-3.[t]'s Guard:
-4.[t]'s Translate:
-5.[t]'s Post:
-
-[x]'s state:
-1.VarName is: [x], VarType is: [int]
-2.[x]'s Pre:
-3.[x]'s Guard:
-4.[x]'s Translate:
-5.[x]'s Post:
+[var6]'s state:
+1.VarName is: [var6], VarType is: [int]
+2.[var6]'s Statements:
 
 [y]'s state:
 1.VarName is: [y], VarType is: [int]
-2.[y]'s Pre:
-3.[y]'s Guard:
-4.[y]'s Translate:
-5.[y]'s Post:
+2.[y]'s Statements:
+{y_5}
+
+[y_0]'s state:
+1.VarName is: [y_0], VarType is: [int]
+2.[y_0]'s Statements:
+{var1 + 1}
+
+[y_1]'s state:
+1.VarName is: [y_1], VarType is: [int]
+2.[y_1]'s Statements:
+{y_0 + 2}
+
+[y_2]'s state:
+1.VarName is: [y_2], VarType is: [int]
+2.[y_2]'s Statements:
+{var3 + 4}
+
+[y_3]'s state:
+1.VarName is: [y_3], VarType is: [int]
+2.[y_3]'s Statements:
+{var4 + 5}
+
+[y_4]'s state:
+1.VarName is: [y_4], VarType is: [int]
+2.[y_4]'s Statements:
+{y_3 + 6}
+
+[y_5]'s state:
+1.VarName is: [y_5], VarType is: [int]
+2.[y_5]'s Statements:
+{var6 + 7}
+====================CreateSolver类信息==========================
+Solver:
+(declare-fun y_5 () Int)
+(declare-fun y () Int)
+(declare-fun |1| () Int)
+(declare-fun var1 () Int)
+(declare-fun y_0 () Int)
+(declare-fun |2| () Int)
+(declare-fun y_1 () Int)
+(declare-fun |4| () Int)
+(declare-fun var3 () Int)
+(declare-fun y_2 () Int)
+(declare-fun |5| () Int)
+(declare-fun var4 () Int)
+(declare-fun y_3 () Int)
+(declare-fun |6| () Int)
+(declare-fun y_4 () Int)
+(declare-fun |7| () Int)
+(declare-fun var6 () Int)
+(assert (= y y_5))
+(assert (= y_0 (+ var1 |1|)))
+(assert (= y_1 (+ y_0 |2|)))
+(assert (= y_2 (+ var3 |4|)))
+(assert (= y_3 (+ var4 |5|)))
+(assert (= y_4 (+ y_3 |6|)))
+(assert (= y_5 (+ var6 |7|)))
+

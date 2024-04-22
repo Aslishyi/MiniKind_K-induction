@@ -156,7 +156,30 @@ assert(Post(X)); // post code and assertion.
 2. 完成L2C解析模块项目的合并
 3. 完成spdlog库的配置
 
+### 4.22 日志
 
+编写`CreateSolver.cpp`完成输入`VarStateList`类后创建`CreateSolver`类构造Z3求解器
+
+完成对以下lustre函数的解析构建
+
+```cpp
+node Counter(init1: int;init2: int) returns (count1: int;count2: int);
+var
+    x: int;
+    y: int;
+let
+    count1 = init1 + x;
+    count2 = init2 + y;
+tel;
+```
+
+
+
+**已完成部分：**
+
+1. 完成Z3Solver求解器的构造部分`CreateSolver`类部分代码
+2. 完成`Tool/Z3Tool`部分内容编写
+3. 修改匹配lustre的正则表达式，使其可以匹配node或function开头的代码
 
 
 

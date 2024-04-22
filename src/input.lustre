@@ -1,12 +1,10 @@
-node Counter(init1: int;init2: int) returns (count1: int;count2: int);
-var
-    x: int;
-    y: int;
-    t: int;
+function fun1(var1: int; var2: int; var3: int; var4: int; var5: int; var6: int)
+returns(y: int)
 let
-  init1 = x + 1;
-  init2 = y + 1;
-  count1 = init1 -> pre count1 + 1;
-  count1 = count1 + x;
-  count2 = t + 2;
+    y = var1 + 1;
+    y = y + 2;
+    y = var3 + 4;
+    y = var4 + 5;
+    y = y + 6;
+    y = var6 + 7;
 tel;

@@ -102,6 +102,10 @@ file(GLOB_RECURSE Ql2c_SRC
 add_executable(
         MiniKind_k-induction src/main.cpp ${Ql2c_SRC}
         src/Lustre/expr/ApplyExprVisitor.h
+        src/Z3Solver/CreateSolver.cpp
+        src/Z3Solver/CreateSolver.h
+        src/Tool/Z3Tool.cpp
+        src/Tool/Z3Tool.h
 )
 
 add_dependencies(

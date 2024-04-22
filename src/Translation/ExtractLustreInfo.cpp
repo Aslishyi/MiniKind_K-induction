@@ -7,7 +7,9 @@
 
 LustreNode ExtractLustreInfo::extractLustreInfo(const std::string &lustreCode) {
     // 定义正则表达式来匹配Lustre节点定义
-    std::regex nodeRegex(R"(\s*node\s+(\w+)\s*\(\s*([^)]*)\s*\)\s*returns\s*\(\s*([^)]*)\s*\);\s*var\s*([\s\S]*?)let\s*([\s\S]*?);\s*tel;\s*)");
+    //std::regex nodeRegex(R"(\s*node\s+(\w+)\s*\(\s*([^)]*)\s*\)\s*returns\s*\(\s*([^)]*)\s*\);(?:\s*var\s*([\s\S]*?))?\s*let\s*([\s\S]*?);\s*tel;\s*)");
+    std::regex nodeRegex(R"(\s*(?:node|function)\s+(\w+)\s*\(\s*([^)]*)\s*\)\s*returns\s*\(\s*([^)]*)\s*\);(?:\s*var\s*([\s\S]*?))?\s*let\s*([\s\S]*?);\s*tel;\s*)");
+
     // 定义正则表达式来匹配变量定义
     std::regex varsRegex(R"(\s*(\w+)\s*=\s*([^;]+);)");
 

@@ -1,4 +1,4 @@
-function fun1(var1: int; var2: int; var3: int; var4: int; var5: int; var6: int)
+node fun1(var1: int; var2: int; var3: int; var4: int; var5: int; var6: int)
 returns(y: int)
 let
     y = var1 + 1;
@@ -7,4 +7,4 @@ let
     y = var4 + 5;
     y = y + 6;
     y = var6 + 7;
-tel
+tel;
