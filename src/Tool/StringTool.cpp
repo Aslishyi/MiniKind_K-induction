@@ -10,6 +10,7 @@ std::vector<std::string> StringTool::StrSplitting(std::string str, const std::st
     std::vector<std::string> res;
     boost::split(res, str, boost::is_any_of(dstr));
     StringVectorTool::trimStrings(res);
+    StringVectorTool::removeEmptyStrings(res);
     return res;
 }
 

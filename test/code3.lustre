@@ -6,7 +6,7 @@ var
 let
   init1 = x + 1;
   init2 = y + 1;
-  count1 = init1 -> pre count1 + 1;
+  count1 = init1 -> count1 + 1;
   count1 = count1 + x;
   count2 = t + 2;
 tel;

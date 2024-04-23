@@ -1,0 +1,5 @@
+node Counter(init: bool) returns (count: bool);
+let
+  init = false;
+  count = true;
+tel;

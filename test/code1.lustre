@@ -1,4 +1,4 @@
 node Counter(init: int) returns (count: int);
 let
-  count = init -> pre count + 1;
+  count = init -> count + 1;
 tel;

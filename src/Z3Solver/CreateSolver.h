@@ -11,6 +11,7 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <boost/algorithm/string/trim.hpp>
 #include "../src/Translation/VarStateList.h"
 #include "../Tool/StringTool.h"
 #include "../Tool/Z3Tool.h"
@@ -21,14 +22,16 @@ class CreateSolver {
 private:
     std::string NodeName;
     z3::context ctx;
+    z3::solver mysolver = z3::solver(ctx);
+    std::map<std::string, z3::expr> myvariables;
 public:
 
-    z3::solver add_constraints(VarStateList varStateList);
-    z3::expr parse_expression(std::map<std::string, z3::expr>& variables, const std::string& expr_str);
-    z3::expr parseExpr(const std::string& exprStr, std::map<std::string, z3::expr>& variables);
-    CreateSolver();
-    CreateSolver(VarStateList varStateList);
+    z3::solver build_z3solver(VarStateList varStateList);
+    z3::expr parse_bool_digit_expr(std::map<std::string, z3::expr>& variables, std::string& expr_str);
+    z3::expr parse_expr(const std::string& exprStr, std::map<std::string, z3::expr>& variables);
 
+    z3::solver add_expr_to_solver(z3::solver &solver, z3::expr &expr);
+    CreateSolver();
 };
 
 

@@ -179,9 +179,32 @@ tel;
 
 1. 完成Z3Solver求解器的构造部分`CreateSolver`类部分代码
 2. 完成`Tool/Z3Tool`部分内容编写
-3. 修改匹配lustre的正则表达式，使其可以匹配node或function开头的代码
+3. 修改匹配lustre的正则表达式，使其可以匹配`node`或`function`开头的代码
 
+### 4.23日志
 
+编写`CreateSolver.cpp`完成对`"->"`符号简单公式的处理
+
+完成对以下lustre函数的解析与构建
+
+```cpp
+node Counter(init1: int;init2: int) returns (count1: int;count2: int);
+var
+    x: int;
+    y: int;
+    t: int;
+let
+  init1 = x + 1;
+  init2 = y + 1;
+  count1 = init1 -> count1 + 1;
+  count1 = count1 + x;
+  count2 = t + 2;
+tel;
+```
+
+**已完成部分：**
+
+1. 编写`CreateSolver.cpp`完成对`"->"`符号简单公式的处理
 
 
 

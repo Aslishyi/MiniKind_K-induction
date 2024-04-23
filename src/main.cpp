@@ -99,9 +99,21 @@ int main(int argc, char **argv) {
     CheckTool::print("====================CreateSolver类信息==========================");
 
     CreateSolver createSolver = CreateSolver();
-    z3::solver solver  = createSolver.add_constraints(varStateList);
-    //z3::solver solver = Z3Tool::create_solver();
-    cout << "Solver:\n" << solver << endl;
+    z3::solver solver  = createSolver.build_z3solver(varStateList);
+
+    // 调用Z3求解器进行求解
+    switch (solver.check()) {
+        case sat:
+            std::cout << "Satisfiable\n";
+            std::cout << "Model:\n" << solver.get_model() << "\n";
+            break;
+        case unsat:
+            std::cout << "Unsatisfiable\n";
+            break;
+        case unknown:
+            std::cout << "Unknown\n";
+            break;
+    }
 
     // 导出结果信息到output.txt
     string result = lustreNode.getNodeMessage();
@@ -114,7 +126,6 @@ int main(int argc, char **argv) {
     ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);*/
 
     /*========= z3 test ==========*/
-
 
     return 0;
 }
