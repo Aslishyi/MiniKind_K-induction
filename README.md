@@ -206,9 +206,94 @@ tel;
 
 1. 编写`CreateSolver.cpp`完成对`"->"`符号简单公式的处理
 
+### 4.25日志
 
+编写`KInduction.cpp`完成对`"->"`符号语句的`Split Case K-induction`验证
 
+`Split Case K-induction`参考代码
 
+样例代码：
+
+```cpp
+int k = 1;
+z3::expr larrow_expr, rarrow_expr, lhs_expr;
+while(true){
+    ...
+    assert(k == 1 ? lhs_expr == larrow_expr : lhs_expr == rarrow_expr);
+    k ++;
+}
+```
+
+**Split Case K-induction**样例代码：
+
+```cpp
+#include <z3++.h>
+#include <iostream>
+
+using namespace z3;
+
+bool check_k_induction(context& c, solver& s, expr& lhs_expr, expr& larrow_expr, expr& rarrow_expr, int max_k) {
+    expr k = c.int_const("k");
+    
+    // Base Case: k == 1, assert lhs_expr == larrow_expr
+    s.add(k == 1);
+    s.add(lhs_expr == larrow_expr);
+    check_result base_result = s.check();
+    if (base_result == unsat) {
+        std::cout << "Base case failed to hold." << std::endl;
+        return false;
+    } else if (base_result == sat) {
+        model m = s.get_model();
+        std::cout << "Base case counterexample found: k = " << m.eval(k) << ", lhs_expr = " << m.eval(lhs_expr) << ", larrow_expr = " << m.eval(larrow_expr) << std::endl;
+        return false;
+    }
+    
+    // Clear solver for inductive step
+    s.reset();
+    
+    // Inductive Step: Assume valid for k, prove for k + 1
+    expr k_prime = c.int_const("k_prime");
+    s.add(k_prime == k + 1);
+    s.add(implies(k == 1, lhs_expr == larrow_expr));
+    s.add(implies(k > 1, lhs_expr == rarrow_expr));
+    
+    // Prove for k + 1
+    s.add(implies(k_prime == 1, lhs_expr == larrow_expr));
+    s.add(implies(k_prime > 1, lhs_expr == rarrow_expr));
+    
+    check_result step_result = s.check();
+    if (step_result == unsat) {
+        std::cout << "Inductive step holds." << std::endl;
+        return true;
+    } else if (step_result == sat) {
+        model m = s.get_model();
+        std::cout << "Inductive step counterexample found: k = " << m.eval(k) << ", k_prime = " << m.eval(k_prime)
+                  << ", lhs_expr = " << m.eval(lhs_expr) << ", larrow_expr = " << m.eval(larrow_expr)
+                  << ", rarrow_expr = " << m.eval(rarrow_expr) << std::endl;
+        return false;
+    }
+    return false; // Default return for unexpected cases
+}
+
+int main() {
+    context c;
+    solver s(c);
+    
+    expr lhs_expr = c.int_const("lhs_expr");
+    expr larrow_expr = c.int_const("larrow_expr");
+    expr rarrow_expr = c.int_const("rarrow_expr");
+    
+    int max_k = 10;  // Maximum number of steps to verify k-induction (for practical termination in example)
+    
+    if (check_k_induction(c, s, lhs_expr, larrow_expr, rarrow_expr, max_k)) {
+        std::cout << "Loop invariant verified successfully." << std::endl;
+    } else {
+        std::cout << "Loop invariant could not be verified." << std::endl;
+    }
+
+    return 0;
+}
+```
 
 
 

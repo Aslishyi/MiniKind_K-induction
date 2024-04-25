@@ -15,6 +15,7 @@
 #include "../src/Translation/VarStateList.h"
 #include "../Tool/StringTool.h"
 #include "../Tool/Z3Tool.h"
+#include "KInduction.h"
 
 using namespace z3;
 

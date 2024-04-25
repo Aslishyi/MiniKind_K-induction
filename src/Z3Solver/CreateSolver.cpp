@@ -88,6 +88,7 @@ z3::expr CreateSolver::parse_expr(const std::string &exprStr, std::map<std::stri
 
 z3::solver CreateSolver::build_z3solver(VarStateList varStateList) {
     z3::solver s(ctx);
+    //z3::context c = ctx;
     this->NodeName = varStateList.getNodeName();
     std::map<std::string,VarState>stateList = varStateList.getVarStateList();
 
@@ -131,14 +132,18 @@ z3::solver CreateSolver::build_z3solver(VarStateList varStateList) {
                 std::vector<std::string> vstr = StringTool::StrSplitting(rhs,"->");
                 std::string larrow = vstr[0];
                 std::string rarrow = vstr[1];
-                // 创建int类型变量k
-                z3::expr k = ctx.int_const("k");
+                // K-induction部分
+                CheckTool::print("K-induction : " + lhs + " = " + larrow + " -> " + rarrow );
                 larrow = Z3Tool::infixToPostfix(larrow);
                 rarrow = Z3Tool::infixToPostfix(rarrow);
                 z3::expr larrow_expr = parse_expr(larrow, variables);
                 z3::expr rarrow_expr = parse_expr(rarrow, variables);
-                s.add(k >= 0);
-                s.add(k == 0 ? lhs_expr == larrow_expr : lhs_expr == rarrow_expr);
+                if (KInduction::split_case_k_induction(ctx, s, lhs_expr, larrow_expr, rarrow_expr)) {
+                    std::cout << "Loop invariant verified successfully." << std::endl;
+                } else {
+                    std::cout << "Loop invariant could not be verified." << std::endl;
+                }
+
             }
             else {
                 //std::string constraint_str = lhs + " = " + rhs;

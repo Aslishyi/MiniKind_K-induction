@@ -1,101 +1,35 @@
 ====================LustreNode类信息==========================
-NodeName: : [fun1]
-NodeInput: : [var1 : int;  var2 : int;  var3 : int;  var4 : int;  var5 : int;  var6 : int; ]
-NodeOutput: [y : int; ]
-NodeVars: [y_0 : int; y_1 : int; y_2 : int; y_3 : int; y_4 : int; y_5 : int; ]
-NodeBodys: [y_0 = var1 + 1;; y_1 = y_0 + 2;; y_2 = var3 + 4;; y_3 = var4 + 5;; y_4 = y_3 + 6;; y_5 = var6 + 7;; y = y_5;; ]
+NodeName: : [Counter]
+NodeInput: : [init : int; ]
+NodeOutput: [count : int; ]
+NodeVars: []
+NodeBodys: [count = init -> count + 1;; ]
 NodeStates:
-From [y_0] to [var1 + 1]
-From [y_1] to [y_0 + 2]
-From [y_2] to [var3 + 4]
-From [y_3] to [var4 + 5]
-From [y_4] to [y_3 + 6]
-From [y_5] to [var6 + 7]
-From [y] to [y_5]
+From [count] to [init -> count + 1]
 ====================VarStateList类信息==========================
 
-[var1]'s state:
-1.VarName is: [var1], VarType is: [int]
-2.[var1]'s Statements:
+[count]'s state:
+1.VarName is: [count], VarType is: [int]
+2.[count]'s Statements:
+{init -> count + 1}
 
-[var2]'s state:
-1.VarName is: [var2], VarType is: [int]
-2.[var2]'s Statements:
-
-[var3]'s state:
-1.VarName is: [var3], VarType is: [int]
-2.[var3]'s Statements:
-
-[var4]'s state:
-1.VarName is: [var4], VarType is: [int]
-2.[var4]'s Statements:
-
-[var5]'s state:
-1.VarName is: [var5], VarType is: [int]
-2.[var5]'s Statements:
-
-[var6]'s state:
-1.VarName is: [var6], VarType is: [int]
-2.[var6]'s Statements:
-
-[y]'s state:
-1.VarName is: [y], VarType is: [int]
-2.[y]'s Statements:
-{y_5}
-
-[y_0]'s state:
-1.VarName is: [y_0], VarType is: [int]
-2.[y_0]'s Statements:
-{var1 + 1}
-
-[y_1]'s state:
-1.VarName is: [y_1], VarType is: [int]
-2.[y_1]'s Statements:
-{y_0 + 2}
-
-[y_2]'s state:
-1.VarName is: [y_2], VarType is: [int]
-2.[y_2]'s Statements:
-{var3 + 4}
-
-[y_3]'s state:
-1.VarName is: [y_3], VarType is: [int]
-2.[y_3]'s Statements:
-{var4 + 5}
-
-[y_4]'s state:
-1.VarName is: [y_4], VarType is: [int]
-2.[y_4]'s Statements:
-{y_3 + 6}
-
-[y_5]'s state:
-1.VarName is: [y_5], VarType is: [int]
-2.[y_5]'s Statements:
-{var6 + 7}
+[init]'s state:
+1.VarName is: [init], VarType is: [int]
+2.[init]'s Statements:
 ====================CreateSolver类信息==========================
-Solver:
-(declare-fun y_5 () Int)
-(declare-fun y () Int)
-(declare-fun |1| () Int)
-(declare-fun var1 () Int)
-(declare-fun y_0 () Int)
-(declare-fun |2| () Int)
-(declare-fun y_1 () Int)
-(declare-fun |4| () Int)
-(declare-fun var3 () Int)
-(declare-fun y_2 () Int)
-(declare-fun |5| () Int)
-(declare-fun var4 () Int)
-(declare-fun y_3 () Int)
-(declare-fun |6| () Int)
-(declare-fun y_4 () Int)
-(declare-fun |7| () Int)
-(declare-fun var6 () Int)
-(assert (= y y_5))
-(assert (= y_0 (+ var1 |1|)))
-(assert (= y_1 (+ y_0 |2|)))
-(assert (= y_2 (+ var3 |4|)))
-(assert (= y_3 (+ var4 |5|)))
-(assert (= y_4 (+ y_3 |6|)))
-(assert (= y_5 (+ var6 |7|)))
-
+K-induction : count = init -> count + 1
+Base case holds!
+Step case holds!
+Loop invariant verified successfully.
+Satisfiable
+Model:
+(define-fun count () Int
+  1)
+(define-fun |1| () Int
+  0)
+(define-fun k_prime () Int
+  3)
+(define-fun init () Int
+  0)
+(define-fun k () Int
+  2)

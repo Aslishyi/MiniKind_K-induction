@@ -74,10 +74,10 @@ int main(int argc, char **argv) {
     ExportOutput::exportOutputToFile("SSA.lustre", SSA);
 
     /*============================== 项目模块二:  模型验证模块 ======================================*/
-    /*//将控制台输出信息转移到cmdMessage.txt
+    //将控制台输出信息转移到cmdMessage.txt
     std::ostringstream oss;
     std::streambuf* pCoutBuf = std::cout.rdbuf();  // 保存旧的 cout buffer
-    std::cout.rdbuf(oss.rdbuf());*/
+    std::cout.rdbuf(oss.rdbuf());
 
 
     // 从Lustre文件中读取lustre代码;
@@ -119,11 +119,11 @@ int main(int argc, char **argv) {
     string result = lustreNode.getNodeMessage();
     ExportOutput::exportOutputToFile(outFilename, result);
 
-/*
+
     //将控制台输出信息转移到cmdMessage.txt
     std::cout.rdbuf(pCoutBuf);
     std::string cmdMessage = oss.str();  // 获取输出的字符串
-    ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);*/
+    ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);
 
     /*========= z3 test ==========*/
 

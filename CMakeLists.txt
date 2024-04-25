@@ -106,6 +106,8 @@ add_executable(
         src/Z3Solver/CreateSolver.h
         src/Tool/Z3Tool.cpp
         src/Tool/Z3Tool.h
+        src/Z3Solver/KInduction.cpp
+        src/Z3Solver/KInduction.h
 )
 
 add_dependencies(
