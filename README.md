@@ -297,7 +297,113 @@ int main() {
 
 
 
+### 4.26日志
 
+编写`KInduction.cpp`完成对`"->"`符号语句的`Combined Case K-induction`验证
+
+**Combined Case K-induction**参考代码：
+
+```cpp
+bool KInduction::combined_case_k_induction(context &ctx, solver &solver, expr &lhs_expr, expr &larrow_expr, expr &rarrow_expr) {
+    /*model m = solver.get_model();
+    std::cout << m <<std::endl;*/
+
+    //solver.push();
+    // Define variables
+    z3::expr k = ctx.int_const("k");
+    // Initial conditions
+    solver.add(k == 1);
+
+    // Loop Invariant: lhs_expr == (k == 1 ? larrow_expr : rarrow_expr)
+    z3::expr invariant = (lhs_expr == (k == 1 ? larrow_expr : rarrow_expr));
+
+    // Base case: k == 1
+    z3::expr base_case = (k == 1);
+    solver.add(base_case);
+
+    // Step case: k++
+    z3::expr step_case = (k == k + 1);
+    solver.add(step_case);
+
+    // Inductive property: (base_case && invariant) => step_case
+    z3::expr inductive_property = z3::implies(base_case && invariant, step_case);
+
+    // Check if the inductive property holds
+    solver.add(!inductive_property);
+    auto result = solver.check();
+
+    if (result == z3::sat) {
+        std::cout << "Inductive property does not hold. Loop is incorrect." << std::endl;
+        model m = solver.get_model();
+        std::cout << "Base case counterexample found:\n k = " << m.eval(k)
+                  << "\nlhs_expr = " << m.eval(lhs_expr) << "\nlarrow_expr = " << m.eval(larrow_expr)
+                  << "\nrarrow_expr = " << m.eval(rarrow_expr) << std::endl;
+        //solver.pop();
+        return false;
+    } else if (result == z3::unsat) {
+        std::cout << "Inductive property holds. Loop is correct." << std::endl;
+        model m = solver.get_model();
+        std::cout << "Base case counterexample found:\n k = " << m.eval(k)
+                  << "\nlhs_expr = " << m.eval(lhs_expr) << "\nlarrow_expr = " << m.eval(larrow_expr)
+                  << "\nrarrow_expr = " << m.eval(rarrow_expr) << std::endl;
+        //solver.pop();
+        return true;
+    } else {
+        std::cout << "Unable to determine correctness." << std::endl;
+        //solver.pop();
+        return false;
+    }
+}
+```
+
+
+
+```cpp
+#include <z3++.h>
+
+int main() {
+    z3::context c;
+    z3::solver s(c);
+
+    // Expressions for larrow_expr and rarrow_expr
+    z3::expr larrow_expr = c.int_val(1); // Example value
+    z3::expr rarrow_expr = c.int_val(2); // Example value
+
+    // Variables used in the loop
+    z3::expr k = c.int_const("k");
+    z3::expr lhs_expr = c.int_const("lhs_expr");
+
+    // Initial state where k = 1
+    z3::expr base_case = (k == 1 && lhs_expr == larrow_expr);
+
+    // Step case - assume property holds for k, prove for k+1
+    // Assumption: lhs_expr == (k == 1 ? larrow_expr : rarrow_expr)
+    z3::expr inductive_assumption = implies(k == 1, lhs_expr == larrow_expr) && implies(k != 1, lhs_expr == rarrow_expr);
+    z3::expr inductive_step = implies(inductive_assumption && k >= 1,
+                                      (k + 1 == 1 ? lhs_expr == larrow_expr : lhs_expr == rarrow_expr));
+
+    // Adding both cases to the solver
+    s.add(base_case);
+    s.add(inductive_step);
+
+    // Check the solver for possible solutions
+    switch (s.check()) {
+        case z3::unsat:
+            std::cout << "Loop is correct under given assumptions." << std::endl;
+            break;
+        case z3::sat:
+            std::cout << "Found a counterexample, loop might be incorrect:" << std::endl;
+            std::cout << s.get_model() << std::endl;
+            break;
+        case z3::unknown:
+            std::cout << "Unable to determine correctness." << std::endl;
+            break;
+    }
+
+    return 0;
+}
+
+```
 
 
 

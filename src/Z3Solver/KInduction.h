@@ -14,6 +14,7 @@ using namespace z3;
 class KInduction {
 public:
     static bool split_case_k_induction(context &c, solver &s, expr &lhs_expr, expr &larrow_expr, expr &rarrow_expr);
+    static bool combined_case_k_induction(context &c, solver &s, expr &lhs_expr, expr &larrow_expr, expr &rarrow_expr);
 };
 
 #endif //MINIKIND_K_INDUCTION_KINDUCTION_H

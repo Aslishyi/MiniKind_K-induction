@@ -132,16 +132,31 @@ z3::solver CreateSolver::build_z3solver(VarStateList varStateList) {
                 std::vector<std::string> vstr = StringTool::StrSplitting(rhs,"->");
                 std::string larrow = vstr[0];
                 std::string rarrow = vstr[1];
+                //std::cout << "Model before k induction:\n" << s.get_model() << "\n";
                 // K-induction部分
-                CheckTool::print("K-induction : " + lhs + " = " + larrow + " -> " + rarrow );
+
+
+                string tlarrow = larrow, trarrow = rarrow;
+
                 larrow = Z3Tool::infixToPostfix(larrow);
                 rarrow = Z3Tool::infixToPostfix(rarrow);
                 z3::expr larrow_expr = parse_expr(larrow, variables);
                 z3::expr rarrow_expr = parse_expr(rarrow, variables);
+
+                CheckTool::print("Split case K-induction : " + lhs + " = " + tlarrow + " -> " + trarrow );
+                s.push();
                 if (KInduction::split_case_k_induction(ctx, s, lhs_expr, larrow_expr, rarrow_expr)) {
-                    std::cout << "Loop invariant verified successfully." << std::endl;
+                    std::cout << "Split case K-induction verified successfully." << std::endl;
                 } else {
-                    std::cout << "Loop invariant could not be verified." << std::endl;
+                    std::cout << "Split case K-induction could not be verified." << std::endl;
+                }
+                s.pop();
+
+                CheckTool::print("Combined case K-induction : " + lhs + " = " + tlarrow + " -> " + trarrow );
+                if (KInduction::combined_case_k_induction(ctx, s, lhs_expr, larrow_expr, rarrow_expr)) {
+                    std::cout << "Combined case K-induction verified successfully." << std::endl;
+                } else {
+                    std::cout << "Combined case K-induction could not be verified." << std::endl;
                 }
 
             }
