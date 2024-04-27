@@ -1,5 +1,5 @@
-node fun1(var1: int; var2: int; var3: int; var4: int; var5: int; var6: int)
-returns(y: int)
+node fun1(var1: int; var2: int; var3: int; var4: int; var5: int; var6: int; init: int)
+returns(y: int; count: int)
 let
     y = var1 + 1;
     y = y + 2;
@@ -7,4 +7,5 @@ let
     y = var4 + 5;
     y = y + 6;
     y = var6 + 7;
+    count = init -> count + 1;
 tel;

@@ -1,5 +1,19 @@
-node Counter(init : int) returns (count : int);
+node fun1(var1 : int; var2 : int; var3 : int; var4 : int; var5 : int; var6 : int; init : int) returns (y : int; count : int);
+var
+    y_0 : int;
+    y_1 : int;
+    y_2 : int;
+    y_3 : int;
+    y_4 : int;
+    y_5 : int;
 let
+    y_0 = var1 + 1;
+    y_1 = y_0 + 2;
+    y_2 = var3 + 4;
+    y_3 = var4 + 5;
+    y_4 = y_3 + 6;
+    y_5 = var6 + 7;
     count = init -> count + 1;
+    y = y_5;
 tel;
 

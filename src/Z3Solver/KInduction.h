@@ -7,6 +7,8 @@
 
 #include <z3++.h>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 using namespace z3;
 
