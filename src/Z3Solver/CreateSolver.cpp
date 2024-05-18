@@ -143,7 +143,7 @@ z3::solver CreateSolver::build_z3solver(VarStateList varStateList) {
                 z3::expr larrow_expr = parse_expr(larrow, variables);
                 z3::expr rarrow_expr = parse_expr(rarrow, variables);
 
-                CheckTool::print("Split case K-induction : " + lhs + " = " + tlarrow + " -> " + trarrow );
+                CheckTool::print("Split case K-induction : [" + lhs + " = " + tlarrow + " -> " + trarrow + "]");
                 s.push();
                 if (KInduction::split_case_k_induction(ctx, s, lhs_expr, larrow_expr, rarrow_expr)) {
                     std::cout << "Split case K-induction verified successfully." << std::endl;
@@ -152,7 +152,7 @@ z3::solver CreateSolver::build_z3solver(VarStateList varStateList) {
                 }
                 s.pop();
 
-                CheckTool::print("Combined case K-induction : " + lhs + " = " + tlarrow + " -> " + trarrow );
+                CheckTool::print("Combined case K-induction : [" + lhs + " = " + tlarrow + " -> " + trarrow + "]");
                 if (KInduction::combined_case_k_induction(ctx, s, lhs_expr, larrow_expr, rarrow_expr)) {
                     std::cout << "Combined case K-induction verified successfully." << std::endl;
                 } else {

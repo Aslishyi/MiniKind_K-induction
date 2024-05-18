@@ -27,10 +27,11 @@ int main(int argc, char **argv) {
     system("chcp 65001");         //解决windows下中文编码问题
 #endif
 
+    CheckTool::print("/*============================== 项目模块一:  L2C解析模块 ======================================*/");
     /*============================== 项目模块一:  L2C解析模块 ======================================*/
     string inputFile = "G:\\Github\\MiniKind_k-induction\\src\\input.Lustre";
     //设置日志输出级别
-    spdlog::set_level(spdlog::level::info);
+    //spdlog::set_level(spdlog::level::info);
     string inputString;
 
     auto inputStream = make_unique<ifstream>();
@@ -72,7 +73,7 @@ int main(int argc, char **argv) {
 
     std::cout<<SSA<<std::endl;
     ExportOutput::exportOutputToFile("SSA.lustre", SSA);
-
+    CheckTool::print("/*============================== 项目模块二:  模型验证模块 ======================================*/");
     /*============================== 项目模块二:  模型验证模块 ======================================*/
     //将控制台输出信息转移到cmdMessage.txt
     /*std::ostringstream oss;
@@ -109,7 +110,6 @@ int main(int argc, char **argv) {
             break;
         case unsat:
             std::cout << "Unsatisfiable\n";
-            //std::cout << "Model:\n" << solver.get_model() << "\n";
             break;
         case unknown:
             std::cout << "Unknown\n";
@@ -127,7 +127,7 @@ int main(int argc, char **argv) {
     std::string cmdMessage = oss.str();  // 获取输出的字符串
     ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);*/
 
-    /*========= z3 test ==========*/
+
 
     return 0;
 }
