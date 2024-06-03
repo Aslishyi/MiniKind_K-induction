@@ -1,6 +1,4 @@
-//
-// Created by jack on 1/17/24.
-//
+
 
 #include "SecondSymbolVisitor.h"
 #include "../../SymbolTable/Symbol/ConstSymbol.h"

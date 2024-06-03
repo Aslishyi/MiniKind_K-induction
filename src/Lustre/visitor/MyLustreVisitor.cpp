@@ -1,6 +1,3 @@
-//
-// Created by jack on 23-11-16.
-//
 
 #include <spdlog/spdlog.h>
 #include "MyLustreVisitor.h"

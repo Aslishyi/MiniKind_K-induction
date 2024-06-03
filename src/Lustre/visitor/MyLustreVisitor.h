@@ -1,6 +1,3 @@
-//
-// Created by jack on 23-11-16.
-//
 
 #ifndef LUSTRETOL2C_MYLUSTREVISITOR_H
 #define LUSTRETOL2C_MYLUSTREVISITOR_H

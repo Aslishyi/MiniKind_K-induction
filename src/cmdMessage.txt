@@ -1,0 +1,123 @@
+/*============================== 项目模块一:  L2C解析模块 ======================================*/
+node fun1(var1 : int; var2 : int; var3 : int; var4 : int; var5 : int; init : int) returns (y : int; count : int);
+var
+    y_0 : int;
+    y_1 : int;
+    y_2 : int;
+    y_3 : int;
+    y_4 : int;
+    y_5 : int;
+let
+    y_0 = var1 + 1;
+    y_1 = y_0 + 2;
+    y_2 = var3 + 4;
+    y_3 = var4 + 5;
+    y_4 = y_3 + 6;
+    y_5 = var5 + 7;
+    count = init -> count + 1;
+    y = y_5;
+tel;
+
+
+/*============================== 项目模块二:  模型验证模块 ======================================*/
+====================LustreNode类信息==========================
+NodeName: : [fun1]
+NodeInput: : [var1 : int;  var2 : int;  var3 : int;  var4 : int;  var5 : int;  init : int; ]
+NodeOutput: [y : int; count : int; ]
+NodeVars: [y_0 : int; y_1 : int; y_2 : int; y_3 : int; y_4 : int; y_5 : int; ]
+NodeBodys: [y_0 = var1 + 1;; y_1 = y_0 + 2;; y_2 = var3 + 4;; y_3 = var4 + 5;; y_4 = y_3 + 6;; y_5 = var5 + 7;; count = init -> count + 1;; y = y_5;; ]
+NodeStates:
+From [y_0] to [var1 + 1]
+From [y_1] to [y_0 + 2]
+From [y_2] to [var3 + 4]
+From [y_3] to [var4 + 5]
+From [y_4] to [y_3 + 6]
+From [y_5] to [var5 + 7]
+From [count] to [init -> count + 1]
+From [y] to [y_5]
+====================VarStateList类信息==========================
+
+[count]'s state:
+1.VarName is: [count], VarType is: [int]
+2.[count]'s Statements:
+{init -> count + 1}
+
+[init]'s state:
+1.VarName is: [init], VarType is: [int]
+2.[init]'s Statements:
+
+[var1]'s state:
+1.VarName is: [var1], VarType is: [int]
+2.[var1]'s Statements:
+
+[var2]'s state:
+1.VarName is: [var2], VarType is: [int]
+2.[var2]'s Statements:
+
+[var3]'s state:
+1.VarName is: [var3], VarType is: [int]
+2.[var3]'s Statements:
+
+[var4]'s state:
+1.VarName is: [var4], VarType is: [int]
+2.[var4]'s Statements:
+
+[var5]'s state:
+1.VarName is: [var5], VarType is: [int]
+2.[var5]'s Statements:
+
+[y]'s state:
+1.VarName is: [y], VarType is: [int]
+2.[y]'s Statements:
+{y_5}
+
+[y_0]'s state:
+1.VarName is: [y_0], VarType is: [int]
+2.[y_0]'s Statements:
+{var1 + 1}
+
+[y_1]'s state:
+1.VarName is: [y_1], VarType is: [int]
+2.[y_1]'s Statements:
+{y_0 + 2}
+
+[y_2]'s state:
+1.VarName is: [y_2], VarType is: [int]
+2.[y_2]'s Statements:
+{var3 + 4}
+
+[y_3]'s state:
+1.VarName is: [y_3], VarType is: [int]
+2.[y_3]'s Statements:
+{var4 + 5}
+
+[y_4]'s state:
+1.VarName is: [y_4], VarType is: [int]
+2.[y_4]'s Statements:
+{y_3 + 6}
+
+[y_5]'s state:
+1.VarName is: [y_5], VarType is: [int]
+2.[y_5]'s Statements:
+{var5 + 7}
+====================CreateSolver类信息==========================
+Split case K-induction : [count = init -> count + 1]
+Base case verified start: 
+Base case verified for k = 1
+Base case verified for k = 2
+Base case verified for k = 3
+Base case verified for k = 4
+Base case verified for k = 5
+Step case verified start: 
+Step case holds!
+Split case K-induction verified successfully.
+Combined case K-induction : [count = init -> count + 1]
+Combined case verification start: 
+Combined case holds for k = 1
+Combined case holds for k = 2
+Combined case holds for k = 3
+Combined case holds for k = 4
+Combined case holds for k = 5
+Combined case verification completed.
+Combined case K-induction verified successfully.
+Satisfiable

@@ -1,6 +1,4 @@
-//
-// Created by jack on 1/17/24.
-//
+
 
 #ifndef QL2C_SECONDSYMBOLVISITOR_H
 #define QL2C_SECONDSYMBOLVISITOR_H

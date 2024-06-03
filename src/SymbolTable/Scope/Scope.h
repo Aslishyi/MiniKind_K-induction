@@ -1,6 +1,4 @@
-//
-// Created by jack on 11/22/23.
-//
+
 
 #ifndef SYMBOL_SCOPE_H
 #define SYMBOL_SCOPE_H

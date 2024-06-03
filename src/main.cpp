@@ -26,10 +26,14 @@ int main(int argc, char **argv) {
 #ifdef __WIN32
     system("chcp 65001");         //解决windows下中文编码问题
 #endif
-
+    //将控制台输出信息转移到cmdMessage.txt
+    std::ostringstream oss;
+    std::streambuf* pCoutBuf = std::cout.rdbuf();  // 保存旧的 cout buffer
+    std::cout.rdbuf(oss.rdbuf());
     CheckTool::print("/*============================== 项目模块一:  L2C解析模块 ======================================*/");
     /*============================== 项目模块一:  L2C解析模块 ======================================*/
-    string inputFile = "G:\\Github\\MiniKind_k-induction\\src\\input.Lustre";
+    // string inputFile = "G:\\Github\\MiniKind_k-induction\\src\\input.Lustre";
+    string inputFile = "../src/input.lustre";
     //设置日志输出级别
     //spdlog::set_level(spdlog::level::info);
     string inputString;
@@ -75,10 +79,10 @@ int main(int argc, char **argv) {
     ExportOutput::exportOutputToFile("SSA.lustre", SSA);
     CheckTool::print("/*============================== 项目模块二:  模型验证模块 ======================================*/");
     /*============================== 项目模块二:  模型验证模块 ======================================*/
-    //将控制台输出信息转移到cmdMessage.txt
-    /*std::ostringstream oss;
-    std::streambuf* pCoutBuf = std::cout.rdbuf();  // 保存旧的 cout buffer
-    std::cout.rdbuf(oss.rdbuf());*/
+//    //将控制台输出信息转移到cmdMessage.txt
+//    std::ostringstream oss;
+//    std::streambuf* pCoutBuf = std::cout.rdbuf();  // 保存旧的 cout buffer
+//    std::cout.rdbuf(oss.rdbuf());
 
 
     // 从Lustre文件中读取lustre代码;
@@ -123,10 +127,9 @@ int main(int argc, char **argv) {
 
 
     //将控制台输出信息转移到cmdMessage.txt
-    /*std::cout.rdbuf(pCoutBuf);
+    std::cout.rdbuf(pCoutBuf);
     std::string cmdMessage = oss.str();  // 获取输出的字符串
-    ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);*/
-
+    ExportOutput::exportOutputToFile("cmdMessage.txt", cmdMessage);
 
 
     return 0;

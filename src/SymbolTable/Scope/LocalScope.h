@@ -1,6 +1,4 @@
-//
-// Created by jack on 11/22/23.
-//
+
 
 #ifndef LUSTRETOL2C_LOCALSCOPE_H
 #define LUSTRETOL2C_LOCALSCOPE_H
